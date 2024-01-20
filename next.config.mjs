@@ -1,4 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    env: {
+        pathUrl: `https://hyggemedicalservice.com/phpapi/api`,
+       
+        HyggeOAliff: '2002893867-MzGeD6nL',
+    }
+
+};
 
 export default nextConfig;
