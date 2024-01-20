@@ -30,9 +30,7 @@ function Navbar() {
 
     return (
         <div className='bg-[#00AE91] h-16'>
-            <p className='text-center text-2xl text-[#ffffff] align-middle p-4'
-             
-            >สมุดโรงพยาบาล</p>
+            <p className='text-center text-2xl text-[#ffffff] align-middle p-4'>สมุดโรงพยาบาล</p>
             {isShown &&
                 <div className="absolute left-10 top-5 h-16 w-16 z-0 ">
                     <Image
