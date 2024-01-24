@@ -13,7 +13,7 @@ function Loadingpage() {
 
     const router = useRouter();
     const pathUrl: any = process.env.pathUrl;
-    const idcardliff: any = process.env.idcardliff;
+    const hyggeOAliff: any = process.env.HyggeOAliff;
     const [os, setOs] = useState<string>();
 
     const [lineId, setLineId] = useState("");
@@ -24,7 +24,7 @@ function Loadingpage() {
         const initLiff = async () => {
             liff.use(new GetOS());
             setOs(liff.getOS());
-            await liff.init({ liffId: idcardliff }).then(async () => {
+            await liff.init({ liffId: hyggeOAliff }).then(async () => {
                 if (!liff.isLoggedIn()) {
                     liff.login();
                 } else {
@@ -41,14 +41,14 @@ function Loadingpage() {
                         token_line: `${profile.userId}`
                     }
 
-                    const checkLineId = await axios.post(`${pathUrl}/health/hie_staff/checkbytoken`, dataSend)
-                    console.info(checkLineId.data);
-                    console.log("res2", checkLineId.data)
+                    const checkLineId = await axios.post(`${pathUrl}/health/hygge_citizen/checkbytoken`, dataSend)
+                    // console.info(checkLineId.data);
+                    // console.log("res2", checkLineId.data)
                     if (checkLineId.data.ok) {
                         if (checkLineId.data.message.length > 0) {
                             const stafftype = checkLineId.data.message[0].staff_type;
                             if (stafftype === 1 || stafftype === 0) {
-                                router.push("/idcard");
+                                router.push("/hospitalbook");
                             } else {
                                 Swal.fire({
                                     title: "ไม่มีสิทธ์เข้าใช้งาน",

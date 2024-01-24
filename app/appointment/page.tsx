@@ -1,109 +1,47 @@
-"use client";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { usePatientStore } from "../store";
+"use client"
+import React, { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
-import dayjs from 'dayjs';
-import th from "dayjs/locale/th";
-import { CirclesWithBar } from "react-loader-spinner";
+
+import Currentdate from "./component/currentpage";
+import Partdate from './component/partpage';
 
 
-const Appointment = () => {
-    const pathUrl: any = process.env.pathUrl;
-    const Patient: any = usePatientStore((state: any) => state.patient);
+function Appointment() {
     const router = useRouter();
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
 
+    const [isShown, setIsShown] = useState(true);
 
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-
-            const data = await axios.post(`${pathUrl}/health/hie/appointment`, { cid: Patient.cid })
-            console.log("data", data.data);
-            setData(data.data.message);
-
-
-        } catch (error: any) {
-            console.error(error.message);
-
-        }
-        setLoading(false);
+    const Clickcurrentdate = e => {
+        setIsShown(true);
+    };
+    const Clickpartdate = e => {
+        setIsShown(false);
     };
 
-    useEffect(() => {
-        console.log("Patient : ", Patient);
-        if (!Patient) {
-            router.push("/hospitalbook");
-        } else {
-            fetchData();
-        }
-    }, [Patient]);
-
-
-
     return (
-
         <div>
-            <div className='bg-[#4D57D3] mx-5 m-5'>
-                <p className='text-center text-lg text-[#ffffff] align-middle p-2'>รายการนัด
-
-                </p>
+            <div className='bg-[#4D57D3] mx-5 m-3'>
+                <p className='text-center text-lg text-[#ffffff] align-middle p-2'>รายการนัด</p>
             </div>
-            {loading && (
-                <div className="flex flex-row justify-center items-center w-full mt-10">
-                    <CirclesWithBar
-                        height="100"
-                        width="100"
-                        color="#4D57D3"
-                        outerCircleColor="#4D57D3"
-                        innerCircleColor="#4D57D3"
-                        barColor="#4D57D3"
-                        ariaLabel="circles-with-bar-loading"
-                        wrapperStyle={{}}
-                        wrapperClass=""
-                        visible={true}
-                    />
 
-                </div>
-            )}
-            {!loading && (
-                (data.length > 0) ?
-                    (
-                        <div className='m-5 grid grid gap-3'>
-                            {data.map((item: any) => (
+            <div className='grid justify-items-center m-5 grid grid-cols-2'>
+                <Button className="bg-[#4D57D3] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
+                    type="button" name="buttoncurrent"
+                    onClick={Clickcurrentdate} > รายการปัจจุบัน</Button>
 
-                                <div className='bg-[#4D57D3] p-4 text-[#ffffff] ' key={item.id}>
+                <Button className="bg-[#999999] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
+                    type="button" name="button part"
+                    onClick={Clickpartdate}> รายการย้อนหลัง</Button>
+            </div>
+            <div>
+                {!isShown && <Partdate />}
+                {isShown && <Currentdate />} 
+            </div>
 
-                                    <div className='grid grid-cols-2'>
-                                        <span>
-                                            {dayjs(item.app_date).locale(th).add(543, "year").format("DD MMM YYYY")} </span>
-
-
-                                        <span className='flex justify-end'>
-                                            {item.app_time}
-
-                                        </span>
-                                    </div><hr className="mb-2" /><div className='grid grid-rows-2 grid-flow-col '>
-                                        <p className="col-span-2">{item.app_clinic_name}</p>
-                                        <p className="col-span-2">{item.app_doctor_name}</p>
-
-                                        {/* <div className="flex justify-center mt-3 row-span-2">
-<Button className='border-2 border-[#fffff] bg-[#4D57D3] shadow-md shadow-black'>รายละเอียด</Button></div> */}
-                                    </div>
-                                </div>))}
-                        </div>
-                    ) : (
-                        <div className="flex justify-center"> ไม่พบข้อมูล</div>
-                    )
-
-
-
-            )}
         </div>
 
-    );
-};
+    )
+}
 
-export default Appointment;
+export default Appointment

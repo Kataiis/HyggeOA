@@ -40,7 +40,7 @@ function Laboratory() {
     useEffect(() => {
         console.log("Patient : ", Patient);
         if (!Patient) {
-            router.push("/idcard");
+            router.push("/hospitalbook");
         } else {
             fetchData();
         }
