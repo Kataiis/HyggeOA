@@ -20,7 +20,7 @@ function Agreement() {
     };
     const [isSubscribed, setIsSubscribed] = useState(false);
 
-    const handleChange = e => {
+    const handleChange = (e:any) => {
         if (e.target.checked) {
             console.log('✅ Checkbox is checked');
         } else {
@@ -48,9 +48,9 @@ function Agreement() {
             <div className="-mt-12 p-10 text-center">
                 <p className=" text-md mt-10 font-semibold ">ข้อตกลงให้ความยินยอม</p>
                 <p className=''>เพื่อเปิดเผยข้อมูลด้านสุขภาพของบุคคลทางอิเล็กทรอนิกส์</p>
-                <p className=' mt-2 font-semibold'> ข้าพเจ้า {Patient.pname + Patient.fname + " " + Patient.lname}</p>
+                <p className=' mt-2 font-semibold'> ข้าพเจ้า {Patient?.pname + Patient?.fname + " " + Patient?.lname}</p>
                 <p className=''>เลขประจำตัวประชาชน</p>
-                <p className='font-semibold'>{Patient.cid}</p>
+                <p className='font-semibold'>{Patient?.cid}</p>
 
             </div>
             <div className="-mt-20 p-10 ">
@@ -67,7 +67,7 @@ function Agreement() {
             <div className="text-center">
                 <input
                     type="checkbox"
-                    value={isSubscribed}
+                    // value={isSubscribed}
                     onChange={handleChange}
                     id="subscribe"
                     name="subscribe"

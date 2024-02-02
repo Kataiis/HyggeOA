@@ -12,16 +12,16 @@ function Navbar() {
     const [isShown, setIsShown] = useState(false);
     const currentPage = usePathname();
     const router = useRouter();
-  
+   
 
     const backPage = () => {
-       router.replace("/hospitalbook");
+        router.replace('/hospitalbook')
     };
 
     useEffect(() => {
-        document.title = "Virtual Hospital";
+        document.title = "Health ATM";
         console.log("currentPage : ", currentPage);
-        if (currentPage !== '/hospitalbook' && currentPage !== '/agreement' && currentPage !== '/loading') {
+        if (currentPage !== '/idcard' && currentPage !== '/hospitalbook' && currentPage !== '/checkno' && currentPage !== '/loading') {
             setIsShown(true);
         } else {
             setIsShown(false);
@@ -29,14 +29,16 @@ function Navbar() {
     }, [currentPage]);
 
     return (
-        <div className='bg-[#00AE91] h-16'>
-            <p className='text-center text-2xl text-[#ffffff] align-middle p-4'>สมุดโรงพยาบาล</p>
+        <div className='bg-[#3D8070] h-16'>
+            <p className='text-center text-2xl text-[#ffffff] align-middle p-4'
+           
+            >Health ATM</p>
             {isShown &&
                 <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
                     <Image
                         priority
                         src={back}
-                        alt="back"
+                        alt="scan"
                         height={25}
                         onClick={backPage}
                     />

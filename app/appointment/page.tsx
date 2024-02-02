@@ -12,10 +12,10 @@ function Appointment() {
 
     const [isShown, setIsShown] = useState(true);
 
-    const Clickcurrentdate = e => {
+    const Clickcurrentdate = (e:any) => {
         setIsShown(true);
     };
-    const Clickpartdate = e => {
+    const Clickpartdate = (e:any)  => {
         setIsShown(false);
     };
 

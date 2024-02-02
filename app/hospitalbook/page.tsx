@@ -7,6 +7,7 @@ import { usePatientStore } from "../store";
 import Swal from "sweetalert2";
 import liff from "@line/liff"
 import GetOS from "@line/liff/get-os";
+import dayjs from "dayjs";
 
 const Hospitalbook = () => {
     const router = useRouter();
@@ -27,17 +28,34 @@ const Hospitalbook = () => {
     const [profile, setProfile] = useState<any>({});
 
     const updatedata = async () => {
+        Swal.fire({
+            html:
+              '<div class="my-3 flex justify-center">' +
+              '<div class="justify-items-center">' +
+              '<svg class="animate-spin w-32 h-32 text-[#0C66BB]" fill="currentColor" ' +
+              'stroke="currentColor" stroke-width="0" viewBox="0 0 16 16">' +
+              '<path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zM8 4c2.209 0 4 1.791 4 4s-1.791 4-4 4-4-1.791-4-4 ' +
+              '1.791-4 4-4zM12.773 12.773c-1.275 1.275-2.97 1.977-4.773 1.977s-3.498-0.702-4.773-1.977-1.977-2.97-1.977-4.773c0-1.803 0.702-3.498 1.977-4.773l1.061 1.061c0 0 0 0 0 0-2.047 2.047-2.047 5.378 0 7.425 0.992 0.992 2.31 1.538 3.712 1.538s2.721-0.546 3.712-1.538c2.047-2.047 2.047-5.378 0-7.425l1.061-1.061c1.275 1.275 1.977 2.97 1.977 4.773s-0.702 3.498-1.977 4.773z"></path>' +
+              "</svg>" +
+              "</div>" +
+              "</div>" +
+              '<p style="font-size: 35px; margin-top: 40px">กำลังโหลดข้อมูล</p>',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+          });
 
+        const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
         const dataIns = {
             req_cid: Patient.cid,
-            req_hospcode: Patient.favhos1,
+            favhos1: Patient.favhos1,
             line_id: `${profile.userId}`,
         };
-
+        console.log("dataIns", dataIns)
         const resIns: any = await axios.post(
-            pathUrl + "/health/hiereq/store_reqerefer",
+            pathUrl + "/health/hiereq/store_hyggeoa",
             dataIns
         );
+        console.log("resIns", resIns.data)
         if (resIns.data.ok) {
             console.log("insert hie_request success");
             const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", {
@@ -45,14 +63,33 @@ const Hospitalbook = () => {
             });
             if (res.data.ok) {
                 if (res.data.message <= 1) {
-                    //ไม่เคยมีการ request วันนี้
+                    const text = "REQUEST|"+Patient.favhos1+"|"+Patient.cid+"|"+mytimestamp
+                    console.log("text",text)
+                    // //ไม่เคยมีการ request วันนี้
+
+                    const sentmqtt = await axios.post(`https://hyggemedicalservice.com/apirbh/connectmqtt/hyggeoa`,{messagemqtt:text})
+
                     const timer = setTimeout(() => {
-                      // ทำ sweetaler แจ้งเตือน ว่าทำสำเร็จแล้ว
-                      }, 12000);
-
+                        // ทำ sweetaler แจ้งเตือน ว่าทำสำเร็จแล้ว
+                        Swal.fire({
+                            title: "อัพเดทข้อมูลสำเร็จ",
+                            icon: "success",
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
+                    }, 12000);
+                    return () => clearTimeout(timer);
                 } else {
-
                     console.log("have  log in hie_request");
+                    Swal.fire({
+                        title: "ข้อมูลเป็นปัจจุบันแล้ว",
+                        icon: "success",
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        timer: 2000
+                      });
+                 
                 }
             }
         }
@@ -98,7 +135,7 @@ const Hospitalbook = () => {
                             const value = checkLineId.data.message[0].cid;
                             // ดึงข้อมูลจาก API
                             const res2 = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: value })
-                            // console.log("res2.data : ", res2.data);
+                            console.log("res2.data : ", res2.data);
                             if (res2.data.ok) {
 
                                 if (res2.data.message.length != 0) {
@@ -208,7 +245,7 @@ const Hospitalbook = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
                             </svg>
-                            update ข้อมูล</Button></div>
+                            click เพื่อ update ข้อมูล</Button></div>
                     <hr />
 
 
