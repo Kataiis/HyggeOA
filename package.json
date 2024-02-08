@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
 
-    "dev": "next -p 4001",
+    "dev": "next -p 8088",
     "build": "next build",
-    "start": "next start -p 4001",
+    "start": "next start -p 8088",
 
     "dev": "next -p 8088",
     "build": "next build",

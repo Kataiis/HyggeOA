@@ -101,6 +101,11 @@ function Drug() {
 
                                             </div>
                                             <hr />
+                                            <div >
+                                                <div className="flex justify-start w-64" ><p className=" text-[#4D57D3]">{vv.drugusage}</p></div>
+                                       
+
+                                            </div>
                                         </AccordionContent>);
                                 })}
                                 <div className="mt-2"></div>
