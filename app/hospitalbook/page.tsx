@@ -21,7 +21,8 @@ const Hospitalbook = () => {
 
     const Patient: any = usePatientStore((state: any) => state.patient);
 
-
+    const [checkuser, setCheckuser] = useState(false);
+    const [user, setUser] = useState<any>([]);
 
 
     const updatePatient: any = usePatientStore((state: any) => state.updatePatient);
@@ -114,7 +115,7 @@ const Hospitalbook = () => {
 
                     const profile = await liff.getProfile()
 
-                    // console.log(profile);
+                    console.log(profile);
                     // console.log("profile?.userId", profile?.userId);
                     setProfile(profile)
                     setLineId(profile?.userId);
@@ -133,7 +134,9 @@ const Hospitalbook = () => {
                     if (checkLineId.data.ok) {
                         if (checkLineId.data.message.length > 0) {
                             console.log("cid : ", checkLineId.data.message[0].cid);
-
+                            setCheckuser(true);
+                            setUser(checkLineId.data[0]);
+                            console.log(checkLineId);
                             const value = checkLineId.data.message[0].cid;
                             // ดึงข้อมูลจาก API
                             const res2 = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: value })
@@ -144,7 +147,7 @@ const Hospitalbook = () => {
                                     updatePatient(res2.data.message[0])
                                     setloading(false);
 
-                                    router.replace("/hospitalbook");
+                                    router.replace("/profile",value);
                                 } else {
                                     throw new Error(res2.data.error);
                                 }

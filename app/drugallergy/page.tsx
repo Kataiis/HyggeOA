@@ -68,44 +68,48 @@ function Drugallergy() {
                 </div>
             )}
             {!loading && (
-                  (data.length > 0)?
-                  (
-                    <div>
-                        {data.map((item: any) => (
-                            <div className='bg-[#F3EEDC] m-5 p-2' key={item.id}>
+                (data.length > 0) ?
+                    (
+                        <div>
+                            {data.map((item: any) => (
+                                <div className='bg-[#F3EEDC] m-5 p-2' key={item.id}>
 
-                                <div className="flex flex-row">
+                                    <div className="flex flex-row">
 
-                                    <div className="grid justify-items-center basis-1/4">
-                                        <Image
-                                            priority
-                                            src={checkmark}
-                                            alt="checkmark"
-                                            width={65}
-                                            height={65} />
+                                        <div className="grid justify-items-center basis-1/4">
+                                            <Image
+                                                priority
+                                                src={checkmark}
+                                                alt="checkmark"
+                                                width={65}
+                                                height={65} />
+                                        </div>
+
+
+                                        <div className="basis-1/2  ml-2">
+                                            <p className="text-[#FF1717] text-lg">ชื่อยาที่แพ้ :</p>
+                                            <p className="text-[#FF1717] text-lg "> {item.allergy_item}</p>
+
+                                            <p className="mt-4">อาการแพ้ : </p>
+                                            <p className="text-lg "> {item.allergy_symtom}</p>
+
+                                        </div>
+                                        <div className="grid justify-items-end pr-2 basis-1/4">
+                                            <Image
+                                                priority
+                                                src={vector}
+                                                alt="vector"
+                                                width={30}
+                                                height={30} />
+                                        </div>
+                                    </div><div className='grid grid-cols-2 text-sm text-[#707070] p-2'>
+                                        <span>โดย {item.name}</span>
+                                        <span className="flex justify-end">
+                                            {dayjs(item.report_date).locale(th).add(543, "year").format("DD MMM YYYY")}
+                                        </span>
                                     </div>
 
-
-                                    <div className="basis-1/2  ml-2">
-                                        <p>ชื่อยาที่แพ้ :</p>
-                                        <p className="text-[#FF1717] text-lg font-semibold"> {item.allergy_symtom}</p>
-                                    </div>
-                                    <div className="grid justify-items-end pr-2 basis-1/4">
-                                        <Image
-                                            priority
-                                            src={vector}
-                                            alt="vector"
-                                            width={30}
-                                            height={30} />
-                                    </div>
-                                </div><div className='grid grid-cols-2 text-sm text-[#707070] p-2'>
-                                    <span>โดย {item.name}</span>
-                                    <span className="flex justify-end">
-                                        {dayjs(item.report_date).locale(th).add(543, "year").format("DD MMM YYYY")}
-                                    </span>
-                                </div>
-
-                            </div>))}
+                                </div>))}
 
 
 
@@ -113,9 +117,13 @@ function Drugallergy() {
 
 
 
-                    </div>):(
-                    <div className="flex justify-center"> ไม่พบข้อมูล</div>
-                )
+                        </div>) : (
+                        <div className=" h-56 grid content-center font-semibold text-[#707070] text-center text-lg p-5">
+                        
+                                ยังไม่มีการรายงาน <br />
+                                ข้อมูลการแพ้ยา
+                        </div>
+                    )
 
             )}
         </div>
