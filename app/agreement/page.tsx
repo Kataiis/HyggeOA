@@ -23,15 +23,7 @@ function Agreement() {
 
     const updatedata = async () => {
         setIsSubscribed(false);
-        Swal.fire({
-            html:
-            '<div><img src="/health-report.gif" />'+
-            '<p style="font-size: 16px; margin-top: 10px">กำลังดึงข้อมูลจากโรงพยาบาล</p>' +
-            '<p style="font-size: 18px; margin-top: 10px">กรุณารอประมาณ 30 วินาที</p>' +
-            '</div>',
-            allowOutsideClick: false,
-            showConfirmButton: false,
-        });
+        
 
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
         const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", {
@@ -39,6 +31,15 @@ function Agreement() {
         });
         if (res.data.ok) {
             if (res.data.message <= 1) {
+                Swal.fire({
+                    html:
+                    '<div><img src="/health-report.gif" />'+
+                    '<p style="font-size: 16px; margin-top: 10px">กำลังดึงข้อมูลจากโรงพยาบาล</p>' +
+                    '<p style="font-size: 18px; margin-top: 10px">กรุณารอประมาณ 30 วินาที</p>' +
+                    '</div>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
                 const text = "REQUEST|" + Patient.favhos1 + "|" + Patient.cid + "|" + mytimestamp
                 console.log("text", text)
                 // //ไม่เคยมีการ request วันนี้
