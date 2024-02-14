@@ -21,6 +21,7 @@ import hygge from '@/public/hygge.png'
 
 import liff from "@line/liff"
 import { usePatientStore } from "../store";
+import dayjs from "dayjs";
 
 
 
@@ -48,7 +49,32 @@ const Login = () => {
         },
     });
 
-
+   
+    const updatedata = async (Patient:any, lineid: any) => {
+        // hygge oa  insert request
+        const dataIns = {
+            req_cid: Patient.cid,
+            favhos1: Patient.favhos1,
+            line_id: lineid,
+        };
+        console.log("dataIns", dataIns)
+        const resIns: any = await axios.post(
+            pathUrl + "/health/hiereq/store_hyggeoa",
+            dataIns
+        );
+        console.log("resIns", resIns.data)
+        if (resIns.data.ok) {
+            console.log("insert hie_request success");
+            const log = await axios.post(`${pathUrl}/health/phrviewlog/ins`, { cid: Patient.cid, line_id: lineid })
+            console.log("log", log.data)
+            if(log.data.ok){
+                router.replace("/agreement")
+            }else{
+                throw new Error(log.data.error);
+            }
+        }
+    };
+    
     const onSubmit = async (data: LoginFormValues) => {
         setIsDisble(true);
         // ข้อมูลที่ส่งไปให้ API
@@ -75,50 +101,7 @@ const Login = () => {
             console.log("message.length : ", res.data.message.length);
 
             if (res.data.message.length > 0) {
-                // checktoken
-                // const token_line = res.data.message[0].token_line;
-                // console.log("token_line",token_line)
 
-                // if (token_line === !null) {
-                //     const profile = await liff.getProfile()
-                //     console.log(profile);
-                //     setProfile(profile)
-                //     setLineId(profile?.userId);
-
-                //     console.warn(lineId);
-
-                //     console.log("profile : ", profile);
-
-                //     const dataSend = {
-                //         cid: res.data.message.cid,
-                //         token_line: `${profile.userId}`
-                //     }
-
-
-                //     const resUpdate: any = await axios.put(`${pathUrl}/health/hygge_citizen/updatetoken`, dataSend)
-                //     console.log("resUpdate", resUpdate.data)
-                //     console.log("dataSend", dataSend)
-                //     if (resUpdate.data.ok) {
-                //         if (resUpdate.data.message === 1) {
-                //             router.push("/hospitalbook");
-                //         } else {
-                //             throw new Error(res.data.error);
-                //         }
-                //     } else {
-                //         throw new Error(res.data.error);
-                //     }
-                // } else {
-                //     Swal.fire({
-                //         title: "ไม่มีสิทธ์เข้าใช้งาน",
-                //         icon: "error",
-                //         html: "กรุณาลงทะเบียน",
-                //         showCloseButton: true,
-                //         showConfirmButton: false,
-                //     }).then(() => {
-                //         form.reset();
-                //         setIsDisble(false);
-                //     });
-                // }
 
                 const dataSend = {
                     cid: res.data.message[0].cid,
@@ -133,7 +116,10 @@ const Login = () => {
                     if (resUpdate.data.message === 1) {
                         const res2 = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: dataSend })
                         updatePatient(res2.data.message[0])
-                        router.replace("/agreement");
+
+                        // router.replace("/agreement");
+                        updatedata(res2.data.message[0], `${profile.userId}`)
+
                     } else {
                         throw new Error(res.data.error);
                     }
@@ -142,7 +128,7 @@ const Login = () => {
                 }
             } else {
                 // ไม่มีข้อมูลใน DB
-                
+
                 Swal.fire({
                     title: "เข้าสู่ระบบไม่สำเร็จ",
                     icon: "error",
@@ -159,12 +145,6 @@ const Login = () => {
         }
     };
 
-    // const Clickregister = () => {
-    //     router.push("/register");
-    //     // router.push("/agreement");
-
-
-    // };
     return (
         <div className="mb-5"
             style={{
@@ -181,7 +161,7 @@ const Login = () => {
                 <Image
                     priority
                     src={hygge}
-                    alt="scan"
+                    alt="hygge"
                     width={250}
 
 
@@ -213,7 +193,7 @@ const Login = () => {
                                             <div className="flex flex-col space-y-1.5 mb-5 ">
                                                 <FormControl>
                                                     <Input
-                                                    inputMode="numeric"
+                                                        inputMode="numeric"
                                                         className="text-center text-lg"
                                                         id="username"
                                                         placeholder="เลขประจำตัวประชาชน"
@@ -232,9 +212,9 @@ const Login = () => {
                                     render={({ field }) => (
                                         <FormItem>
                                             <div className="flex flex-col space-y-1.5 mb-5">
-                                                <FormControl> 
+                                                <FormControl>
                                                     <Input
-                                                    inputMode="numeric"
+                                                        inputMode="numeric"
                                                         className="text-center text-lg"
                                                         id="password"
                                                         type="password"
@@ -270,7 +250,7 @@ const Login = () => {
                     variant="outline"
                     className="bg-[#00AE91] text-white drop-shadow-lg text-md  hover:bg-[#eaefe8] hover:text-grey hover:text-lg  "
                     onClick={() => router.replace('/register')}
-                 
+
                 >
                     วิธีการลงทะเบียน ขอรหัสผ่าน
                 </Button>

@@ -10,6 +10,7 @@ import GetOS from "@line/liff/get-os";
 import dayjs from "dayjs";
 import Image from 'next/image'
 import refresh from '@/public/refresh.png'
+import medicalhistory from '@/public/medical-history.gif'
 
 const Hospitalbook = () => {
     const router = useRouter();
@@ -30,28 +31,22 @@ const Hospitalbook = () => {
     const [lineId, setLineId] = useState("");
     const [profile, setProfile] = useState<any>({});
 
-    const updatedata = async () => {
+    const updatedata = async (Patient:any, lineid: any) => {
         Swal.fire({
             html:
-                '<div class="my-3 flex justify-center">' +
-                '<div class="justify-items-center">' +
-                '<svg class="animate-spin w-32 h-32 text-[#0C66BB]" fill="currentColor" ' +
-                'stroke="currentColor" stroke-width="0" viewBox="0 0 16 16">' +
-                '<path d="M8 0c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zM8 4c2.209 0 4 1.791 4 4s-1.791 4-4 4-4-1.791-4-4 ' +
-                '1.791-4 4-4zM12.773 12.773c-1.275 1.275-2.97 1.977-4.773 1.977s-3.498-0.702-4.773-1.977-1.977-2.97-1.977-4.773c0-1.803 0.702-3.498 1.977-4.773l1.061 1.061c0 0 0 0 0 0-2.047 2.047-2.047 5.378 0 7.425 0.992 0.992 2.31 1.538 3.712 1.538s2.721-0.546 3.712-1.538c2.047-2.047 2.047-5.378 0-7.425l1.061-1.061c1.275 1.275 1.977 2.97 1.977 4.773s-0.702 3.498-1.977 4.773z"></path>' +
-                "</svg>" +
-                "</div>" +
-                "</div>" +
-                '<p style="font-size: 35px; margin-top: 40px">กำลังโหลดข้อมูล</p>',
+            '<div><img src="/health-report.gif" />'+
+            '<p style="font-size: 16px; margin-top: 10px">กำลังดึงข้อมูลจากโรงพยาบาล</p>' +
+            '<p style="font-size: 18px; margin-top: 10px">กรุณารอประมาณ 30 วินาที</p>' +
+            '</div>',
             allowOutsideClick: false,
             showConfirmButton: false,
         });
 
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
         const dataIns = {
-            req_cid: Patient.cid,
-            favhos1: Patient.favhos1,
-            line_id: `${profile.userId}`,
+            req_cid: Patient?.cid,
+            favhos1: Patient?.favhos1,
+            line_id: lineid,
         };
         console.log("dataIns", dataIns)
         const resIns: any = await axios.post(
@@ -62,11 +57,11 @@ const Hospitalbook = () => {
         if (resIns.data.ok) {
             console.log("insert hie_request success");
             const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", {
-                cid: Patient.cid,
+                cid: Patient?.cid,
             });
             if (res.data.ok) {
                 if (res.data.message <= 1) {
-                    const text = "REQUEST|" + Patient.favhos1 + "|" + Patient.cid + "|" + mytimestamp
+                    const text = "REQUEST|" + Patient.favhos1 + "|" + Patient?.cid + "|" + mytimestamp
                     console.log("text", text)
                     // //ไม่เคยมีการ request วันนี้
 
@@ -80,6 +75,9 @@ const Hospitalbook = () => {
                             allowOutsideClick: false,
                             showConfirmButton: false,
                             timer: 1500
+                        })
+                        .then(() => {
+                            router.replace("/profile")
                         });
                     }, 30000);
                     return () => clearTimeout(timer);
@@ -92,92 +90,88 @@ const Hospitalbook = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
+                    router.replace("/profile")
 
                 }
             }
         }
     };
 
+    const initLiff = async () => {
+        liff.use(new GetOS());
+        setOs(liff.getOS());
+        await liff.init({ liffId: hyggeOAliff }).then(async () => {
+            if (!liff.isLoggedIn()) {
+                liff.login();
+            } else {
+                const profile = await liff.getProfile()
+                console.log(profile);
+                // console.log("profile?.userId", profile?.userId);
+                setProfile(profile)
+                setLineId(profile?.userId);
+                console.warn(lineId);
+                const dataSend = { token_line: `${profile.userId}` }
 
-    useEffect(() => {
+                const checkLineId = await axios.post(`${pathUrl}/health/hygge_citizen/checkbytoken`, dataSend)
+                console.info(checkLineId.data);
+                console.log("checkLineId", checkLineId.data)
 
-        const initLiff = async () => {
+                if (checkLineId.data.ok) {
+                    if (checkLineId.data.message.length > 0) {
+                        console.log("cid : ", checkLineId.data.message[0].cid);
+                        setCheckuser(true);
+                        setUser(checkLineId.data[0]);
+                        console.log(checkLineId);
+                        const value = checkLineId.data.message[0].cid;
+                        // ดึงข้อมูลจาก API
+                        const res2 = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: value })
+                        console.log("res2.data : ", res2.data);
+                        if (res2.data.ok) {
+                            if (res2.data.message.length != 0) {
+                                updatePatient(res2.data.message[0])
+                                const Patient = res2.data.message[0]
 
-            liff.use(new GetOS());
-            setOs(liff.getOS());
-            await liff.init({ liffId: hyggeOAliff }).then(async () => {
+                                const log = await axios.post(`${pathUrl}/health/phrviewlog/ins`, { cid: value, line_id: `${profile.userId}` })
+                                console.log("log", log.data)
+                                const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
-                if (!liff.isLoggedIn()) {
+                               if(log.data.ok){
+                                updatedata(Patient, `${profile.userId}`)
+                               }else{
+                                throw new Error(log.data.error);
+                               }
 
-                    liff.login();
 
-                } else {
-
-                    const profile = await liff.getProfile()
-
-                    console.log(profile);
-                    // console.log("profile?.userId", profile?.userId);
-                    setProfile(profile)
-                    setLineId(profile?.userId);
-
-                    console.warn(lineId);
-
-                    const dataSend = {
-                        token_line: `${profile.userId}`
-
-                    }
-
-                    const checkLineId = await axios.post(`${pathUrl}/health/hygge_citizen/checkbytoken`, dataSend)
-                    console.info(checkLineId.data);
-                    console.log("checkLineId", checkLineId.data)
-
-                    if (checkLineId.data.ok) {
-                        if (checkLineId.data.message.length > 0) {
-                            console.log("cid : ", checkLineId.data.message[0].cid);
-                            setCheckuser(true);
-                            setUser(checkLineId.data[0]);
-                            console.log(checkLineId);
-                            const value = checkLineId.data.message[0].cid;
-                            // ดึงข้อมูลจาก API
-                            const res2 = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: value })
-                            console.log("res2.data : ", res2.data);
-                            if (res2.data.ok) {
-
-                                if (res2.data.message.length != 0) {
-                                    updatePatient(res2.data.message[0])
-                                    setloading(false);
-
-                                    router.replace("/profile",value);
-                                } else {
-                                    throw new Error(res2.data.error);
-                                }
                             } else {
                                 throw new Error(res2.data.error);
                             }
-
-
-                        } else {
-                            router.replace("/login");
                         }
-
-
                     } else {
-
-                        throw new Error(checkLineId.data.error);
+                        router.replace("/login");
                     }
+
+
+                } else {
+
+                    throw new Error(checkLineId.data.error);
                 }
+            }
 
-            });
-            await liff.ready
-        }
+        });
+        await liff.ready
+    }
 
+
+
+
+    useEffect(() => {
         try {
             initLiff()
         } catch (e: any) {
             console.error('liff init error', e.message)
         }
 
-    }, [lineId]);
+    }, []);
 
     return (
 
@@ -212,96 +206,7 @@ const Hospitalbook = () => {
 
             )}
 
-            {!loading && (
-                <><div className='m-5 text-2xl'>
-                    <p>
-                        {Patient.pname + Patient.fname + " " + Patient.lname}
-                    </p>
-                    <div className='grid grid-cols-2'>
-                        <div>
-                            <span>เพศ :</span>
-                            <span> {(Patient.gender === "1") ? "ชาย" : (Patient.gender === "2") ? "หญิง" : null}</span>
 
-
-
-                        </div>
-
-                        <div>
-                            <span>อายุ : </span>
-                            <span>{Patient.age_y} </span>
-                            <span>ปี</span>
-                        </div>
-                    </div>
-                    {/* <span>หมู่เลือด : </span>
-                    <span>{Patient.bloodgroup}</span>
-
-                    <div>
-                        <span>สิทธิการรักษา : </span>
-                        <div>{Patient.pttype_name}</div>
-                    </div> */}
-                </div>
-                    {/* <div className='bg-[#49DABD] mx-4'>
-                        <p className='text-center text-lg text-[#ffffff] align-middle p-2'>สมุดโรงพยาบาล</p>
-                    </div> */}
-
-                    <hr />
-
-
-
-                    <div className='grid justify-items-center m-8 grid gap-6'>
-
-                        <Button className="bg-[#4D57D3] text-[#ffffff] text-lg h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
-                            type="button"
-                            onClick={() => router.replace('/appointment')}
-                        >ข้อมูลการนัดหมาย</Button>
-
-
-
-                        <Button className="bg-[#76DA49] text-[#ffffff] text-lg h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
-                            type="button"
-                            onClick={() => router.replace('/drug')}
-                        >ข้อมูลการรับยา</Button>
-
-
-                        <Button className="bg-[#E17104] text-[#ffffff] text-lg h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
-                            type="button"
-                            onClick={() => router.replace('/drugallergy')}
-                        >ข้อมูลการแพ้ยา</Button>
-
-                        <Button className="bg-[#6BB1E1] text-[#ffffff] text-lg h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
-                            type="button"
-                            onClick={() => router.replace('/laboratory')}
-
-                        > ผลทางห้องปฏิบัติการ</Button>
-
-                        <Button className="bg-[#B96BE1] text-[#ffffff] text-lg h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
-                            type="button"
-                            onClick={() => router.replace('/xray')}> ผลอ่านทางรังสีวิทยา
-                        </Button>
-
-
-                    </div>
-
-                    <div className="flex justify-end">
-
-                        <div className="text-sm	p-3" >
-
-                            หากพบว่าข้อมูลไม่เป็นปัจจุบันกรุณาคลิกที่นี้  {'>'}
-                        </div>
-                        <div
-                            onClick={() => updatedata()}>
-                            <Image
-                                priority
-                                src={refresh}
-                                alt="refresh"
-                                width={50}
-                                height={50} />
-                        </div>
-                    </div>
-
-                </>
-
-            )}
         </div>
 
 

@@ -14,13 +14,13 @@ function Navbar() {
 
 
     const backPage = () => {
-        router.replace('/hospitalbook')
+        router.replace('/patient')
     };
 
     useEffect(() => {
         document.title = "Virtual Hospital";
         console.log("currentPage : ", currentPage);
-        if (currentPage !== '/idcard' && currentPage !== '/hospitalbook' && currentPage !== '/checkno' && currentPage !== '/loading') {
+        if (currentPage !== '/idcard' && currentPage !== '/hospitalbook' && currentPage !== '/checkno' && currentPage !== '/loading'&& currentPage !== '/patient') {
             setIsShown(true);
         } else {
             setIsShown(false);

@@ -44,6 +44,11 @@ function Xray() {
     }, [Patient]);
     return (
         <div>
+               <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
+                <p>
+                    {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
+                </p>
+            </div>
             <div className='bg-[#B96BE1] mx-5 m-3'>
                 <p className='text-center text-lg text-[#ffffff] align-middle p-2'>ผลอ่านทางรังสีวิทยา</p>
             </div>
@@ -104,7 +109,11 @@ function Xray() {
 
                         </div>
                     ) : (
-                        <div className="flex justify-center"> ไม่พบข้อมูล</div>
+                        <div className=" h-56 grid content-center font-semibold text-[#707070] text-center text-lg p-5">
+
+                            ยังไม่มีการรายงาน <br />
+                            ผลอ่านทางรังสีวิทยา
+                        </div>
                     )
             )}
         </div>

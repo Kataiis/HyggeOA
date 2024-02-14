@@ -5,22 +5,29 @@ import { useRouter } from "next/navigation";
 
 import Currentdate from "./component/currentpage";
 import Partdate from './component/partpage';
+import { usePatientStore } from "../store";
 
 
 function Appointment() {
     const router = useRouter();
+    const Patient: any = usePatientStore((state: any) => state.patient);
 
     const [isShown, setIsShown] = useState(true);
 
-    const Clickcurrentdate = (e:any) => {
+    const Clickcurrentdate = (e: any) => {
         setIsShown(true);
     };
-    const Clickpartdate = (e:any)  => {
+    const Clickpartdate = (e: any) => {
         setIsShown(false);
     };
 
     return (
         <div>
+            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
+                <p>
+                    {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
+                </p>
+            </div>
             <div className='bg-[#4D57D3] mx-5 m-3'>
                 <p className='text-center text-lg text-[#ffffff] align-middle p-2'>รายการนัด</p>
             </div>
@@ -36,7 +43,7 @@ function Appointment() {
             </div>
             <div>
                 {!isShown && <Partdate />}
-                {isShown && <Currentdate />} 
+                {isShown && <Currentdate />}
             </div>
 
         </div>

@@ -47,6 +47,11 @@ function Drug() {
 
     return (
         <div>
+            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
+                <p>
+                    {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
+                </p>
+            </div>
             <div className='bg-[#76DA49] mx-5 m-3'>
                 <p className='text-center text-lg text-[#ffffff] align-middle p-2'>ข้อมูลการรับยา</p>
             </div>
@@ -69,56 +74,56 @@ function Drug() {
                 </div>
             )}
             {!loading && (
-                 (data.length > 0)?
-                 (
-                <div className="mx-5 ">
-                    
-                    <Accordion type="single" collapsible className="w-full" >
-                        {data.map((item: any) => (
-                            <AccordionItem value={item.vn} key={item.vn}>
-                                <AccordionTrigger className="p-3 bg-[#C0E4AF] shadow-md shadow-black">
-                                    <div className="grid grid-cols-2 gap-10">
-                                        <div className="flex justify-start w-64 ">{item.name}</div>
-                                        <div className="flex justify-center "> {dayjs(item.vstdate).locale(th).add(543, "year").format("DD MMM YYYY")}
-                                            { }</div>
+                (data.length > 0) ?
+                    (
+                        <div className="mx-5 ">
 
-                                    </div>
-                                </AccordionTrigger>
-                                <AccordionContent className="p-3 bg-[#C3C3C3]">
-                                    <div className="grid grid-cols-2 ">
-                                        <div className="flex justify-start w-64 " >ชื่อยา</div>
-                                        <div className="flex justify-end ">จำนวน</div>
-                                    </div>
-                                </AccordionContent>
+                            <Accordion type="single" collapsible className="w-full" >
+                                {data.map((item: any) => (
+                                    <AccordionItem value={item.vn} key={item.vn}>
+                                        <AccordionTrigger className="p-3 bg-[#C0E4AF] shadow-md shadow-black">
+                                            <div className="grid grid-cols-2 gap-10">
+                                                <div className="flex justify-start w-64 ">{item.name}</div>
+                                                <div className="flex justify-center "> {dayjs(item.vstdate).locale(th).add(543, "year").format("DD MMM YYYY")}
+                                                    { }</div>
 
-
-                                {item.datadrug.map((vv: any) => {
-                                    return (
-                                        <AccordionContent className="p-3" key={item.index} >
+                                            </div>
+                                        </AccordionTrigger>
+                                        <AccordionContent className="p-3 bg-[#C3C3C3]">
                                             <div className="grid grid-cols-2 ">
-                                                <div className="flex justify-start w-64" >{vv.genericname}</div>
-                                                <div className="flex justify-end" >{vv.qty} {"  "}{vv.units}</div>
-
+                                                <div className="flex justify-start w-64 " >ชื่อยา</div>
+                                                <div className="flex justify-end ">จำนวน</div>
                                             </div>
-                                            <hr />
-                                            <div >
-                                                <div className="flex justify-start w-64" ><p className=" text-[#4D57D3]">{vv.drugusage}</p></div>
-                                       
+                                        </AccordionContent>
 
-                                            </div>
-                                        </AccordionContent>);
-                                })}
-                                <div className="mt-2"></div>
-                            </AccordionItem>
-                        ))}
 
-                    </Accordion>
+                                        {item.datadrug.map((vv: any) => {
+                                            return (
+                                                <AccordionContent className="p-3" key={item.index} >
+                                                    <div className="grid grid-cols-2 ">
+                                                        <div className="flex justify-start w-64" >{vv.genericname}</div>
+                                                        <div className="flex justify-end" >{vv.qty} {"  "}{vv.units}</div>
 
-                </div>
-                 ):(
-                    <div className="flex justify-center"> ไม่พบข้อมูล</div>
-                )
-                )}
+                                                    </div>
+                                                    <hr />
+                                                    <div >
+                                                        <div className="flex justify-start w-64" ><p className=" text-[#4D57D3]">{vv.drugusage}</p></div>
+
+
+                                                    </div>
+                                                </AccordionContent>);
+                                        })}
+                                        <div className="mt-2"></div>
+                                    </AccordionItem>
+                                ))}
+
+                            </Accordion>
+
+                        </div>
+                    ) : (
+                        <div className="flex justify-center"> ไม่พบข้อมูล</div>
+                    )
+            )}
         </div>
     )
 }

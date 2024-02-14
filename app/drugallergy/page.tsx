@@ -46,6 +46,11 @@ function Drugallergy() {
 
     return (
         <div>
+               <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
+                <p>
+                    {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
+                </p>
+            </div>
             <div className='bg-[#E17104] mx-5 m-3'>
                 <p className='text-center text-lg text-[#ffffff] align-middle p-2'>ข้อมูลการแพ้ยา {data.length} รายการ</p>
             </div>
