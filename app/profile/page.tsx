@@ -65,7 +65,7 @@ function Profile() {
 
             </div>
             <div className="h-[70px] text-center flex flex-row justify-center items-center mt-5 ">
-                <Barcode value={Patient.cid} displayValue={false} height={60} width={2} />
+                <Barcode value={Patient?.cid} displayValue={false} height={60} width={2} />
 
             </div>
 
