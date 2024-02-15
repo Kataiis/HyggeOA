@@ -8,10 +8,10 @@ const nextConfig = {
         pathUrl: `https://hyggemedicalservice.com/phpapi/api`,
 
       
-        // HyggeOAliff: '2003391401-jDvm8MlZ', 
+        HyggeOAliff: '2003391401-jDvm8MlZ', 
         
         // test //
-        HyggeOAliff: '2002893867-MzGeD6nL',
+        // HyggeOAliff: '2002893867-MzGeD6nL',
     }
 
 };
