@@ -46,15 +46,14 @@ function Drugallergy() {
 
     return (
         <div>
-               <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
+            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
                     {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
                 </p>
             </div>
-            <div className='bg-[#E17104] mx-5 m-3'>
-                <p className='text-center text-lg text-[#ffffff] align-middle p-2'>ข้อมูลการแพ้ยา {data.length} รายการ</p>
-            </div>
-
+         
+            <div className="bg-[#ffffff] p-4 sticky top-32">
+                <p className='bg-[#E17104] text-center text-lg text-[#ffffff] align-middle p-2'>ข้อมูลการแพ้ยา {data.length} รายการ</p> </div>
             {loading && (
                 <div className="flex flex-row justify-center items-center w-full mt-10">
                     <CirclesWithBar

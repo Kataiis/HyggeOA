@@ -23,28 +23,34 @@ function Appointment() {
 
     return (
         <div>
-            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
+            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
                     {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
                 </p>
             </div>
-            <div className='bg-[#4D57D3] mx-5 m-3'>
-                <p className='text-center text-lg text-[#ffffff] align-middle p-2'>รายการนัด</p>
+            <div className="bg-[#ffffff] p-4 sticky top-32">
+                <p className='bg-[#4D57D3] text-center text-lg text-[#ffffff] align-middle p-2'>รายการนัด</p>
+
+                <div className='grid grid-cols-2 justify-items-center mt-5'>
+
+                    <Button className="bg-[#4D57D3] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
+                        type="button" name="buttoncurrent"
+                        onClick={Clickcurrentdate} > รายการปัจจุบัน</Button>
+
+                    <Button className="bg-[#999999] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
+                        type="button" name="button part"
+                        onClick={Clickpartdate}> รายการย้อนหลัง</Button>
+                </div>
             </div>
 
-            <div className='grid justify-items-center m-5 grid grid-cols-2'>
-                <Button className="bg-[#4D57D3] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
-                    type="button" name="buttoncurrent"
-                    onClick={Clickcurrentdate} > รายการปัจจุบัน</Button>
 
-                <Button className="bg-[#999999] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
-                    type="button" name="button part"
-                    onClick={Clickpartdate}> รายการย้อนหลัง</Button>
-            </div>
+
+
             <div>
                 {!isShown && <Partdate />}
                 {isShown && <Currentdate />}
             </div>
+
 
         </div>
 

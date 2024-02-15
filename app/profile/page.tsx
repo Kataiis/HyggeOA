@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import Avatar from '@mui/material/Avatar';
 
-
+import logo from "@/public/hg.png"
 const hyggeOAliff: any = process.env.HyggeOAliff;
 const pathUrl: any = process.env.pathUrl;
 function Profile() {
@@ -60,9 +60,19 @@ function Profile() {
 
         <div>
 
-            <div className='bg-[#F15D4F] '>
-                <p className='text-center text-2xl text-[#ffffff] align-middle p-5'>อุกกะ เมดิคอล เซอร์วิส</p>
+            <div className='bg-[#F15D4F] flex justify-center p-3 '>
+                <div >
+                    <Image
+                        priority
+                        src={logo}
 
+                        alt="logo"
+                        width={60}
+                        height={60} />
+                </div>
+                <div >
+                    <p className='text-center text-2xl text-[#ffffff] align-middle p-3'>ฮุกกะ เมดิคอล เซอร์วิส</p>
+                </div>
             </div>
             <div className="h-[70px] text-center flex flex-row justify-center items-center mt-5 ">
                 <Barcode value={Patient?.cid} displayValue={false} height={60} width={2} />
@@ -91,9 +101,9 @@ function Profile() {
                 <p className='text-center text-lg text-[#ffffff] align-middle p-2'>สิทธิ : {Patient?.pttype_name} </p>
 
             </div>
-            <div className='grid justify-items-center m-8 grid gap-6'>
+            <div className='grid justify-items-center m-8  gap-6'>
 
-                <Button className="bg-[#2C97A3] text-[#ffffff] text-lg h-14 w-full rounded-xl shadow-md shadow-gray-500/100 "
+                <Button className="bg-[#2C97A3] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100 "
                     type="button"
                     onClick={() => router.replace('/comingsoon')}
                 >สมุดสุขภาพ
@@ -102,7 +112,7 @@ function Profile() {
 
 
 
-                <Button className="bg-[#49DABD] text-[#ffffff] text-lg h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
+                <Button className="bg-[#49DABD] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
                     type="button"
                     // onClick={() => updatedata()}
                     onClick={() => router.replace('/patient')}
