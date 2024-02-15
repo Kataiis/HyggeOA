@@ -61,18 +61,18 @@ function Profile() {
         <div>
 
             <div className='bg-[#F15D4F] flex justify-center p-3 '>
-                <div >
+           
                     <Image
                         priority
                         src={logo}
 
                         alt="logo"
-                        width={60}
-                        height={60} />
-                </div>
-                <div >
-                    <p className='text-center text-2xl text-[#ffffff] align-middle p-3'>ฮุกกะ เมดิคอล เซอร์วิส</p>
-                </div>
+                        width={55}
+                        height={50} />
+            
+              
+                    <p className='text-center text-2xl text-[#ffffff] p-3'>ฮุกกะ เมดิคอล เซอร์วิส</p>
+              
             </div>
             <div className="h-[70px] text-center flex flex-row justify-center items-center mt-5 ">
                 <Barcode value={Patient?.cid} displayValue={false} height={60} width={2} />
@@ -98,7 +98,7 @@ function Profile() {
                 </p>
             </div>
             <div className='bg-[#39CC88]  mt-3'>
-                <p className='text-center text-lg text-[#ffffff] align-middle p-2'>สิทธิ : {Patient?.pttype_name} </p>
+                <p className='text-center text-xl text-[#ffffff] align-middle p-2'>สิทธิ : {Patient?.pttype_name} </p>
 
             </div>
             <div className='grid justify-items-center m-8  gap-6'>
