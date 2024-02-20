@@ -1,20 +1,20 @@
 "use client"
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Button } from "@/components/ui/button"
 import { useRouter, } from "next/navigation";
 import Image from "next/image";
 import Barcode from "react-barcode";
 import { usePatientStore } from '../store';
 import liff from "@line/liff"
-import Swal from "sweetalert2";
-import dayjs from "dayjs";
+
 import Avatar from '@mui/material/Avatar';
 import QRCode from "react-qr-code";
 
 import logo from "@/public/hg.png"
+
 const hyggeOAliff: any = process.env.HyggeOAliff;
-const pathUrl: any = process.env.pathUrl;
+
+
 function Profile() {
     const router = useRouter();
     const Patient: any = usePatientStore((state: any) => state.patient);
@@ -40,8 +40,6 @@ function Profile() {
 
                     console.warn(lineId);
                 }
-
-
             });
             await liff.ready
         }
@@ -107,7 +105,7 @@ function Profile() {
                     <QRCode
                         size={145}
                         // style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-                        value={Patient?.cid}
+                        value={`${Patient?.cid}`}
                         viewBox={`0 0 256 256`}
                     />
                 </div>
