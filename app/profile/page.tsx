@@ -10,6 +10,7 @@ import liff from "@line/liff"
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import Avatar from '@mui/material/Avatar';
+import QRCode from "react-qr-code";
 
 import logo from "@/public/hg.png"
 const hyggeOAliff: any = process.env.HyggeOAliff;
@@ -61,28 +62,32 @@ function Profile() {
         <div>
 
             <div className='bg-[#F15D4F] flex justify-center p-3 '>
-           
-                    <Image
-                        priority
-                        src={logo}
-
-                        alt="logo"
-                        width={55}
-                        height={50} />
-            
-              
-                    <p className='text-center text-2xl text-[#ffffff] p-3'>ฮุกกะ เมดิคอล เซอร์วิส</p>
-              
-            </div>
-            <div className="h-[70px] text-center flex flex-row justify-center items-center mt-5 ">
-                <Barcode value={Patient?.cid} displayValue={false} height={60} width={2} />
-
+                <Image
+                    priority
+                    src={logo}
+                    alt="logo"
+                    width={55}
+                    height={50} />
+                <p className='text-center text-2xl text-[#ffffff] p-3'>ฮุกกะ เมดิคอล เซอร์วิส</p>
             </div>
 
-            <div className="mt-5 grid justify-items-center">
-                <Avatar src={imgPath} sx={{ width: 140, height: 140 }} />
 
-                {/* <Image className="mx-auto  rounded-full border-2 border-white shadow-lg shadow-black-500/100"
+            {/* <div className="h-[70px] text-center flex flex-row justify-center items-center mt-5 "> */}
+            {/* <Barcode value={Patient?.cid} displayValue={false} height={60} width={2} /> */}
+            {/* <QRCode
+                    size={100}
+                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    value={Patient?.cid}
+                    viewBox={`0 0 256 256`}
+                /> */}
+
+            {/* </div> */}
+
+
+            {/* <div className="mt-5 grid justify-items-center">
+                <Avatar src={imgPath} sx={{ width: 140, height: 140 }} /> */}
+
+            {/* <Image className="mx-auto  rounded-full border-2 border-white shadow-lg shadow-black-500/100"
                     priority
                     src={profile.pictureUrl}
                     // src = {image}
@@ -90,6 +95,22 @@ function Profile() {
                     width={140}
                     height={100} /> */}
 
+            {/* </div> */}
+
+
+            <div className="grid grid-cols-2 justify-items-center m-5 ">
+                <div className=" p-5 ">
+                    <Avatar src={imgPath} sx={{ width: 140, height: 140 }} />
+                </div>
+
+                <div  className=" p-5">
+                    <QRCode
+                        size={145}
+                        // style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                        value={Patient?.cid}
+                        viewBox={`0 0 256 256`}
+                    />
+                </div>
             </div>
 
             <div className='m-5 text-2xl'>

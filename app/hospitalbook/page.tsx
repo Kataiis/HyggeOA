@@ -11,6 +11,8 @@ import dayjs from "dayjs";
 import Image from 'next/image'
 import refresh from '@/public/refresh.png'
 import medicalhistory from '@/public/medical-history.gif'
+import loadingpage from '@/public/loading.png'
+
 
 const Hospitalbook = () => {
     const router = useRouter();
@@ -31,8 +33,8 @@ const Hospitalbook = () => {
     const [lineId, setLineId] = useState("");
     const [profile, setProfile] = useState<any>({});
 
-    const updatedata = async (Patient:any, lineid: any) => {
-        
+    const updatedata = async (Patient: any, lineid: any) => {
+
 
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
         const dataIns = {
@@ -55,10 +57,10 @@ const Hospitalbook = () => {
                 if (res.data.message <= 1) {
                     Swal.fire({
                         html:
-                        '<div><img src="/health-report.gif" />'+
-                        '<p style="font-size: 16px; margin-top: 10px">กำลังดึงข้อมูลจากโรงพยาบาล</p>' +
-                        '<p style="font-size: 18px; margin-top: 10px">กรุณารอประมาณ 30 วินาที</p>' +
-                        '</div>',
+                            '<div><img src="/health-report.gif" />' +
+                            '<p style="font-size: 16px; margin-top: 10px">กำลังดึงข้อมูลจากโรงพยาบาล</p>' +
+                            '<p style="font-size: 18px; margin-top: 10px">กรุณารอประมาณ 30 วินาที</p>' +
+                            '</div>',
                         allowOutsideClick: false,
                         showConfirmButton: false,
                     });
@@ -77,9 +79,9 @@ const Hospitalbook = () => {
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        .then(() => {
-                            router.replace("/profile")
-                        });
+                            .then(() => {
+                                router.replace("/profile")
+                            });
                     }, 30000);
                     return () => clearTimeout(timer);
                 } else {
@@ -136,11 +138,11 @@ const Hospitalbook = () => {
                                 console.log("log", log.data)
                                 const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
-                               if(log.data.ok){
-                                updatedata(Patient, `${profile.userId}`)
-                               }else{
-                                throw new Error(log.data.error);
-                               }
+                                if (log.data.ok) {
+                                    updatedata(Patient, `${profile.userId}`)
+                                } else {
+                                    throw new Error(log.data.error);
+                                }
 
 
                             } else {
@@ -178,32 +180,53 @@ const Hospitalbook = () => {
 
         <div>
             {loading && (
-                <div className="flex justify-center items-center w-full mt-20">
 
+                <div><div className="flex justify-center items-center w-full mt-20">
+                   
+                        <div className="animate-pulse flex space-x-4  justify-center items-center">
+                            <Image
+                                priority
+                                src={loadingpage}
 
-                    <div className="border border-blue-300 shadow rounded-md p-10 max-w-sm w-full m-7">
+                                alt="loading"
+                                width={100}
+                                height={100} />
+                    
+                    </div>
 
-                        <div className="animate-pulse flex space-x-4">
-                            <div className="rounded-full bg-slate-200 h-10 w-10 justify-center"></div>
-                            <div className="flex-1 space-y-6 py-1">
-                                <div className="h-2 bg-slate-200 rounded"></div>
-                                <div className="space-y-3">
-                                    <div className="grid grid-cols-3 gap-4">
-                                        <div className="h-2 bg-slate-200 rounded col-span-2"></div>
-                                        <div className="h-2 bg-slate-200 rounded col-span-1"></div>
-                                    </div>
-                                    <div className="h-2 bg-slate-200 rounded">
-
-
-                                    </div>
-                                </div>
-                                <h1>Loading ... </h1>
-                            </div>
-                        </div>
+                </div>
+                <div className="flex justify-center mt-4 text-[#65B16D]">
+                        <p className="text-center font-semibold	">กำลังดึงข้อมูลจากโรงพยาบาล <br />กรุณารอประมาณ 30 วินาที</p>
+                    </div>
                     </div>
 
 
-                </div>
+                // <div className="flex justify-center items-center w-full mt-20">
+
+
+                //     <div className="border border-blue-300 shadow rounded-md p-10 max-w-sm w-full m-7">
+
+                //         <div className="animate-pulse flex space-x-4">
+                //             <div className="rounded-full bg-slate-200 h-10 w-10 justify-center"></div>
+                //             <div className="flex-1 space-y-6 py-1">
+                //                 <div className="h-2 bg-slate-200 rounded"></div>
+                //                 <div className="space-y-3">
+                //                     <div className="grid grid-cols-3 gap-4">
+                //                         <div className="h-2 bg-slate-200 rounded col-span-2"></div>
+                //                         <div className="h-2 bg-slate-200 rounded col-span-1"></div>
+                //                     </div>
+                //                     <div className="h-2 bg-slate-200 rounded">
+
+
+                //                     </div>
+                //                 </div>
+                //                 <h1>Loading ... </h1>
+                //             </div>
+                //         </div>
+                //     </div>
+
+
+                // </div>
 
             )}
 

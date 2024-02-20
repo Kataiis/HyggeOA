@@ -36,7 +36,7 @@ export default function RootLayout(
   useEffect(() => {
     document.title = "Virtual Hospital";
     console.log("currentPage : ", currentPage);
-    if (currentPage !== '/login' && currentPage !== '/loading' && currentPage !== '/register' && currentPage !== '/agreement'  && currentPage !== '/profile') {
+    if (currentPage !== '/login' && currentPage !== '/loading' && currentPage !== '/register' && currentPage !== '/agreement'  && currentPage !== '/profile' && currentPage !== '/comingsoon') {
       setIsShown(true);
     } else {
       setIsShown(false);

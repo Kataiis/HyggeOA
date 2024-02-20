@@ -34,7 +34,7 @@ function Patient() {
                         height={25}
                         onClick={backPage}
                     />
-                    </div>
+                </div>
                 <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
                     <p>
                         {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
@@ -155,7 +155,7 @@ function Patient() {
 
                     <Button className="bg-[#B96BE1] text-[#ffffff] text-lg h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/xray')}>  
+                        onClick={() => router.replace('/xray')}>
                         <div className="flex ">
                             <div className="flex-initial w-30 ">
                                 <Image
@@ -168,7 +168,7 @@ function Patient() {
                             </div>
                             <div className="flex-initial w-60">
                                 <p className="text-2xl " >ผลอ่านทางรังสีวิทยา</p>
-                                </div></div>
+                            </div></div>
                     </Button>
 
 
