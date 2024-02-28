@@ -6,16 +6,16 @@ import hygge_logo from '@/public/hygge_logo.png'
 import pix from '@/public/pix.png'
 import { useRouter } from "next/navigation";
 import backpage from '@/public/back.png'
-import { usePatientStore } from "../store";
+// import { usePatientStore } from "../store";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import axios from "axios";
 
 
-function Agreement() {
+function Agreement({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
     const pathUrl: any = process.env.pathUrl;
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
     const back = () => {
         router.back()
     };
@@ -27,7 +27,7 @@ function Agreement() {
 
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
         const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", {
-            cid: Patient.cid,
+            cid: params.cid,
         });
         if (res.data.ok) {
             if (res.data.message <= 1) {
@@ -40,11 +40,11 @@ function Agreement() {
                     allowOutsideClick: false,
                     showConfirmButton: false,
                 });
-                const text = "REQUEST|" + Patient.favhos1 + "|" + Patient.cid + "|" + mytimestamp
-                console.log("text", text)
+                // const text = "REQUEST|" + params.favhos1 + "|" + params.cid + "|" + mytimestamp
+                // console.log("text", text)
                 // //ไม่เคยมีการ request วันนี้
 
-                const sentmqtt = await axios.post(`https://hyggemedicalservice.com/apirbh/connectmqtt/hyggeoa`, { messagemqtt: text })
+                // const sentmqtt = await axios.post(`https://hyggemedicalservice.com/apirbh/connectmqtt/hyggeoa`, { messagemqtt: text })
 
                 const timer = setTimeout(() => {
                     // ทำ sweetaler แจ้งเตือน ว่าทำสำเร็จแล้ว
@@ -106,9 +106,11 @@ function Agreement() {
             <div className="-mt-12 p-10 text-center">
                 <p className=" text-md mt-10 font-semibold ">ข้อตกลงให้ความยินยอม</p>
                 <p className=''>เพื่อเปิดเผยข้อมูลด้านสุขภาพของบุคคลทางอิเล็กทรอนิกส์</p>
-                <p className=' mt-2 font-semibold'> ข้าพเจ้า {Patient?.pname + Patient?.fname + " " + Patient?.lname}</p>
+                <p className=' mt-2 font-semibold'> ข้าพเจ้า {params.cid} {params.lineid}
+                {/* {params?.pname + params?.fname + " " + params?.lname} */}
+                </p>
                 <p className=''>เลขประจำตัวประชาชน</p>
-                <p className='font-semibold'>{Patient?.cid}</p>
+                <p className='font-semibold'>{params?.cid}</p>
 
             </div>
             <div className="-mt-20 p-10 ">

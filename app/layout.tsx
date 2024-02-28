@@ -3,7 +3,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Kanit } from "next/font/google";
-import Navbar from './components/Navbar';
+import Navbar from './profile2/[cid]/[lineid]/components/Navbar';
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from 'react';
 

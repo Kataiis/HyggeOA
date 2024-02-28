@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { useRouter, } from "next/navigation";
-import { usePatientStore } from "../store";
+// import { usePatientStore } from "../../../../store";
 import Image from 'next/image'
 import comment from '@/public/comment-text.png'
 import drug from '@/public/drug.png'
@@ -13,14 +13,14 @@ import xray from '@/public/xray.png'
 import back from '@/public/back.png'
 
 
-function Patient() {
+function Patient({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
     const [loading, setloading] = useState(true);
 
 
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
     const backPage = () => {
-        router.replace('/profile')
+        router.replace('/profile2')
     };
 
     return (
@@ -37,7 +37,8 @@ function Patient() {
                 </div>
                 <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
                     <p>
-                        {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
+                        {params.cid} , {params.cid}
+                        {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
                     </p>
                 </div>
                 {/* <div className='grid grid-cols-2'>
@@ -71,12 +72,12 @@ function Patient() {
 
 
 
-                <div className='grid justify-items-center m-6 grid gap-6'>
+                <div className='grid justify-items-center m-6  gap-6'>
 
                     <Button
                         className="bg-[#4D57D3] text-[#ffffff] h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/appointment')}
+                        onClick={() => router.replace(params.cid + "/"+ params.lineid + "/appointment")}
                     >
                         <div className="flex ">
                             <div className="flex-initial w-30">
@@ -98,7 +99,7 @@ function Patient() {
 
                     <Button className="bg-[#76DA49] text-[#ffffff] h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/drug')}
+                        onClick={() => router.replace(""+"/drug")}
                     >
                         <div className="flex ">
                             <div className="flex-initial w-30 ">

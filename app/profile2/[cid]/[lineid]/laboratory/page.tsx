@@ -7,16 +7,16 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import axios from "axios";
-import { usePatientStore } from "../store";
+// import { usePatientStore } from "../store";
 import dayjs from 'dayjs';
 import th from "dayjs/locale/th";
 import { CirclesWithBar } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 
 
-function Laboratory() {
+function Laboratory({ params }: { params: { cid: string, lineid: string } }) {
     const pathUrl: any = process.env.pathUrl;
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
     const router = useRouter();
 
     const [data, setData] = useState([]);
@@ -28,7 +28,7 @@ function Laboratory() {
         setLoading(true);
         try {
 
-            const data = await axios.post(`${pathUrl}/health/hie/lab`, { cid: Patient.cid })
+            const data = await axios.post(`${pathUrl}/health/hie/lab`, { cid: params.cid })
             console.log("data", data.data);
             setData(data.data.message);
         } catch (error: any) {
@@ -38,18 +38,19 @@ function Laboratory() {
     };
 
     useEffect(() => {
-        console.log("Patient : ", Patient);
-        if (!Patient) {
+        console.log("Patient : ", params);
+        if (!params) {
             router.push("/hospitalbook");
         } else {
             fetchData();
         }
-    }, [Patient]);
+    }, [params]);
     return (
         <div>
                <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
-                    {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
+                    {params.cid}
+                    {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
                 </p>
             </div>
      

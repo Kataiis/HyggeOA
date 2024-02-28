@@ -22,7 +22,7 @@ const inter: any = Athiti({
 
 
 
-const Currentdate = (dataIn: any) => {
+const Currentdate = ({ params }: { params: { cid: string, lineid: string } }, dataIn: any) => {
     const dataOverview = dataIn.data;
     const pathUrl: any = process.env.pathUrl;
     const Patient: any = usePatientStore((state: any) => state.patient);
@@ -35,7 +35,7 @@ const Currentdate = (dataIn: any) => {
         setLoading(true);
         try {
 
-            const data = await axios.post(`${pathUrl}/health/hie/appointment`, { cid: Patient.cid })
+            const data = await axios.post(`${pathUrl}/health/hie/appointment`, { cid: params.cid })
             console.log("data", data.data);
             setData(data.data.message);
 
@@ -48,13 +48,13 @@ const Currentdate = (dataIn: any) => {
     };
 
     useEffect(() => {
-        console.log("Patient : ", Patient);
-        if (!Patient) {
+        console.log("Patient : ", params.cid);
+        if (!params) {
             router.push("/hospitalbook");
         } else {
             fetchData();
         }
-    }, [Patient]);
+    }, [params]);
 
 
     return (

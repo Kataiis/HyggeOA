@@ -5,15 +5,15 @@ import Image from 'next/image'
 import checkmark from '@/public/checkmark.png'
 import vector from '@/public/Vector.png'
 import axios from "axios";
-import { usePatientStore } from "../store";
+// import { usePatientStore } from "../store";
 import dayjs from 'dayjs';
 import th from "dayjs/locale/th";
 import { CirclesWithBar } from "react-loader-spinner";
 
 
-function Drugallergy() {
+function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
     const pathUrl: any = process.env.pathUrl;
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
     const [data, setData] = useState([]);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
@@ -22,7 +22,7 @@ function Drugallergy() {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const data = await axios.post(`${pathUrl}/health/hie/drugallergy`, { cid: Patient.cid })
+            const data = await axios.post(`${pathUrl}/health/hie/drugallergy`, { cid: params.cid })
             console.log("data", data.data);
             setData(data.data.message);
         } catch (error: any) {
@@ -33,14 +33,14 @@ function Drugallergy() {
 
 
     useEffect(() => {
-        console.log("Patient : ", Patient);
-        if (!Patient) {
+        console.log("Patient : ", params);
+        if (!params) {
             router.push("/hospitalbook");
         } else {
             fetchData();
         }
 
-    }, [Patient]);
+    }, [params]);
 
 
 
@@ -48,7 +48,8 @@ function Drugallergy() {
         <div>
             <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
-                    {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
+                    {params.cid}
+                    {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
                 </p>
             </div>
          

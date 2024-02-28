@@ -5,12 +5,12 @@ import { useRouter } from "next/navigation";
 
 import Currentdate from "./component/currentpage";
 import Partdate from './component/partpage';
-import { usePatientStore } from "../store";
+// import { usePatientStore } from "../store";
 
 
-function Appointment() {
+function Appointment({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
 
     const [isShown, setIsShown] = useState(true);
 
@@ -25,7 +25,8 @@ function Appointment() {
         <div>
             <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
-                    {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
+                    {params.cid} {params.lineid}
+                    {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
                 </p>
             </div>
             <div className="bg-[#ffffff] p-4 sticky top-32">
@@ -48,7 +49,10 @@ function Appointment() {
 
             <div>
                 {!isShown && <Partdate />}
-                {isShown && <Currentdate />}
+                {isShown && <Currentdate params={{
+                    cid: "",
+                    lineid: ""
+                }} />}
             </div>
 
 

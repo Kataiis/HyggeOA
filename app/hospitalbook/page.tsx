@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { useRouter, } from "next/navigation";
-import { usePatientStore } from "../store";
+// import { usePatientStore } from "../store";
 import Swal from "sweetalert2";
 import liff from "@line/liff"
 import GetOS from "@line/liff/get-os";
@@ -22,20 +22,18 @@ const Hospitalbook = () => {
     const [loading, setloading] = useState(true);
 
 
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
 
     const [checkuser, setCheckuser] = useState(false);
     const [user, setUser] = useState<any>([]);
 
 
-    const updatePatient: any = usePatientStore((state: any) => state.updatePatient);
+    // const updatePatient: any = usePatientStore((state: any) => state.updatePatient);
     const [os, setOs] = useState<string>();
     const [lineId, setLineId] = useState("");
     const [profile, setProfile] = useState<any>({});
 
     const updatedata = async (Patient: any, lineid: any) => {
-
-
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
         const dataIns = {
             req_cid: Patient?.cid,
@@ -80,7 +78,7 @@ const Hospitalbook = () => {
                             timer: 1500
                         })
                             .then(() => {
-                                router.replace("/profile")
+                                router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
                             });
                     }, 30000);
                     return () => clearTimeout(timer);
@@ -93,7 +91,7 @@ const Hospitalbook = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
-                    router.replace("/profile")
+                    router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
 
                 }
             }
@@ -131,7 +129,7 @@ const Hospitalbook = () => {
                         console.log("res2.data : ", res2.data);
                         if (res2.data.ok) {
                             if (res2.data.message.length != 0) {
-                                updatePatient(res2.data.message[0])
+                                // updatePatient(res2.data.message[0])
                                 const Patient = res2.data.message[0]
 
                                 const log = await axios.post(`${pathUrl}/health/phrviewlog/ins`, { cid: value, line_id: `${profile.userId}` })
