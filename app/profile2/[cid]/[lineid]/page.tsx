@@ -10,22 +10,31 @@ import Avatar from '@mui/material/Avatar';
 import QRCode from "react-qr-code";
 
 import logo from "@/public/hg.png"
+import axios from "axios";
 
 const hyggeOAliff: any = process.env.HyggeOAliff;
 
 const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) => {
     const router = useRouter();
+    const pathUrl: any = process.env.pathUrl;
 
     const [profile, setProfile] = useState<any>({});
+    const [patient, setPatient] = useState<any>([]);
 
     const [lineId, setLineId] = useState("");
     const [loading, setloading] = useState(false);
     const [image, setimage] = useState("");
 
     const imgPath = 'https://www.virtualhos.net/api4000/apihygge/getImageProfile/' + params.cid;
+    
     useEffect(() => {
 
-     
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+
+
+        }
+        getPatient();
 
         try {
            
@@ -36,7 +45,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
 
     }, [])
 
-
+ 
 
     return (
 
@@ -96,18 +105,18 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
 
             <div className='m-5 text-2xl'>
                 <p className='text-center text-[#2C97A3]'>
-               { params?.cid }
+                {patient?.pname} {patient?.fname} {patient?.lname}
                 </p>
             </div>
             <div className='bg-[#39CC88]  mt-3'>
-                <p className='text-center text-xl text-[#ffffff] align-middle p-2'>สิทธิ : xxxx</p>
+                <p className='text-center text-xl text-[#ffffff] align-middle p-2'>สิทธิ :  {patient?.pttype_name} </p>
 
             </div>
             <div className='grid justify-items-center m-8  gap-6'>
 
                 <Button className="bg-[#2C97A3] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100 "
                     type="button"
-                    onClick={() => router.replace('/comingsoon')}
+                    onClick={() => router.replace('./comingsoon')}
                 >สมุดสุขภาพ
                 </Button>
                 <div className="-mt-3"> สมุดบันทึกข้อมูล <span className="text-lg italic ">ด้วยตัวคุณเอง</span></div>

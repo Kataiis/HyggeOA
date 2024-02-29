@@ -17,10 +17,10 @@ const inter: any = Athiti({
     adjustFontFallback: true,
 });
 
-const Currentdate = (dataIn: any) => {
+const Partdate = ({ params }: { params: { cid: string, lineid: string } }, dataIn: any) => {
     const dataOverview = dataIn.data;
     const pathUrl: any = process.env.pathUrl;
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
     const router = useRouter();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -30,7 +30,7 @@ const Currentdate = (dataIn: any) => {
         setLoading(true);
         try {
 
-            const data = await axios.post(`${pathUrl}/health/hie/appointment/old`, { cid: Patient.cid })
+            const data = await axios.post(`${pathUrl}/health/hie/appointment/old`, { cid: params.cid })
             console.log("data", data.data);
             setData(data.data.message);
 
@@ -43,13 +43,14 @@ const Currentdate = (dataIn: any) => {
     };
 
     useEffect(() => {
-        console.log("Patient : ", Patient);
-        if (!Patient) {
+        console.log("Patient : ", params.cid);
+        if (!params.cid) {
             router.push("/hospitalbook");
         } else {
             fetchData();
         }
-    }, [Patient]);
+    }, [params.cid]);
+
     return (
         <div>
 
@@ -74,7 +75,7 @@ const Currentdate = (dataIn: any) => {
             {!loading && (
                 (data.length > 0) ?
                     (
-                        <div className='mx-5 grid grid gap-3'>
+                        <div className='mx-5 grid gap-3'>
                             {data.map((item: any) => (
 
                                 <div className='bg-[#C3C3C3] p-4 text-[#707070] ' key={item.id}>
@@ -110,4 +111,4 @@ const Currentdate = (dataIn: any) => {
     );
 };
 
-export default Currentdate;
+export default Partdate;

@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation";
 
 import Currentdate from "./component/currentpage";
 import Partdate from './component/partpage';
+import axios from "axios";
 // import { usePatientStore } from "../store";
 
 
 function Appointment({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
     // const Patient: any = usePatientStore((state: any) => state.patient);
+    const pathUrl: any = process.env.pathUrl;
+    const [patient, setPatient] = useState<any>([]);
 
     const [isShown, setIsShown] = useState(true);
 
@@ -21,11 +24,23 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
         setIsShown(false);
     };
 
+
+    useEffect(() => {
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+
+
+        }
+        getPatient();
+    }, [])
+
+
+    
     return (
         <div>
             <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
-                    {params.cid} {params.lineid}
+                {patient.pname} {patient.fname} {patient.lname}
                     {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
                 </p>
             </div>
@@ -48,10 +63,13 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
 
 
             <div>
-                {!isShown && <Partdate />}
+                {!isShown && <Partdate params={{
+                  cid: params.cid,
+                  lineid: params.lineid
+                }} />}
                 {isShown && <Currentdate params={{
-                    cid: "",
-                    lineid: ""
+                    cid: params.cid,
+                    lineid: params.lineid
                 }} />}
             </div>
 

@@ -1,4 +1,4 @@
-  "use client";
+"use client";
 
 import type { Metadata } from 'next'
 import './globals.css'
@@ -25,18 +25,23 @@ const inter: any = Kanit({
 
 export default function RootLayout(
   {
-  
-  children,
-}: {
-  children: React.ReactNode
-}) {
+
+    children,
+  }: {
+    children: React.ReactNode
+  }) {
   const [isShown, setIsShown] = useState(false);
   const currentPage = usePathname();
 
   useEffect(() => {
     document.title = "Virtual Hospital";
     console.log("currentPage : ", currentPage);
-    if (currentPage !== '/login' && currentPage !== '/loading' && currentPage !== '/register' && currentPage !== '/agreement'  && currentPage !== '/profile' && currentPage !== '/comingsoon') {
+    if (currentPage !== '/login'
+      && currentPage !== '/loading'
+      && currentPage !== '/register'
+      && currentPage !== '/agreement'
+      && currentPage !== '/comingsoon'
+      && currentPage !== '/profile2') {
       setIsShown(true);
     } else {
       setIsShown(false);
@@ -50,7 +55,7 @@ export default function RootLayout(
       <body className={`${inter.className}`} >
         <div>
           {isShown && <Navbar />}
-        
+
           {children}
         </div>
 

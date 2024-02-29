@@ -18,14 +18,10 @@ const inter: any = Athiti({
 });
 
 
-
-
-
-
 const Currentdate = ({ params }: { params: { cid: string, lineid: string } }, dataIn: any) => {
     const dataOverview = dataIn.data;
     const pathUrl: any = process.env.pathUrl;
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
     const router = useRouter();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -49,13 +45,12 @@ const Currentdate = ({ params }: { params: { cid: string, lineid: string } }, da
 
     useEffect(() => {
         console.log("Patient : ", params.cid);
-        if (!params) {
+        if (!params.cid) {
             router.push("/hospitalbook");
         } else {
             fetchData();
         }
-    }, [params]);
-
+    }, [params.cid]);
 
     return (
         <div>

@@ -11,17 +11,29 @@ import drugallergy from '@/public/drugallergy.png'
 import lab from '@/public/Lab.png'
 import xray from '@/public/xray.png'
 import back from '@/public/back.png'
+import axios from 'axios';
 
 
 function Patient({ params }: { params: { cid: string, lineid: string } }) {
+    const pathUrl: any = process.env.pathUrl;
     const router = useRouter();
     const [loading, setloading] = useState(true);
+    const [patient, setPatient] = useState<any>([]);
 
 
     // const Patient: any = usePatientStore((state: any) => state.patient);
     const backPage = () => {
-        router.replace('/profile2')
+        router.replace("../../"+params.cid+"/"+params.lineid);
     };
+
+    useEffect(() => {
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+
+
+        }
+        getPatient();
+    }, [])
 
     return (
         <div> {loading && (
@@ -37,7 +49,7 @@ function Patient({ params }: { params: { cid: string, lineid: string } }) {
                 </div>
                 <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium">
                     <p>
-                        {params.cid} , {params.cid}
+                        {patient.pname} {patient.fname} {patient.lname}
                         {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
                     </p>
                 </div>
@@ -77,7 +89,7 @@ function Patient({ params }: { params: { cid: string, lineid: string } }) {
                     <Button
                         className="bg-[#4D57D3] text-[#ffffff] h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace(params.cid + "/"+ params.lineid + "/appointment")}
+                        onClick={() => router.replace("./appointment")}
                     >
                         <div className="flex ">
                             <div className="flex-initial w-30">
@@ -99,7 +111,7 @@ function Patient({ params }: { params: { cid: string, lineid: string } }) {
 
                     <Button className="bg-[#76DA49] text-[#ffffff] h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace(""+"/drug")}
+                        onClick={() => router.replace("./drug")}
                     >
                         <div className="flex ">
                             <div className="flex-initial w-30 ">
@@ -120,7 +132,7 @@ function Patient({ params }: { params: { cid: string, lineid: string } }) {
 
                     <Button className="bg-[#E17104] text-[#ffffff] text-lg h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/drugallergy')}
+                        onClick={() => router.replace("./drugallergy")}
                     >  <div className="flex ">
                             <div className="flex-initial w-30 ">
                                 <Image
@@ -137,7 +149,7 @@ function Patient({ params }: { params: { cid: string, lineid: string } }) {
 
                     <Button className="bg-[#6BB1E1] text-[#ffffff] text-lg h-20 w-full rounded-xl shadow-md shadow-gray-500/100 "
                         type="button"
-                        onClick={() => router.replace('/laboratory')}
+                        onClick={() => router.replace('./laboratory')}
 
                     >  <div className="flex ">
                             <div className="flex-initial w-30 ">
@@ -156,7 +168,7 @@ function Patient({ params }: { params: { cid: string, lineid: string } }) {
 
                     <Button className="bg-[#B96BE1] text-[#ffffff] text-lg h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/xray')}>
+                        onClick={() => router.replace('./xray')}>
                         <div className="flex ">
                             <div className="flex-initial w-30 ">
                                 <Image
