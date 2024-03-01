@@ -58,11 +58,7 @@ const Login = () => {
             line_id: lineid,
         };
 
-        const dataservice = {
-            cid: Patient.cid,
-            lineid: lineid,
-            hospcode: 10677,
-        }
+
 
         console.log("dataIns", dataIns)
 
@@ -73,28 +69,10 @@ const Login = () => {
             console.log("insert hie_request success");
             const log = await axios.post(`${pathUrl}/health/phrviewlog/ins`, { cid: Patient.cid, line_id: lineid })
             console.log("log", log.data)
+            router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid + "/agreement")
 
-            if (log.data.ok) {
-                const check = await axios.post(`${pathUrl}/health/hyggelineservice/checkLineid`, {lineid:lineid})
-                if(check.data.ok){
-                    if(check.data.message === 0){
-                        const service = await axios.post(`${pathUrl}/health/hyggelineservice`, dataservice)
-                        console.log("service", service.data)
-
-                        if (service.data.ok) {
-                            console.log(service.data.message)
-                            router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid + "/agreement")
-                        } else {
-                            throw new Error(service.data.error);
-                        }
-                    }else{
-                        router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid + "/agreement") 
-                    }
-                }
-               
-            }else{throw new Error(log.data.error)}
         }
-        
+
     };
 
     const onSubmit = async (data: LoginFormValues) => {

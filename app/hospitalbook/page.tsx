@@ -50,12 +50,6 @@ const Hospitalbook = () => {
         console.log("resIns", resIns.data)
 
 
-        const dataservice = {
-            cid: Patient.cid,
-            lineid: lineid,
-            hospcode: 10677,
-        }
-
         if (resIns.data.ok) {
             console.log("insert hie_request success");
             const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", {
@@ -88,23 +82,8 @@ const Hospitalbook = () => {
                             timer: 1500
                         })
                             .then(async () => {
-                                const check = await axios.post(`${pathUrl}/health/hyggelineservice/checkLineid`, { lineid: lineid })
-                                if (check.data.ok) {
-                                    if (check.data.message === 0) {
-                                        const service = await axios.post(`${pathUrl}/health/hyggelineservice`, dataservice)
-                                        console.log("service", service.data)
-
-                                        if (service.data.ok) {
-                                            console.log(service.data.message)
-                                            router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid)
-                                        } else {
-                                            throw new Error(service.data.error);
-                                        }
-                                    } else {
-                                        router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid)
-                                    }
-                                }
-                                // router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                               
+                                router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
                             });
                     }, 30000);
                     return () => clearTimeout(timer);
@@ -117,23 +96,8 @@ const Hospitalbook = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
-                    // router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
-                    const check = await axios.post(`${pathUrl}/health/hyggelineservice/checkLineid`, { lineid: lineid })
-                    if (check.data.ok) {
-                        if (check.data.message === 0) {
-                            const service = await axios.post(`${pathUrl}/health/hyggelineservice`, dataservice)
-                            console.log("service", service.data)
-
-                            if (service.data.ok) {
-                                console.log(service.data.message)
-                                router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid)
-                            } else {
-                                throw new Error(service.data.error);
-                            }
-                        } else {
-                            router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid)
-                        }
-                    }
+                    router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                    
 
                 }
             }
@@ -239,34 +203,6 @@ const Hospitalbook = () => {
                         <p className="text-center font-semibold	">กำลังดึงข้อมูลจากโรงพยาบาล <br />กรุณารอประมาณ 30 วินาที</p>
                     </div>
                 </div>
-
-
-                // <div className="flex justify-center items-center w-full mt-20">
-
-
-                //     <div className="border border-blue-300 shadow rounded-md p-10 max-w-sm w-full m-7">
-
-                //         <div className="animate-pulse flex space-x-4">
-                //             <div className="rounded-full bg-slate-200 h-10 w-10 justify-center"></div>
-                //             <div className="flex-1 space-y-6 py-1">
-                //                 <div className="h-2 bg-slate-200 rounded"></div>
-                //                 <div className="space-y-3">
-                //                     <div className="grid grid-cols-3 gap-4">
-                //                         <div className="h-2 bg-slate-200 rounded col-span-2"></div>
-                //                         <div className="h-2 bg-slate-200 rounded col-span-1"></div>
-                //                     </div>
-                //                     <div className="h-2 bg-slate-200 rounded">
-
-
-                //                     </div>
-                //                 </div>
-                //                 <h1>Loading ... </h1>
-                //             </div>
-                //         </div>
-                //     </div>
-
-
-                // </div>
 
             )}
 
