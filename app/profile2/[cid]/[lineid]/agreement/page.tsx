@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import { Button } from "@/components/ui/button"
 import Image from 'next/image'
 import hygge_logo from '@/public/hygge_logo.png'
@@ -16,14 +16,18 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
     const pathUrl: any = process.env.pathUrl;
     // const Patient: any = usePatientStore((state: any) => state.patient);
-    const back = () => {
-        router.back()
-    };
+
     const [isSubscribed, setIsSubscribed] = useState(false);
+    const [patient, setPatient] = useState<any>([]);
+
+
+    const backPage = () => {
+        router.replace("../../" + params.cid + "/" + params.lineid);
+    };
 
     const updatedata = async () => {
         setIsSubscribed(false);
-        
+
 
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
         const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", {
@@ -33,10 +37,10 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
             if (res.data.message <= 1) {
                 Swal.fire({
                     html:
-                    '<div><img src="/health-report.gif" />'+
-                    '<p style="font-size: 16px; margin-top: 10px">กำลังดึงข้อมูลจากโรงพยาบาล</p>' +
-                    '<p style="font-size: 18px; margin-top: 10px">กรุณารอประมาณ 30 วินาที</p>' +
-                    '</div>',
+                        '<div><img src="/health-report.gif" />' +
+                        '<p style="font-size: 16px; margin-top: 10px">กำลังดึงข้อมูลจากโรงพยาบาล</p>' +
+                        '<p style="font-size: 18px; margin-top: 10px">กรุณารอประมาณ 30 วินาที</p>' +
+                        '</div>',
                     allowOutsideClick: false,
                     showConfirmButton: false,
                 });
@@ -86,12 +90,32 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
     };
 
 
+    useEffect(() => {
+
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+
+
+        }
+        getPatient();
+
+
+
+    }, [])
 
 
     return (
 
         <div>
-
+            <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
+                <Image
+                    priority
+                    src={backpage}
+                    alt="scan"
+                    height={25}
+                    onClick={backPage}
+                />
+            </div>
             <div className='flex justify-center mt-12'>
                 <Image
                     priority
@@ -106,8 +130,7 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
             <div className="-mt-12 p-10 text-center">
                 <p className=" text-md mt-10 font-semibold ">ข้อตกลงให้ความยินยอม</p>
                 <p className=''>เพื่อเปิดเผยข้อมูลด้านสุขภาพของบุคคลทางอิเล็กทรอนิกส์</p>
-                <p className=' mt-2 font-semibold'> ข้าพเจ้า {params.cid} {params.lineid}
-                {/* {params?.pname + params?.fname + " " + params?.lname} */}
+                <p className=' mt-2 font-semibold'> ข้าพเจ้า {patient?.pname} {patient?.fname} {patient?.lname}
                 </p>
                 <p className=''>เลขประจำตัวประชาชน</p>
                 <p className='font-semibold'>{params?.cid}</p>

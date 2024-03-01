@@ -12,6 +12,7 @@ import lab from '@/public/Lab.png'
 import xray from '@/public/xray.png'
 import back from '@/public/back.png'
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 
 function Patient({ params }: { params: { cid: string, lineid: string } }) {
@@ -23,7 +24,7 @@ function Patient({ params }: { params: { cid: string, lineid: string } }) {
 
     // const Patient: any = usePatientStore((state: any) => state.patient);
     const backPage = () => {
-        router.replace("../../"+params.cid+"/"+params.lineid);
+        router.replace("../../" + params.cid + "/" + params.lineid);
     };
 
     useEffect(() => {
@@ -36,7 +37,7 @@ function Patient({ params }: { params: { cid: string, lineid: string } }) {
     }, [])
 
     return (
-        <div> {loading && (
+        <div>   <Navbar />{loading && (
             <><div>
                 <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
                     <Image

@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
 import th from "dayjs/locale/th";
 import { CirclesWithBar } from "react-loader-spinner";
+import Navbar from "../components/Navbar";
 
 function Drug({ params }: { params: { cid: string, lineid: string } }) {
     const pathUrl: any = process.env.pathUrl;
@@ -21,6 +22,7 @@ function Drug({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [patient, setPatient] = useState<any>([]);
 
 
     const fetchData = async () => {
@@ -37,6 +39,15 @@ function Drug({ params }: { params: { cid: string, lineid: string } }) {
     };
 
     useEffect(() => {
+
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+
+
+        }
+        getPatient();
+
+
         console.log("Patient : ", params.cid);
         if (!params.cid) {
             router.push("/hospitalbook");
@@ -47,10 +58,11 @@ function Drug({ params }: { params: { cid: string, lineid: string } }) {
 
     return (
         <div>
+            <Navbar/>
             <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
-                {params.cid}
-                    {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
+                    {/* {params.cid} */}
+                    {patient.pname} {patient.fname} {patient.lname}
                 </p>
             </div>
             <div className="bg-[#ffffff] p-4 sticky top-32">

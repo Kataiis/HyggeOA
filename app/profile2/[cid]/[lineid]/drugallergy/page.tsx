@@ -9,6 +9,7 @@ import axios from "axios";
 import dayjs from 'dayjs';
 import th from "dayjs/locale/th";
 import { CirclesWithBar } from "react-loader-spinner";
+import Navbar from "../components/Navbar";
 
 
 function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
@@ -17,6 +18,7 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
     const [data, setData] = useState([]);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+    const [patient, setPatient] = useState<any>([]);
 
 
     const fetchData = async () => {
@@ -33,6 +35,14 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
 
 
     useEffect(() => {
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+
+
+        }
+        getPatient();
+
+
         console.log("Patient : ", params);
         if (!params) {
             router.push("/hospitalbook");
@@ -46,13 +56,14 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
 
     return (
         <div>
+            <Navbar/>
             <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
-                    {params.cid}
-                    {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
+                    {/* {params.cid} */}
+                    {patient.pname + " " + patient.fname + " " + patient.lname}
                 </p>
             </div>
-         
+
             <div className="bg-[#ffffff] p-4 sticky top-32">
                 <p className='bg-[#E17104] text-center text-lg text-[#ffffff] align-middle p-2'>ข้อมูลการแพ้ยา {data.length} รายการ</p> </div>
             {loading && (
@@ -124,9 +135,9 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
 
                         </div>) : (
                         <div className=" h-56 grid content-center font-semibold text-[#707070] text-center text-lg p-5">
-                        
-                                ยังไม่มีการรายงาน <br />
-                                ข้อมูลการแพ้ยา
+
+                            ยังไม่มีการรายงาน <br />
+                            ข้อมูลการแพ้ยา
                         </div>
                     )
 

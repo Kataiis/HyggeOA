@@ -25,7 +25,8 @@ function Navbar() {
             && currentPage !== '/loading'
             && currentPage !== '/patient'
             && currentPage !== '/comingsoon'
-            && currentPage !== '/profile2..'
+            && currentPage !== '/profile2'
+            && currentPage !== '/agreement'
         ) {
             setIsShown(true);
         } else {

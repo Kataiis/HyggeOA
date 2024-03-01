@@ -6,6 +6,9 @@ import { Kanit } from "next/font/google";
 import Navbar from './profile2/[cid]/[lineid]/components/Navbar';
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from 'react';
+import Agreement from './profile2/[cid]/[lineid]/agreement/page';
+import ProfilePage from './profile2/[cid]/[lineid]/page';
+
 
 const inter: any = Kanit({
   subsets: ["latin"],
@@ -33,28 +36,31 @@ export default function RootLayout(
   const [isShown, setIsShown] = useState(false);
   const currentPage = usePathname();
 
-  useEffect(() => {
-    document.title = "Virtual Hospital";
-    console.log("currentPage : ", currentPage);
-    if (currentPage !== '/login'
-      && currentPage !== '/loading'
-      && currentPage !== '/register'
-      && currentPage !== '/agreement'
-      && currentPage !== '/comingsoon'
-      && currentPage !== '/profile2') {
-      setIsShown(true);
-    } else {
-      setIsShown(false);
-    }
-  }, [
-    currentPage
-  ]);
+  // useEffect(() => {
+  //   document.title = "Virtual Hospital";
+  //   console.log("currentPage : ", currentPage);
+  //   if (currentPage !== '/login'
+  //     && currentPage !== '/loading'
+  //     && currentPage !== '/register'
+      
+  //     && currentPage !== './profile2/[cid]/[lineid]/comingsoon'
+  //     && currentPage !== './profile2/[cid]/[lineid]/agreement'
+  //     && currentPage !== './profile2') {
+  //     setIsShown(true);
+  //   } else {
+  //     setIsShown(false);
+  //   }
+  // }, [
+  //   currentPage
+  // ]);
 
   return (
     <html lang="en">
       <body className={`${inter.className}`} >
         <div>
-          {isShown && <Navbar />}
+          {/* {isShown &&  */}
+          {/* <Navbar /> */}
+          {/* } */}
 
           {children}
         </div>

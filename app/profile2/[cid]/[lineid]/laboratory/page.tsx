@@ -12,13 +12,14 @@ import dayjs from 'dayjs';
 import th from "dayjs/locale/th";
 import { CirclesWithBar } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
+import Navbar from "../components/Navbar";
 
 
 function Laboratory({ params }: { params: { cid: string, lineid: string } }) {
     const pathUrl: any = process.env.pathUrl;
     // const Patient: any = usePatientStore((state: any) => state.patient);
     const router = useRouter();
-
+    const [patient, setPatient] = useState<any>([]);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -38,6 +39,13 @@ function Laboratory({ params }: { params: { cid: string, lineid: string } }) {
     };
 
     useEffect(() => {
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+
+
+        }
+        getPatient();
+
         console.log("Patient : ", params);
         if (!params) {
             router.push("/hospitalbook");
@@ -45,15 +53,18 @@ function Laboratory({ params }: { params: { cid: string, lineid: string } }) {
             fetchData();
         }
     }, [params]);
+
+
     return (
         <div>
-               <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
+            <Navbar/>
+            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
-                    {params.cid}
-                    {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
+                    {/* {params.cid} */}
+                    {patient.pname} {patient.fname} {patient.lname}
                 </p>
             </div>
-     
+
             <div className="bg-[#ffffff] p-4 sticky top-32">
                 <p className='bg-[#6BB1E1] text-center text-lg text-[#ffffff] align-middle p-2'>ผลทางห้องปฏิบัติการ</p></div>
 

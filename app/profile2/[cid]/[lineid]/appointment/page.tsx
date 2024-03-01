@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Currentdate from "./component/currentpage";
 import Partdate from './component/partpage';
 import axios from "axios";
+import Navbar from "../components/Navbar";
 // import { usePatientStore } from "../store";
 
 
@@ -35,12 +36,13 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
     }, [])
 
 
-    
+
     return (
         <div>
+            <Navbar />
             <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
-                {patient.pname} {patient.fname} {patient.lname}
+                    {patient.pname} {patient.fname} {patient.lname}
                     {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
                 </p>
             </div>
@@ -64,8 +66,8 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
 
             <div>
                 {!isShown && <Partdate params={{
-                  cid: params.cid,
-                  lineid: params.lineid
+                    cid: params.cid,
+                    lineid: params.lineid
                 }} />}
                 {isShown && <Currentdate params={{
                     cid: params.cid,

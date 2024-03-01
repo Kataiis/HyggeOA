@@ -9,11 +9,11 @@ import back from '@/public/back.png'
 import commingsoon from '@/public/workin.png'
 import logo from "@/public/hg.png"
 
-function Coming() {
+function Coming({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
 
     const backPage = () => {
-        router.replace('/profile')
+        router.replace("../../"+params.cid+"/"+params.lineid);
     };
 
     return (

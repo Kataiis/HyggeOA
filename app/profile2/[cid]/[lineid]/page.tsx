@@ -26,7 +26,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
     const [image, setimage] = useState("");
 
     const imgPath = 'https://www.virtualhos.net/api4000/apihygge/getImageProfile/' + params.cid;
-    
+
     useEffect(() => {
 
         const getPatient = async () => {
@@ -37,7 +37,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
         getPatient();
 
         try {
-           
+
             setimage("https://www.virtualhos.net/api4000/apihygge/getImageProfile/" + params.cid)
         } catch (e: any) {
             console.error('liff init error', e.message)
@@ -45,12 +45,12 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
 
     }, [])
 
- 
+
 
     return (
 
         <div>
-
+          
             <div className='bg-[#F15D4F] flex justify-center p-3 '>
                 <Image
                     priority
@@ -93,7 +93,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
                     <Avatar src={imgPath} sx={{ width: 140, height: 140 }} />
                 </div>
 
-                <div  className=" p-5">
+                <div className=" p-5">
                     <QRCode
                         size={145}
                         // style={{ height: "auto", maxWidth: "100%", width: "100%" }}
@@ -105,7 +105,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
 
             <div className='m-5 text-2xl'>
                 <p className='text-center text-[#2C97A3]'>
-                {patient?.pname} {patient?.fname} {patient?.lname}
+                    {patient?.pname} {patient?.fname} {patient?.lname}
                 </p>
             </div>
             <div className='bg-[#39CC88]  mt-3'>
@@ -116,7 +116,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
 
                 <Button className="bg-[#2C97A3] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100 "
                     type="button"
-                    onClick={() => router.replace('./comingsoon')}
+                    onClick={() => router.replace("../" + params.cid + "/" + params.lineid + "/comingsoon")}
                 >สมุดสุขภาพ
                 </Button>
                 <div className="-mt-3"> สมุดบันทึกข้อมูล <span className="text-lg italic ">ด้วยตัวคุณเอง</span></div>
@@ -126,7 +126,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
                 <Button className="bg-[#49DABD] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
                     type="button"
                     // onClick={() => updatedata()}
-                    onClick={() => router.replace("../"+params.cid+"/"+params.lineid+"/patient")}
+                    onClick={() => router.replace("../" + params.cid + "/" + params.lineid + "/patient")}
 
                 >สมุดโรงพยาบาล</Button>
 

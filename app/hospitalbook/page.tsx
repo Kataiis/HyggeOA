@@ -33,6 +33,7 @@ const Hospitalbook = () => {
     const [lineId, setLineId] = useState("");
     const [profile, setProfile] = useState<any>({});
 
+
     const updatedata = async (Patient: any, lineid: any) => {
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
         const dataIns = {
@@ -45,7 +46,16 @@ const Hospitalbook = () => {
             pathUrl + "/health/hiereq/store_hyggeoa",
             dataIns
         );
+
         console.log("resIns", resIns.data)
+
+
+        const dataservice = {
+            cid: Patient.cid,
+            lineid: lineid,
+            hospcode: 10677,
+        }
+
         if (resIns.data.ok) {
             console.log("insert hie_request success");
             const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", {
@@ -77,8 +87,24 @@ const Hospitalbook = () => {
                             showConfirmButton: false,
                             timer: 1500
                         })
-                            .then(() => {
-                                router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                            .then(async () => {
+                                const check = await axios.post(`${pathUrl}/health/hyggelineservice/checkLineid`, { lineid: lineid })
+                                if (check.data.ok) {
+                                    if (check.data.message === 0) {
+                                        const service = await axios.post(`${pathUrl}/health/hyggelineservice`, dataservice)
+                                        console.log("service", service.data)
+
+                                        if (service.data.ok) {
+                                            console.log(service.data.message)
+                                            router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid)
+                                        } else {
+                                            throw new Error(service.data.error);
+                                        }
+                                    } else {
+                                        router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid)
+                                    }
+                                }
+                                // router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
                             });
                     }, 30000);
                     return () => clearTimeout(timer);
@@ -91,7 +117,23 @@ const Hospitalbook = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
-                    router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                    // router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                    const check = await axios.post(`${pathUrl}/health/hyggelineservice/checkLineid`, { lineid: lineid })
+                    if (check.data.ok) {
+                        if (check.data.message === 0) {
+                            const service = await axios.post(`${pathUrl}/health/hyggelineservice`, dataservice)
+                            console.log("service", service.data)
+
+                            if (service.data.ok) {
+                                console.log(service.data.message)
+                                router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid)
+                            } else {
+                                throw new Error(service.data.error);
+                            }
+                        } else {
+                            router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid)
+                        }
+                    }
 
                 }
             }
@@ -180,23 +222,23 @@ const Hospitalbook = () => {
             {loading && (
 
                 <div><div className="flex justify-center items-center w-full mt-20">
-                   
-                        <div className="animate-pulse flex space-x-4  justify-center items-center">
-                            <Image
-                                priority
-                                src={loadingpage}
 
-                                alt="loading"
-                                width={100}
-                                height={100} />
-                    
+                    <div className="animate-pulse flex space-x-4  justify-center items-center">
+                        <Image
+                            priority
+                            src={loadingpage}
+
+                            alt="loading"
+                            width={100}
+                            height={100} />
+
                     </div>
 
                 </div>
-                <div className="flex justify-center mt-4 text-[#65B16D]">
+                    <div className="flex justify-center mt-4 text-[#65B16D]">
                         <p className="text-center font-semibold	">กำลังดึงข้อมูลจากโรงพยาบาล <br />กรุณารอประมาณ 30 วินาที</p>
                     </div>
-                    </div>
+                </div>
 
 
                 // <div className="flex justify-center items-center w-full mt-20">
