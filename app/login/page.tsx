@@ -69,7 +69,7 @@ const Login = () => {
             console.log("insert hie_request success");
             const log = await axios.post(`${pathUrl}/health/phrviewlog/ins`, { cid: Patient.cid, line_id: lineid })
             console.log("log", log.data)
-            router.replace("/profile2" + "/" + Patient?.cid + "/" + lineid + "/agreement")
+            router.replace("/agreement")
 
         }
 

@@ -6,7 +6,7 @@ import { Kanit } from "next/font/google";
 import Navbar from './profile2/[cid]/[lineid]/components/Navbar';
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from 'react';
-import Agreement from './profile2/[cid]/[lineid]/agreement/page';
+import Agreement from './agreement/page';
 import ProfilePage from './profile2/[cid]/[lineid]/page';
 
 

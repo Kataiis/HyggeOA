@@ -6,33 +6,29 @@ import hygge_logo from '@/public/hygge_logo.png'
 import pix from '@/public/pix.png'
 import { useRouter } from "next/navigation";
 import backpage from '@/public/back.png'
-// import { usePatientStore } from "../store";
+import { usePatientStore } from "../store";
 import Swal from "sweetalert2";
 import dayjs from "dayjs";
 import axios from "axios";
 
 
-function Agreement({ params }: { params: { cid: string, lineid: string } }) {
+function Agreement() {
     const router = useRouter();
     const pathUrl: any = process.env.pathUrl;
-    // const Patient: any = usePatientStore((state: any) => state.patient);
+    const Patient: any = usePatientStore((state: any) => state.patient);
 
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [patient, setPatient] = useState<any>([]);
 
 
-    const backPage = () => {
-        router.replace("../../" + params.cid + "/" + params.lineid);
-    };
+    // const backPage = () => {
+    //     router.replace("../../" + params.cid + "/" + params.lineid);
+    // };
 
     const updatedata = async () => {
         setIsSubscribed(false);
-
-
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
-        const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", {
-            cid: params.cid,
-        });
+        const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", { cid: Patient.cid,});
         if (res.data.ok) {
             if (res.data.message <= 1) {
                 Swal.fire({
@@ -59,7 +55,8 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
                         showConfirmButton: false,
                         timer: 1000
                     }).then(() => {
-                        router.replace('/profile')
+                          router.replace('/profile2/'+Patient?.cid+"/"+Patient.token_line)
+                        // router.replace('/profile')
                     });
 
                 }, 30000);
@@ -74,7 +71,7 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
                 //     showConfirmButton: false,
                 //     timer: 2000
                 // });
-                router.replace('/profile')
+                router.replace('/profile2/'+Patient?.cid+"/"+Patient.token_line)
             }
         }
     };
@@ -93,7 +90,7 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
     useEffect(() => {
 
         const getPatient = async () => {
-            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: Patient.cid }).then((v: any) => setPatient(v.data.message[0]));
 
 
         }
@@ -108,13 +105,13 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
 
         <div>
             <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
-                <Image
+                {/* <Image
                     priority
                     src={backpage}
                     alt="scan"
                     height={25}
                     onClick={backPage}
-                />
+                /> */}
             </div>
             <div className='flex justify-center mt-12'>
                 <Image
@@ -130,10 +127,10 @@ function Agreement({ params }: { params: { cid: string, lineid: string } }) {
             <div className="-mt-12 p-10 text-center">
                 <p className=" text-md mt-10 font-semibold ">ข้อตกลงให้ความยินยอม</p>
                 <p className=''>เพื่อเปิดเผยข้อมูลด้านสุขภาพของบุคคลทางอิเล็กทรอนิกส์</p>
-                <p className=' mt-2 font-semibold'> ข้าพเจ้า {patient?.pname} {patient?.fname} {patient?.lname}
+                <p className=' mt-2 font-semibold'> ข้าพเจ้า {Patient?.pname} {Patient?.fname} {Patient?.lname}
                 </p>
                 <p className=''>เลขประจำตัวประชาชน</p>
-                <p className='font-semibold'>{params?.cid}</p>
+                <p className='font-semibold'>{Patient?.cid}</p>
 
             </div>
             <div className="-mt-20 p-10 ">
