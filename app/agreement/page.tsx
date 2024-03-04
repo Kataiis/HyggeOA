@@ -28,7 +28,9 @@ function Agreement() {
     const updatedata = async () => {
         setIsSubscribed(false);
         const mytimestamp: any = dayjs().format("YYYY-MM-DD HH:mm:ss");
-        const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", { cid: Patient.cid,});
+     
+
+        const res: any = await axios.post(pathUrl + "/health/hiereq/checkin", { cid: Patient.cid, });
         if (res.data.ok) {
             if (res.data.message <= 1) {
                 Swal.fire({
@@ -40,11 +42,11 @@ function Agreement() {
                     allowOutsideClick: false,
                     showConfirmButton: false,
                 });
-                // const text = "REQUEST|" + params.favhos1 + "|" + params.cid + "|" + mytimestamp
-                // console.log("text", text)
+                const text = "REQUEST|" + Patient.favhos1 + "|" + Patient?.cid + "|" + mytimestamp
+                console.log("text", text)
                 // //ไม่เคยมีการ request วันนี้
 
-                // const sentmqtt = await axios.post(`https://hyggemedicalservice.com/apirbh/connectmqtt/hyggeoa`, { messagemqtt: text })
+                const sentmqtt = await axios.post(`https://hyggemedicalservice.com/apirbh/connectmqtt/hyggeoa`, { messagemqtt: text })
 
                 const timer = setTimeout(() => {
                     // ทำ sweetaler แจ้งเตือน ว่าทำสำเร็จแล้ว
@@ -55,7 +57,7 @@ function Agreement() {
                         showConfirmButton: false,
                         timer: 1000
                     }).then(() => {
-                          router.replace('/profile2/'+Patient?.cid+"/"+Patient.token_line)
+                        router.replace('/profile2/' + Patient?.cid + "/" + Patient.token_line)
                         // router.replace('/profile')
                     });
 
@@ -71,7 +73,7 @@ function Agreement() {
                 //     showConfirmButton: false,
                 //     timer: 2000
                 // });
-                router.replace('/profile2/'+Patient?.cid+"/"+Patient.token_line)
+                router.replace('/profile2/' + Patient?.cid + "/" + Patient.token_line)
             }
         }
     };
