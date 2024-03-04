@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios"
 import { useFirstTimeStore } from "./component/healthbookStorage";
+import { usePatientStore } from "../store";
 
 interface HealthProps {
   bmi: any;
@@ -44,10 +45,11 @@ export default function Home() {
   const [data, setData] = useState<HealthProps[]>([]);
   const [activeTab, setActiveTab] = useState("summary");
   const { FirstTimeStore, setFirstTimeStore, removeFirstTimeStore } = useFirstTimeStore();
+  const Patient: any = usePatientStore((state: any) => state.patient);
 
 
   const FetchData = async () => {
-    const datahealth = await axios.get(`${baseURL}/bookinghealth/1709901223905/cid`);
+    const datahealth = await axios.get(`${baseURL}/bookinghealth/${Patient?.cid}/cid`);
     if (datahealth.data.ok) {
       setData(datahealth.data.rows)
       // console.log("datahealth", datahealth.data.rows)
@@ -71,9 +73,6 @@ export default function Home() {
     result = [...data].sort((a, b) => {
       return b.create_date.localeCompare(a.create_date);
     });
-    // console.log("sortedData", JSON.stringify(result));
-    // console.log("sortedData", result);
-
     return result;
   }, [data]);
 
@@ -93,13 +92,12 @@ export default function Home() {
           <div onClick={() => setActiveTab("summary")} className="pr-4"><ChevronLeft size={40} /></div>
           <div className='text-xl'>สมุดสุขภาพ</div>
           <div className="w-[40px]">
-            {/* <Image src={"/hygge_healthbook/icon_home.svg"} priority alt="Image" width={45} height={45} className="flex flex-row text-center pr-4" /> */}
           </div>
         </div>
 
         {activeTab === "summary" ? "" :
           <div className="h-[60px] flex items-center justify-center relative text-xl text-center p-2 pt-4 text-[#2C97A3] bg-white font-bold">
-            <div>{`Firstname Lastname`}</div>
+            <div>{`${Patient?.pname } ${Patient?.fname } ${Patient?.lname}`}</div>
             <div className="absolute top-3 right-3"><Component_help /></div>
           </div>
         }
@@ -128,26 +126,26 @@ export default function Home() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="weight">
-          <Component_result title={"น้ำหนัก"} description={""} type={"weight"} data={sortedDataDESC} />
+          <Component_result title={"น้ำหนัก"} description={""} type={"weight"} data={sortedDataDESC} cid={Patient?.cid} />
         </TabsContent>
         <TabsContent value="height">
-          <Component_result title={"ส่วนสูง"} description={""} type={"height"} data={sortedDataDESC} />
+          <Component_result title={"ส่วนสูง"} description={""} type={"height"} data={sortedDataDESC} cid={Patient?.cid}/>
         </TabsContent>
         <TabsContent value="pressure">
-          <Component_result title={"ความดันโลหิต (บน/ล่าง)"} description={""} type={"pressure"} data={sortedDataDESC} />
+          <Component_result title={"ความดันโลหิต (บน/ล่าง)"} description={""} type={"pressure"} data={sortedDataDESC} cid={Patient?.cid}/>
         </TabsContent>
         <TabsContent value="pulse">
-          <Component_result title={"อัตราการเต้นของหัวใจ"} description={""} type={"pulse"} data={sortedDataDESC} />
+          <Component_result title={"อัตราการเต้นของหัวใจ"} description={""} type={"pulse"} data={sortedDataDESC} cid={Patient?.cid}/>
         </TabsContent>
         <TabsContent value="bloodsugar">
-          <Component_result title={"ค่าน้ำตาลในเลือด"} description={"(แสดงค่าบันทึก ก่อนอาหารเช้า)"} type={"bloodsugar"} data={sortedDataDESC} />
+          <Component_result title={"ค่าน้ำตาลในเลือด"} description={"(แสดงค่าบันทึก ก่อนอาหารเช้า)"} type={"bloodsugar"} data={sortedDataDESC} cid={Patient?.cid}/>
         </TabsContent>
         <TabsContent value="bmi">
-          <Component_result title={"ดัชนีมวลกาย"} description={""} type={"bmi"} data={sortedDataDESC} />
+          <Component_result title={"ดัชนีมวลกาย"} description={""} type={"bmi"} data={sortedDataDESC} cid={Patient?.cid}/>
         </TabsContent>
         <TabsContent value="summary">
           {FirstTimeStore ? <div className="absolute top-3 right-3"><Component_help /></div> : ""}
-          <Component_summary data={sortedDataDESC} />
+          <Component_summary data={sortedDataASC} fname={Patient?.fname}/>
         </TabsContent>
       </Tabs>
 

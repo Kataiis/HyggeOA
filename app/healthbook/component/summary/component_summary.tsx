@@ -1,7 +1,6 @@
 'use client';
 
 import Image from "next/image";
-import Chart from 'chart.js/auto';
 import { useEffect, useMemo, useRef, useState } from "react";
 import LineChart from './component/LineChart'
 import {
@@ -12,13 +11,11 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import Component_result from "../result/component_result";
-import AlertFail from "../AlertFail";
-import { Average } from "next/font/google";
 
 
 interface Props {
     data: HealthProps[];
+    fname: any;
 }
 
 interface HealthProps {
@@ -71,7 +68,7 @@ interface GlucoseDataProps {
 
 }
 
-export default function Component_summary({ data }: Props) {
+export default function Component_summary({ data, fname }: Props) {
 
     const [ChartData, setChartData] = useState<ChartDataProps[]>([]);
     const [GlucoseData, setGlucoseData] = useState<GlucoseDataProps[]>([]);
@@ -149,7 +146,7 @@ export default function Component_summary({ data }: Props) {
             }
 
             let sum = 0;
-            let max = 0;
+            let max = (-1);
             let min = 999999999;
             for (let i = 0; i < newAvgGlucose.length; i++) {
                 sum = sum + newAvgGlucose[i];
@@ -160,7 +157,7 @@ export default function Component_summary({ data }: Props) {
                     min = newAvgGlucose[i];
                 }
             }
-            setAvgGlucose(sum / newAvgGlucose.length);
+            setAvgGlucose(newAvgGlucose.length > 0 ? sum / newAvgGlucose.length : 0);
             setMaxGlucose(max);
             setMinGlucose(min);
 
@@ -249,13 +246,22 @@ export default function Component_summary({ data }: Props) {
 
 
             <div className="w-full items-center justify-center mb-3">
-                <div className="text-center text-2xl font-bold text-[#2C97A3]">{`สวัสดีครับ ! ${""}`}</div>
+                <div className="text-center text-2xl font-bold text-[#2C97A3]">{`สวัสดีครับ ! คุณ ${fname}`}</div>
                 <div className="text-center">{`ข้อมูลจากการบันทึกประวัติสุขภาพของคุณ`}</div>
             </div>
 
             <div className="grid grid-cols-5 gap-2 items-center justify-center pb-2">
                 <div className="col-span-2 flex items-center justify-center">
-                    <Image src={"/hygge_healthbook/BMI_normal.svg"} priority alt="Image" width={90} height={100} className="" />
+                    {data[data.length - 1]?.bmi >= 18.5 && data[data.length - 1]?.bmi <= 22.9 ?
+                        <Image src={"/hygge_healthbook/BMI_good.svg"} priority alt="Image" width={90} height={100} className="" />
+                        : (data[data.length - 1]?.bmi < 18.5 || (data[data.length - 1]?.bmi >= 23.0 && data[data.length - 1]?.bmi <= 24.9) ?
+                            <Image src={"/hygge_healthbook/BMI_normal.svg"} priority alt="Image" width={90} height={100} className="" />
+                            : (data[data.length - 1]?.bmi > 25.0 ?
+                                <Image src={"/hygge_healthbook/BMI_bad.svg"} priority alt="Image" width={90} height={100} className="" />
+                                : ""
+                            )
+                        )
+                    }
                 </div>
                 <div className="col-span-3">
                     <Card>
@@ -265,7 +271,7 @@ export default function Component_summary({ data }: Props) {
                                 <div>
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
-                                        : data[0]?.weight
+                                        : data[data.length - 1]?.weight
                                     }
                                 </div>
                                 <div>ซม.</div>
@@ -276,7 +282,7 @@ export default function Component_summary({ data }: Props) {
                                 <div>
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
-                                        : data[0]?.height
+                                        : data[data.length - 1]?.height
                                     }
                                 </div>
                                 <div>กก.</div>
@@ -340,9 +346,9 @@ export default function Component_summary({ data }: Props) {
                             {data.length == 0 ?
                                 <>
                                     <div className="w-full absolute text-center my-10 text-3xl text-gray-400">ไม่พบข้อมูล</div>
-                                    <LineChart chartdata={chartPressure} />
+                                    <LineChart chartdata={chartHeartrate} />
                                 </>
-                                : <LineChart chartdata={chartPressure} />
+                                : <LineChart chartdata={chartHeartrate} />
                             }                        </div>
                         <div className="col-span-2 bg-[#E1E1E1] rounded-r-lg flex flex-col items-center justify-center px-2 py-3">
                             <div className="">ครั้งล่าสุด</div>
@@ -365,15 +371,15 @@ export default function Component_summary({ data }: Props) {
                         <div className="col-span-7 grid grid-cols-3 items-center justify-center bg-[#E1E1E1] px-1 py-3 pb-2 ">
                             <div className="flex items-center justify-center gap-2 text-sm">
                                 <div className="">ค่าต่ำสุด</div>
-                                <div className="text-base text-[#1628C8] font-bold">{minGlucose}</div>
+                                <div className="text-base text-[#1628C8] font-bold">{minGlucose == 999999999 ? "-" : minGlucose}</div>
                             </div>
                             <div className="flex items-center justify-center gap-2 text-sm">
                                 <div>ค่าสูงสุด</div>
-                                <div className="text-base text-[#1628C8] font-bold">{maxGlucose}</div>
+                                <div className="text-base text-[#1628C8] font-bold">{maxGlucose == (-1) ? "-" : maxGlucose}</div>
                             </div>
                             <div className="flex items-center justify-center gap-2 text-sm">
                                 <div>ค่าเฉลี่ย</div>
-                                <div className="text-base text-[#AF16C8] font-bold">{avgGlucose}</div>
+                                <div className="text-base text-[#AF16C8] font-bold">{avgGlucose == 0 ? "-" : Number(avgGlucose).toFixed(2)}</div>
                             </div>
 
                         </div>
@@ -383,13 +389,20 @@ export default function Component_summary({ data }: Props) {
 
                                     <tr className="">
                                         {GlucoseData.length > 0 ?
-                                            <div>
+                                            <>
                                                 {GlucoseData?.map((item, index) => (
                                                     <td key={index} className="text-center px-1 pt-3 border-b">
                                                         {item.data.glucose_morning == 0 ? "-" : item.data.glucose_morning}
                                                     </td>
                                                 ))}
-                                            </div>
+                                                {data.length < 7 ? (
+                                                    Array.from({ length: 7 - data.length }, (_, i) => (
+                                                        <td key={i} className="text-center px-1 pt-3 border-b min-w-[30px]"></td>
+                                                    ))
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </>
                                             :
                                             <td colSpan={7} rowSpan={4}>
                                                 <div className="text-center text-3xl text-gray-400">ไม่พบข้อมูล</div>
@@ -405,16 +418,22 @@ export default function Component_summary({ data }: Props) {
 
                                     <tr className="">
                                         {GlucoseData.length > 0 ?
-                                            <div>
+                                            <>
                                                 {GlucoseData?.map((item, index) => (
                                                     <td key={index} className="text-center px-1 pt-3 border-b ">
                                                         {item.data.glucose_afternoon == 0 ? "-" : item.data.glucose_afternoon}
                                                     </td>
                                                 ))}
-                                            </div>
+                                                {data.length < 7 ? (
+                                                    Array.from({ length: 7 - data.length }, (_, i) => (
+                                                        <td key={i} className="text-center px-1 pt-3 border-b min-w-[30px]"></td>
+                                                    ))
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </>
                                             :
                                             ""
-                                            // <td colSpan={7} className="pl-2 pt-3"></td>
                                         }
                                         <td className="col-span-3 pl-2 pt-3">
                                             <div className="flex items-center justify-left gap-2">
@@ -426,16 +445,22 @@ export default function Component_summary({ data }: Props) {
 
                                     <tr className="">
                                         {GlucoseData.length > 0 ?
-                                            <div>
+                                            <>
                                                 {GlucoseData?.map((item, index) => (
-                                                    <td key={index} className="text-center px-1 pt-3 border-b">
+                                                    <td key={index} className="text-center px-1 pt-3 border-b min-w-[30px]">
                                                         {item.data.glucose_evening == 0 ? "-" : item.data.glucose_evening}
                                                     </td>
                                                 ))}
-                                            </div>
+                                                {data.length < 7 ? (
+                                                    Array.from({ length: 7 - data.length }, (_, i) => (
+                                                        <td key={i} className="text-center px-1 pt-3 border-b min-w-[30px]"></td>
+                                                    ))
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </>
                                             :
                                             ""
-                                            // <td colSpan={7} className="pl-2 pt-3"></td>
                                         }
                                         <td className="col-span-3 pl-2 pt-3">
                                             <div className="flex items-center justify-left gap-2">
@@ -447,16 +472,22 @@ export default function Component_summary({ data }: Props) {
 
                                     <tr className="">
                                         {GlucoseData.length > 0 ?
-                                            <div>
+                                            <>
                                                 {GlucoseData?.map((item, index) => (
                                                     <td key={index} className="text-center px-1 pt-3 border-b">
                                                         {item.data.glucose_night == 0 ? "-" : item.data.glucose_night}
                                                     </td>
                                                 ))}
-                                            </div>
+                                                {data.length < 7 ? (
+                                                    Array.from({ length: 7 - data.length }, (_, i) => (
+                                                        <td key={i} className="text-center px-1 pt-3 border-b min-w-[30px]"></td>
+                                                    ))
+                                                ) : (
+                                                    ""
+                                                )}
+                                            </>
                                             :
                                             ""
-                                            // <td colSpan={7} className="pl-2 pt-3"></td>
                                         }
                                         <td className="col-span-3 pl-2 pt-3">
                                             <div className="flex items-center justify-left gap-2">
@@ -467,49 +498,28 @@ export default function Component_summary({ data }: Props) {
                                     </tr>
 
                                     <tr>
-                                        <td className="text-center ">
-                                            <div className="flex flex-col items-center justify-center ">
-                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
-                                                <div>1</div>
-                                            </div>
-                                        </td>
-                                        <td className="text-center min-w-[30px]">
-                                            <div className="flex flex-col items-center justify-center ">
-                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
-                                                <div>2</div>
-                                            </div>
-                                        </td>
-                                        <td className="text-center min-w-[30px]">
-                                            <div className="flex flex-col items-center justify-center ">
-                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
-                                                <div>3</div>
-                                            </div>
-                                        </td>
-                                        <td className="text-center min-w-[30px]">
-                                            <div className="flex flex-col items-center justify-center ">
-                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
-                                                <div>4</div>
-                                            </div>
-
-                                        </td>
-                                        <td className="text-center min-w-[30px]">
-                                            <div className="flex flex-col items-center justify-center ">
-                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
-                                                <div>5</div>
-                                            </div>
-                                        </td>
-                                        <td className="text-center min-w-[30px]">
-                                            <div className="flex flex-col items-center justify-center ">
-                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
-                                                <div>6</div>
-                                            </div>
-                                        </td>
-                                        <td className="text-center min-w-[30px]">
-                                            <div className="flex flex-col items-center justify-center ">
-                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
-                                                <div>ล่าสุด</div>
-                                            </div>
-                                        </td>
+                                        {[...Array(7)].map((_, index) => (
+                                            <td key={index} className="text-center min-w-[30px]">
+                                                {index + 1 < GlucoseData.length ?
+                                                    <div className="flex flex-col items-center justify-center ">
+                                                        <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
+                                                        <div>{index + 1}</div>
+                                                    </div>
+                                                    : (
+                                                        index + 1 == GlucoseData.length ?
+                                                            <div className="flex flex-col items-center justify-center ">
+                                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
+                                                                <div>ล่าสุด</div>
+                                                            </div>
+                                                            : (
+                                                                index + 1 > GlucoseData.length ?
+                                                                    ""
+                                                                    : ""
+                                                            )
+                                                    )
+                                                }
+                                            </td>
+                                        ))}
                                     </tr>
                                 </tbody>
                             </table>

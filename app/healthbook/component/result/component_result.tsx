@@ -16,7 +16,7 @@ interface Props {
   description: any;
   type: any;
   data: HealthProps[];
-
+  cid: any;
 }
 
 interface HealthProps {
@@ -38,7 +38,7 @@ interface HealthProps {
   weight: any;
 }
 
-export default function Component_result({ title, description, type, data }: Props) {
+export default function Component_result({ title, description, type, data, cid }: Props) {
   const { HealthStore, setHealthStore, removeHealthStore } = useHealthStore();
 
 
@@ -46,7 +46,7 @@ export default function Component_result({ title, description, type, data }: Pro
     if (data.length == 0) {
       setHealthStore({
         bmi: 0,
-        cid: 0,
+        cid: cid,
         create_date: new Date(),
         dbp: 0,
         dbp_night: 0,
