@@ -116,7 +116,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
 
                 <Button className="bg-[#2C97A3] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100 "
                     type="button"
-                    onClick={() => router.replace("../" + params.cid + "/" + params.lineid + "/comingsoon")}
+                    onClick={() => router.replace("../" + params.cid + "/" + params.lineid + "/healthbook")}
                 >สมุดสุขภาพ
                 </Button>
                 <div className="-mt-3"> สมุดบันทึกข้อมูล <span className="text-lg italic ">ด้วยตัวคุณเอง</span></div>

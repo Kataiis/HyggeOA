@@ -36,18 +36,22 @@ interface HealthProps {
 }
 
 const baseURL = process.env.APIKey;
+const pathUrl: any = process.env.pathUrl;
 
 
-export default function Home() {
+export default function Home({ params }: { params: { cid: string, lineid: string } }) {
   const [isLoading, setIsloading] = useState<boolean>(true);
   const router = useRouter()
   const [data, setData] = useState<HealthProps[]>([]);
   const [activeTab, setActiveTab] = useState("summary");
   const { FirstTimeStore, setFirstTimeStore, removeFirstTimeStore } = useFirstTimeStore();
+  const [patient, setPatient] = useState<any>([]);
+
 
 
   const FetchData = async () => {
-    const datahealth = await axios.get(`${baseURL}/bookinghealth/1709901223905/cid`);
+    const datahealth = await axios.get(`${baseURL}/bookinghealth/${params.cid}/cid`);
+
     if (datahealth.data.ok) {
       setData(datahealth.data.rows)
       // console.log("datahealth", datahealth.data.rows)
@@ -58,13 +62,21 @@ export default function Home() {
   };
 
   useEffect(() => {
+    console.log(params.cid)
     const fetchdata = async () => {
       await setIsloading(true);
       await FetchData();
       await setIsloading(true);
     }
     fetchdata()
+    // const getPatient = async () => {
+    //   const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+
+
+    // }
+    // getPatient();
   }, []);
+
 
   const sortedDataDESC = useMemo(() => {
     let result = data;
@@ -98,7 +110,7 @@ export default function Home() {
 
         {activeTab === "summary" ? "" :
           <div className="h-[60px] flex items-center justify-center relative text-xl text-center p-2 pt-4 text-[#2C97A3] bg-white font-bold">
-            <div>{`Firstname Lastname`}</div>
+            <div>{`${patient.pname} ${patient.fname} ${patient.lname}`}</div>
             <div className="absolute top-3 right-3"><Component_help /></div>
           </div>
         }
@@ -127,26 +139,26 @@ export default function Home() {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="weight">
-          <Component_result title={"น้ำหนัก"} description={""} type={"weight"} data={sortedDataDESC} cid={'1709901223905'} />
+          <Component_result title={"น้ำหนัก"} description={""} type={"weight"} data={sortedDataDESC} cid={patient.cid} />
         </TabsContent>
         <TabsContent value="height">
-          <Component_result title={"ส่วนสูง"} description={""} type={"height"} data={sortedDataDESC} cid={'1709901223905'} />
+          <Component_result title={"ส่วนสูง"} description={""} type={"height"} data={sortedDataDESC} cid={patient.cid} />
         </TabsContent>
         <TabsContent value="pressure">
-          <Component_result title={"ความดันโลหิต (บน/ล่าง)"} description={""} type={"pressure"} data={sortedDataDESC} cid={'1709901223905'} />
+          <Component_result title={"ความดันโลหิต (บน/ล่าง)"} description={""} type={"pressure"} data={sortedDataDESC} cid={patient.cid} />
         </TabsContent>
         <TabsContent value="pulse">
-          <Component_result title={"อัตราการเต้นของหัวใจ"} description={""} type={"pulse"} data={sortedDataDESC} cid={'1709901223905'} />
+          <Component_result title={"อัตราการเต้นของหัวใจ"} description={""} type={"pulse"} data={sortedDataDESC} cid={patient.cid} />
         </TabsContent>
         <TabsContent value="bloodsugar">
-          <Component_result title={"ค่าน้ำตาลในเลือด"} description={"(แสดงค่าบันทึก ก่อนอาหารเช้า)"} type={"bloodsugar"} data={sortedDataDESC} cid={'1709901223905'} />
+          <Component_result title={"ค่าน้ำตาลในเลือด"} description={"(แสดงค่าบันทึก ก่อนอาหารเช้า)"} type={"bloodsugar"} data={sortedDataDESC} cid={patient.cid} />
         </TabsContent>
         <TabsContent value="bmi">
-          <Component_result title={"ดัชนีมวลกาย"} description={""} type={"bmi"} data={sortedDataDESC} cid={'1709901223905'} />
+          <Component_result title={"ดัชนีมวลกาย"} description={""} type={"bmi"} data={sortedDataDESC} cid={patient.cid} />
         </TabsContent>
         <TabsContent value="summary">
           {FirstTimeStore ? <div className="absolute top-3 right-3"><Component_help /></div> : ""}
-          <Component_summary data={sortedDataASC} fname={''}/>
+          <Component_summary data={sortedDataASC} fname={patient.fname} />
         </TabsContent>
       </Tabs>
 
