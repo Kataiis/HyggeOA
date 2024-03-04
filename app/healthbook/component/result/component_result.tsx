@@ -17,6 +17,7 @@ interface Props {
   type: any;
   data: HealthProps[];
   cid: any;
+
 }
 
 interface HealthProps {

@@ -15,7 +15,7 @@ import {
 
 interface Props {
     data: HealthProps[];
-    fname: any;
+    fname:any;
 }
 
 interface HealthProps {
@@ -252,11 +252,11 @@ export default function Component_summary({ data, fname }: Props) {
 
             <div className="grid grid-cols-5 gap-2 items-center justify-center pb-2">
                 <div className="col-span-2 flex items-center justify-center">
-                    {data[data.length - 1]?.bmi >= 18.5 && data[data.length - 1]?.bmi <= 22.9 ?
+                    {data[data.length-1]?.bmi >= 18.5 && data[data.length-1]?.bmi <= 22.9 ?
                         <Image src={"/hygge_healthbook/BMI_good.svg"} priority alt="Image" width={90} height={100} className="" />
-                        : (data[data.length - 1]?.bmi < 18.5 || (data[data.length - 1]?.bmi >= 23.0 && data[data.length - 1]?.bmi <= 24.9) ?
+                        : (data[data.length-1]?.bmi < 18.5 || (data[data.length-1]?.bmi >= 23.0 && data[data.length-1]?.bmi <= 24.9) ?
                             <Image src={"/hygge_healthbook/BMI_normal.svg"} priority alt="Image" width={90} height={100} className="" />
-                            : (data[data.length - 1]?.bmi > 25.0 ?
+                            : (data[data.length-1]?.bmi > 25.0 ?
                                 <Image src={"/hygge_healthbook/BMI_bad.svg"} priority alt="Image" width={90} height={100} className="" />
                                 : ""
                             )
@@ -271,7 +271,7 @@ export default function Component_summary({ data, fname }: Props) {
                                 <div>
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
-                                        : data[data.length - 1]?.weight
+                                        : data[data.length-1]?.weight
                                     }
                                 </div>
                                 <div>ซม.</div>
@@ -282,7 +282,7 @@ export default function Component_summary({ data, fname }: Props) {
                                 <div>
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
-                                        : data[data.length - 1]?.height
+                                        : data[data.length-1]?.height
                                     }
                                 </div>
                                 <div>กก.</div>
