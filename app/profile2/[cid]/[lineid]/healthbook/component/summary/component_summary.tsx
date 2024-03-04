@@ -15,7 +15,7 @@ import {
 
 interface Props {
     data: HealthProps[];
-    fname:any;
+    fname: any;
 }
 
 interface HealthProps {
@@ -252,13 +252,13 @@ export default function Component_summary({ data, fname }: Props) {
 
             <div className="grid grid-cols-5 gap-2 items-center justify-center pb-2">
                 <div className="col-span-2 flex items-center justify-center">
-                    {data[data.length-1]?.bmi >= 18.5 && data[data.length-1]?.bmi <= 22.9 ?
+                    {data[data.length - 1]?.bmi >= 18.5 && data[data.length - 1]?.bmi <= 22.9 ?
                         <Image src={"/hygge_healthbook/BMI_good.svg"} priority alt="Image" width={90} height={100} className="" />
-                        : (data[data.length-1]?.bmi < 18.5 || (data[data.length-1]?.bmi >= 23.0 && data[data.length-1]?.bmi <= 24.9) ?
+                        : (data[data.length - 1]?.bmi < 18.5 || (data[data.length - 1]?.bmi >= 23.0 && data[data.length - 1]?.bmi <= 24.9) ?
                             <Image src={"/hygge_healthbook/BMI_normal.svg"} priority alt="Image" width={90} height={100} className="" />
-                            : (data[data.length-1]?.bmi > 25.0 ?
+                            : (data[data.length - 1]?.bmi > 25.0 ?
                                 <Image src={"/hygge_healthbook/BMI_bad.svg"} priority alt="Image" width={90} height={100} className="" />
-                                : ""
+                                : <div className="text-center text-xl text-gray-400">ไม่พบข้อมูล</div>
                             )
                         )
                     }
@@ -271,7 +271,7 @@ export default function Component_summary({ data, fname }: Props) {
                                 <div>
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
-                                        : data[data.length-1]?.weight
+                                        : data[data.length - 1]?.weight
                                     }
                                 </div>
                                 <div>ซม.</div>
@@ -282,7 +282,7 @@ export default function Component_summary({ data, fname }: Props) {
                                 <div>
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
-                                        : data[data.length-1]?.height
+                                        : data[data.length - 1]?.height
                                     }
                                 </div>
                                 <div>กก.</div>
@@ -371,17 +371,16 @@ export default function Component_summary({ data, fname }: Props) {
                         <div className="col-span-7 grid grid-cols-3 items-center justify-center bg-[#E1E1E1] px-1 py-3 pb-2 ">
                             <div className="flex items-center justify-center gap-2 text-sm">
                                 <div className="">ค่าต่ำสุด</div>
-                                <div className="text-base text-[#1628C8] font-bold">{minGlucose == 999999999 ? "-" : minGlucose}</div>
+                                <div className="text-base text-[#1628C8] font-bold">{minGlucose == 999999999 || minGlucose == undefined ? "-" : minGlucose}</div>
                             </div>
                             <div className="flex items-center justify-center gap-2 text-sm">
                                 <div>ค่าสูงสุด</div>
-                                <div className="text-base text-[#1628C8] font-bold">{maxGlucose == (-1) ? "-" : maxGlucose}</div>
+                                <div className="text-base text-[#1628C8] font-bold">{maxGlucose == (-1) || maxGlucose == undefined ? "-" : maxGlucose}</div>
                             </div>
                             <div className="flex items-center justify-center gap-2 text-sm">
                                 <div>ค่าเฉลี่ย</div>
-                                <div className="text-base text-[#AF16C8] font-bold">{avgGlucose == 0 ? "-" : Number(avgGlucose).toFixed(2)}</div>
+                                <div className="text-base text-[#AF16C8] font-bold">{avgGlucose == undefined ? "-" : Number(avgGlucose).toFixed(2)}</div>
                             </div>
-
                         </div>
                         <div className="col-span-7 flex flex-col justify-center text-xs px-1 pb-2">
                             <table className="w-full">
@@ -405,7 +404,7 @@ export default function Component_summary({ data, fname }: Props) {
                                             </>
                                             :
                                             <td colSpan={7} rowSpan={4}>
-                                                <div className="text-center text-3xl text-gray-400">ไม่พบข้อมูล</div>
+                                                <div className="text-center text-4xl text-gray-400">ไม่พบข้อมูล</div>
                                             </td>
                                         }
                                         <td className="col-span-3 pl-2 pt-3">
