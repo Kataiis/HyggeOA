@@ -95,7 +95,7 @@ interface HealthProps {
 const baseURL = process.env.APIKey;
 
 
-export default function Home(params: { cid: string, lineid: string }) {
+export default function Home({ params }: { params: { cid: string, lineid: string } }) {
     const { HealthStore, setHealthStore, removeHealthStore } = useHealthStore();
     const [date, setDate] = useState<Date | undefined>(new Date(HealthStore?.create_date))
     const [calendarOpen, setCalendarOpen] = useState(false);
