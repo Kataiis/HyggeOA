@@ -250,14 +250,20 @@ export default function Component_summary({ data, fname }: Props) {
                 <div className="text-center">{`ข้อมูลจากการบันทึกประวัติสุขภาพของคุณ`}</div>
             </div>
 
-            <div className="grid grid-cols-5 gap-2 items-center justify-center pb-2">
+            <div className="grid grid-cols-5 gap-2 items-center justify-center mb-2 py-2">
                 <div className="col-span-2 flex items-center justify-center">
                     {data[data.length - 1]?.bmi >= 18.5 && data[data.length - 1]?.bmi <= 22.9 ?
-                        <Image src={"/hygge_healthbook/BMI_good.svg"} priority alt="Image" width={90} height={100} className="" />
+                        <div className="flex items-center justify-center w-[100px] h-[90px]">
+                            <Image src={"/hygge_healthbook/BMI_good.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
+                        </div>
                         : (data[data.length - 1]?.bmi < 18.5 || (data[data.length - 1]?.bmi >= 23.0 && data[data.length - 1]?.bmi <= 24.9) ?
-                            <Image src={"/hygge_healthbook/BMI_normal.svg"} priority alt="Image" width={90} height={100} className="" />
+                            <div className="flex items-center justify-center w-[100px] h-[90px]">
+                                <Image src={"/hygge_healthbook/BMI_normal.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
+                            </div>
                             : (data[data.length - 1]?.bmi > 25.0 ?
-                                <Image src={"/hygge_healthbook/BMI_bad.svg"} priority alt="Image" width={90} height={100} className="" />
+                                <div className="flex items-center justify-center w-[100px] h-[90px]">
+                                    <Image src={"/hygge_healthbook/BMI_bad.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
+                                </div>
                                 : <div className="text-center text-xl text-gray-400">ไม่พบข้อมูล</div>
                             )
                         )
@@ -407,9 +413,11 @@ export default function Component_summary({ data, fname }: Props) {
                                                 <div className="text-center text-4xl text-gray-400">ไม่พบข้อมูล</div>
                                             </td>
                                         }
-                                        <td className="col-span-3 pl-2 pt-3">
+                                        <td className="col-span-3 pl-2 py-2 flex items-center ">
                                             <div className="flex items-center justify-left gap-2">
-                                                <Image src={"/hygge_healthbook/icon_morning.svg"} priority alt="Image" width={25} height={25} className="flex flex-row text-center" />
+                                                <div className="w-[25px] h-[25px">
+                                                    <Image src={"/hygge_healthbook/icon_morning.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
+                                                </div>
                                                 {`เช้า`}
                                             </div>
                                         </td>
@@ -434,9 +442,11 @@ export default function Component_summary({ data, fname }: Props) {
                                             :
                                             ""
                                         }
-                                        <td className="col-span-3 pl-2 pt-3">
+                                        <td className="col-span-3 pl-2 py-2 flex items-center ">
                                             <div className="flex items-center justify-left gap-2">
-                                                <Image src={"/hygge_healthbook/icon_day.svg"} priority alt="Image" width={25} height={25} className="flex flex-row text-center" />
+                                                <div className="w-[25px] h-[25px">
+                                                    <Image src={"/hygge_healthbook/icon_day.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
+                                                </div>
                                                 {`กลางวัน`}
                                             </div>
                                         </td>
@@ -461,9 +471,11 @@ export default function Component_summary({ data, fname }: Props) {
                                             :
                                             ""
                                         }
-                                        <td className="col-span-3 pl-2 pt-3">
+                                        <td className="col-span-3 pl-2 py-2 flex items-center ">
                                             <div className="flex items-center justify-left gap-2">
-                                                <Image src={"/hygge_healthbook/icon_evening.svg"} priority alt="Image" width={25} height={25} className="flex flex-row text-center" />
+                                                <div className="w-[25px] h-[25px">
+                                                    <Image src={"/hygge_healthbook/icon_evening.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
+                                                </div>
                                                 {`เย็น`}
                                             </div>
                                         </td>
@@ -488,9 +500,11 @@ export default function Component_summary({ data, fname }: Props) {
                                             :
                                             ""
                                         }
-                                        <td className="col-span-3 pl-2 pt-3">
+                                        <td className="col-span-3 pl-2 py-2 flex items-center ">
                                             <div className="flex items-center justify-left gap-2">
-                                                <Image src={"/hygge_healthbook/icon_night.svg"} priority alt="Image" width={25} height={25} className="flex flex-row text-center" />
+                                                <div className="w-[28px] h-[28px]">
+                                                    <Image src={"/hygge_healthbook/icon_night.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
+                                                </div>
                                                 {`ก่อนนอน`}
                                             </div>
                                         </td>
@@ -501,13 +515,13 @@ export default function Component_summary({ data, fname }: Props) {
                                             <td key={index} className="text-center min-w-[30px]">
                                                 {index + 1 < GlucoseData.length ?
                                                     <div className="flex flex-col items-center justify-center ">
-                                                        <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
+                                                        <div className="w-2 h-2 my-1 mt-3 bg-[#4F4F4F] rounded-full"></div>
                                                         <div>{index + 1}</div>
                                                     </div>
                                                     : (
                                                         index + 1 == GlucoseData.length ?
                                                             <div className="flex flex-col items-center justify-center ">
-                                                                <div className="w-2 h-2 my-1 bg-[#4F4F4F] rounded-full"></div>
+                                                                <div className="w-2 h-2 my-1 mt-3 bg-[#4F4F4F] rounded-full"></div>
                                                                 <div>ล่าสุด</div>
                                                             </div>
                                                             : (

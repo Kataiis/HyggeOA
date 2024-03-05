@@ -51,9 +51,7 @@ export default function AlertStatus({ isOpen, setIsOpenAlert, isStatus, title, m
 
         <>
             {openDialog && (
-                <Dialog >
-
-                    {/* <Dialog open={openDialog} onOpenChange={(update) => { setOpenDialog(update); setIsOpenAlert(update); }}/> */}
+                <Dialog onOpenChange={(update) => { setOpenDialog(update); setIsOpenAlert(update); }}>
                     <DialogTrigger asChild />
                     <DialogContent className="">
                         <DialogHeader className="pt-5">
