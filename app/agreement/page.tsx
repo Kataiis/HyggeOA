@@ -57,7 +57,7 @@ function Agreement() {
                         showConfirmButton: false,
                         timer: 1000
                     }).then(() => {
-                        router.replace('/profile2/' + Patient?.cid + "/" + Patient.token_line)
+                        router.replace('/profile')
                         // router.replace('/profile')
                     });
 
@@ -73,7 +73,8 @@ function Agreement() {
                 //     showConfirmButton: false,
                 //     timer: 2000
                 // });
-                router.replace('/profile2/' + Patient?.cid + "/" + Patient.token_line)
+                router.replace('/profile')
+
             }
         }
     };

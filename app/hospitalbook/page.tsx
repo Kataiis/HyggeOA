@@ -3,7 +3,6 @@ import axios from "axios";
 import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { useRouter, } from "next/navigation";
-// import { usePatientStore } from "../store";
 import Swal from "sweetalert2";
 import liff from "@line/liff"
 import GetOS from "@line/liff/get-os";
@@ -12,6 +11,7 @@ import Image from 'next/image'
 import refresh from '@/public/refresh.png'
 import medicalhistory from '@/public/medical-history.gif'
 import loadingpage from '@/public/loading.png'
+import { usePatientStore } from "../store";
 
 
 const Hospitalbook = () => {
@@ -21,14 +21,10 @@ const Hospitalbook = () => {
     const [data, setData] = useState([]);
     const [loading, setloading] = useState(true);
 
-
-    // const Patient: any = usePatientStore((state: any) => state.patient);
-
+    const Patient: any = usePatientStore((state: any) => state.patient);
     const [checkuser, setCheckuser] = useState(false);
     const [user, setUser] = useState<any>([]);
 
-
-    // const updatePatient: any = usePatientStore((state: any) => state.updatePatient);
     const [os, setOs] = useState<string>();
     const [lineId, setLineId] = useState("");
     const [profile, setProfile] = useState<any>({});
@@ -83,7 +79,7 @@ const Hospitalbook = () => {
                         })
                             .then(async () => {
                                
-                                router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                                router.replace("/profile")
                             });
                     }, 30000);
                     return () => clearTimeout(timer);
@@ -96,7 +92,7 @@ const Hospitalbook = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
-                    router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                    router.replace("/profile")
                     
 
                 }
