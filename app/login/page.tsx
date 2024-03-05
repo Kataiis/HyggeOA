@@ -17,7 +17,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import Image from 'next/image'
-import hygge from '@/public/hygge.png'
+import hygge_logo from '@/public/hygge_logo.png'
 
 import liff from "@line/liff"
 import { usePatientStore } from "../store";
@@ -158,16 +158,12 @@ const Login = () => {
             <span style={{ fontSize: "9em", marginRight: "10px" }}>
                 <Image
                     priority
-                    src={hygge}
-                    alt="hygge"
-                    width={250}
-
-
+                    src={hygge_logo}
+                    alt="logo"
+                    width={145}
                 />
-
-
             </span>
-
+            <p className="mt-5 text-3xl text-[#ffffff]">ดิจิทัล เซอร์วิส</p>
 
             <br></br>
 
@@ -229,7 +225,7 @@ const Login = () => {
                                 <Button
                                     type="submit"
                                     variant="outline"
-                                    className="bg-[#47799A] text-grey drop-shadow-md text-md hover:bg-[#eaefe8] hover:text-grey hover:text-lg"
+                                    className="bg-[#47799A] text-grey drop-shadow-md text-md hover:bg-[#eaefe8] hover:text-grey hover:text-lg text-[#ffffff] h-[45px] w-[250px]"
                                     disabled={isDisble}
 
                                 >
@@ -240,7 +236,18 @@ const Login = () => {
 
                     </FormProvider>
                 </CardContent>
+                <div className="flex justify-center mb-5">
+                    <Button
+                        type="submit"
+                        variant="outline"
+                        className="bg-[#53AE85] text-grey drop-shadow-md text-md hover:bg-[#eaefe8] hover:text-grey hover:text-lg text-[#ffffff] h-[45px] w-[250px]"
+                        disabled={isDisble}
+                        onClick={() => router.replace('/comingsoon')}
 
+
+                    >
+                        ลืม password
+                    </Button></div>
             </Card>
             <div className="mt-10">
                 <Button

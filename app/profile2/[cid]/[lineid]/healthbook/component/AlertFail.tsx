@@ -32,8 +32,8 @@ interface Props {
     isStatus: boolean;
     title: string;
     message: string;
-    cid:any;
-    lineid:any;
+    cid: any;
+    lineid: any;
 }
 
 
@@ -51,7 +51,9 @@ export default function AlertStatus({ isOpen, setIsOpenAlert, isStatus, title, m
 
         <>
             {openDialog && (
-                <Dialog open={openDialog} onOpenChange={(update) => { setOpenDialog(update); setIsOpenAlert(update); }}>
+                <Dialog >
+
+                    {/* <Dialog open={openDialog} onOpenChange={(update) => { setOpenDialog(update); setIsOpenAlert(update); }}/> */}
                     <DialogTrigger asChild />
                     <DialogContent className="">
                         <DialogHeader className="pt-5">
