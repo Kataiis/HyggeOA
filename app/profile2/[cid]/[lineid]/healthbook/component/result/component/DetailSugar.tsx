@@ -40,7 +40,7 @@ export default function DetailSugar({ date, morning, afternoon, evening, night }
     <Dialog>
       <DialogTrigger asChild>
         <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#39CC88] hover:bg-[#9ce4c2] shadow-lg">
-          <Image src={"/hygge_healthbook/icon_detail.svg"} priority alt="Image" width={20} height={20} className="flex flex-row item-center justify-self-center" />
+          <Image src={"/hygge_healthbook/icon_detail.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-1 w-auto h-full"  />
         </Button>
       </DialogTrigger>
       <DialogContent className="" >
@@ -57,7 +57,7 @@ export default function DetailSugar({ date, morning, afternoon, evening, night }
           <CardContent className="grid grid-cols-5 gap-2 items-center justify-center p-3">
             <div className="flex items-center h-10 justify-end col-span-4 text-lg">
               ก่อนอาหาร เช้า
-              <Image src={"/hygge_healthbook/icon_morning.svg"} priority alt="Image" width={35} height={35} className="flex flex-row text-center pl-2" />
+              <Image src={"/hygge_healthbook/icon_morning.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
             </div>
             <div className="flex items-center h-10 justify-center col-span-1 text-[#39CC88] font-bold">
               {morning}
@@ -69,7 +69,7 @@ export default function DetailSugar({ date, morning, afternoon, evening, night }
           <CardContent className="grid grid-cols-5 gap-2 items-center justify-center p-3">
             <div className="flex items-center h-10 justify-end col-span-4 text-lg">
               ก่อนอาหาร กลางวัน
-              <Image src={"/hygge_healthbook/icon_day.svg"} priority alt="Image" width={35} height={35} className="flex flex-row text-center pl-2" />
+              <Image src={"/hygge_healthbook/icon_day.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
             </div>
             <div className="flex items-center h-10 justify-center col-span-1 text-[#39CC88] font-bold">
               {afternoon}
@@ -81,7 +81,7 @@ export default function DetailSugar({ date, morning, afternoon, evening, night }
           <CardContent className="grid grid-cols-5 gap-2 items-center justify-center p-3">
             <div className="flex items-center h-10 justify-end col-span-4 text-lg">
               ก่อนอาหาร เย็น
-              <Image src={"/hygge_healthbook/icon_evening.svg"} priority alt="Image" width={35} height={35} className="flex flex-row text-center pl-2" />
+              <Image src={"/hygge_healthbook/icon_evening.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
             </div>
             <div className="flex items-center h-10 justify-center col-span-1 text-[#39CC88] font-bold">
               {evening}
@@ -93,7 +93,7 @@ export default function DetailSugar({ date, morning, afternoon, evening, night }
           <CardContent className="grid grid-cols-5 gap-2 items-center justify-center p-3">
             <div className="flex items-center h-10 justify-end col-span-4 text-lg">
               ก่อนนอน
-              <Image src={"/hygge_healthbook/icon_night.svg"} priority alt="Image" width={35} height={35} className="flex flex-row text-center pl-2" />
+              <Image src={"/hygge_healthbook/icon_night.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
             </div>
             <div className="flex items-center h-10 justify-center col-span-1 text-[#39CC88] font-bold">
               {night}

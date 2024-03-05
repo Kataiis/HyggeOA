@@ -511,7 +511,7 @@ export default function Home(params: { cid: string, lineid: string }) {
 
                         <div className="flex items-center h-8 justify-end col-span-3 text-base">
                             ก่อนอาหาร เช้า
-                            <Image src={"/hygge_healthbook/icon_morning.svg"} priority alt="Image" width={35} height={35} className="flex flex-row text-center pl-2" />
+                            <Image src={"/hygge_healthbook/icon_morning.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="py-[5px] pl-2 w-auto h-full" />
                         </div>
                         <div className="flex items-center h-8 justify-center col-span-2 ">
                             <FormField
@@ -530,7 +530,7 @@ export default function Home(params: { cid: string, lineid: string }) {
 
                         <div className="flex items-center h-8 justify-end col-span-3 text-base">
                             ก่อนอาหาร กลางวัน
-                            <Image src={"/hygge_healthbook/icon_day.svg"} priority alt="Image" width={35} height={35} className="flex flex-row text-center pl-2" />
+                            <Image src={"/hygge_healthbook/icon_day.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="py-[3px] pl-2 w-auto h-full" />
                         </div>
                         <div className="flex items-center h-8 justify-center col-span-2 ">
                             <FormField
@@ -549,7 +549,7 @@ export default function Home(params: { cid: string, lineid: string }) {
 
                         <div className="flex items-center h-8 justify-end col-span-3 text-base">
                             ก่อนอาหาร เย็น
-                            <Image src={"/hygge_healthbook/icon_evening.svg"} priority alt="Image" width={35} height={35} className="flex flex-row text-center pl-2" />
+                            <Image src={"/hygge_healthbook/icon_evening.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="py-[5px] pl-2 w-auto h-full" />
                         </div>
                         <div className="flex items-center h-8 justify-center col-span-2 ">
                             <FormField
@@ -568,7 +568,7 @@ export default function Home(params: { cid: string, lineid: string }) {
 
                         <div className="flex items-center h-8 justify-end col-span-3 text-base">
                             ก่อนนอน
-                            <Image src={"/hygge_healthbook/icon_night.svg"} priority alt="Image" width={35} height={35} className="flex flex-row text-center pl-2" />
+                            <Image src={"/hygge_healthbook/icon_night.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="py-[5px] pl-2 w-auto h-full"/>
                         </div>
                         <div className="flex items-center h-8 justify-center col-span-2 ">
                             <FormField

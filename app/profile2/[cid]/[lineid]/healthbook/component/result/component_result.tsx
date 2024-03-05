@@ -17,7 +17,7 @@ interface Props {
   type: any;
   data: HealthProps[];
   cid: any;
-  lineid:any
+  lineid: any
 
 }
 
@@ -40,7 +40,7 @@ interface HealthProps {
   weight: any;
 }
 
-export default function Component_result( { title, description, type, data, cid, lineid }: Props) {
+export default function Component_result({ title, description, type, data, cid, lineid }: Props) {
   const { HealthStore, setHealthStore, removeHealthStore } = useHealthStore();
 
 
@@ -91,15 +91,20 @@ export default function Component_result( { title, description, type, data, cid,
     <div className='bg-white flex flex-col'>
       <div className=" fixed w-full mt-[170px]">
         <div className="flex flex-col items-center justify-center text-white text-xl font-bold bg-[#39CC88] h-[60px] ">
-          {title}
-          {description == "" ? "" : <div className="text-base font-normal">{description}</div>}
+          {description == "" ?
+            <div>{title}</div>
+            : <>
+              <div className="mt-3">{title}</div>
+              <div className="-mt-1 text-base font-normal">{description}</div>
+            </>
+          }
         </div>
 
         <div className="w-full h-12 grid grid-cols-8 gap-1 items-center justify-center px-4 bg-white">
           <div className="w-full flex items-center justify-center">
             <Link href={`../../${cid}/${lineid}/healthbook/add`} onClick={() => handleSetHealthStore(0, true)}>
               <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#49DABD] hover:bg-[#9fdfd2] shadow-lg">
-                <Image src={"/hygge_healthbook/icon_add.svg"} priority alt="Image" width={20} height={20} className="flex flex-row item-center justify-self-center" />
+                <Image src={"/hygge_healthbook/icon_add.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-1 w-auto h-full" />
               </Button>
             </Link>
           </div>
@@ -128,7 +133,7 @@ export default function Component_result( { title, description, type, data, cid,
                 <div className="w-full flex justify-center  ">
                   <Link href={`../../${cid}/${lineid}/healthbook/add`} onClick={() => handleSetHealthStore(index, false)}>
                     <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#F98F86] hover:bg-[#fac0bb] shadow-lg">
-                      <Image src={"/hygge_healthbook/icon_edit.svg"} priority alt="Image" width={20} height={20} className="flex flex-row item-center justify-self-center" />
+                      <Image src={"/hygge_healthbook/icon_edit.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-1 w-auto h-full" />
                     </Button>
                   </Link>
                 </div>
