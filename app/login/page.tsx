@@ -247,7 +247,8 @@ const Login = () => {
 
                     >
                         ลืม password
-                    </Button></div>
+                    </Button>
+                </div>
             </Card>
             <div className="mt-10">
                 <Button
