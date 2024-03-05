@@ -58,7 +58,7 @@ function Agreement() {
                         timer: 1000
                     }).then(() => {
                         router.replace('/profile')
-                        // router.replace('/profile')
+                      
                     });
 
                 }, 30000);
