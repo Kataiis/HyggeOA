@@ -69,12 +69,12 @@ export default function Home({ params }: { params: { cid: string, lineid: string
       await setIsloading(true);
     }
     fetchdata()
-    // const getPatient = async () => {
-    //   const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+    const getPatient = async () => {
+      const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
 
 
-    // }
-    // getPatient();
+    }
+    getPatient();
   }, []);
 
 
@@ -102,7 +102,8 @@ export default function Home({ params }: { params: { cid: string, lineid: string
     <div className='bg-white h-screen flex flex-col'>
       <div className="fixed w-full">
         <div className="h-[69px] bg-[#2D95A1] flex items-center justify-between p-2 text-white font-medium">
-          <div onClick={() => setActiveTab("summary")} className="pr-4"><ChevronLeft size={40} /></div>
+          <div onClick={() => { setActiveTab("summary"); { activeTab == "summary" ? router.push(`/`) : "" }; }}
+            className="pr-4"><ChevronLeft size={40} /></div>
           <div className='text-xl'>สมุดสุขภาพ</div>
           <div className="w-[40px]">
           </div>
@@ -139,22 +140,22 @@ export default function Home({ params }: { params: { cid: string, lineid: string
           </TabsTrigger>
         </TabsList>
         <TabsContent value="weight">
-          <Component_result title={"น้ำหนัก"} description={""} type={"weight"} data={sortedDataDESC} cid={patient.cid} />
+          <Component_result title={"น้ำหนัก"} description={""} type={"weight"} data={sortedDataDESC} cid={patient.cid} lineid={params.lineid} />
         </TabsContent>
         <TabsContent value="height">
-          <Component_result title={"ส่วนสูง"} description={""} type={"height"} data={sortedDataDESC} cid={patient.cid} />
+          <Component_result title={"ส่วนสูง"} description={""} type={"height"} data={sortedDataDESC} cid={patient.cid} lineid={params.lineid} />
         </TabsContent>
         <TabsContent value="pressure">
-          <Component_result title={"ความดันโลหิต (บน/ล่าง)"} description={""} type={"pressure"} data={sortedDataDESC} cid={patient.cid} />
+          <Component_result title={"ความดันโลหิต (บน/ล่าง)"} description={""} type={"pressure"} data={sortedDataDESC} cid={patient.cid} lineid={params.lineid} />
         </TabsContent>
         <TabsContent value="pulse">
-          <Component_result title={"อัตราการเต้นของหัวใจ"} description={""} type={"pulse"} data={sortedDataDESC} cid={patient.cid} />
+          <Component_result title={"อัตราการเต้นของหัวใจ"} description={""} type={"pulse"} data={sortedDataDESC} cid={patient.cid} lineid={params.lineid} />
         </TabsContent>
         <TabsContent value="bloodsugar">
-          <Component_result title={"ค่าน้ำตาลในเลือด"} description={"(แสดงค่าบันทึก ก่อนอาหารเช้า)"} type={"bloodsugar"} data={sortedDataDESC} cid={patient.cid} />
+          <Component_result title={"ค่าน้ำตาลในเลือด"} description={"(แสดงค่าบันทึก ก่อนอาหารเช้า)"} type={"bloodsugar"} data={sortedDataDESC} cid={patient.cid} lineid={params.lineid} />
         </TabsContent>
         <TabsContent value="bmi">
-          <Component_result title={"ดัชนีมวลกาย"} description={""} type={"bmi"} data={sortedDataDESC} cid={patient.cid} />
+          <Component_result title={"ดัชนีมวลกาย"} description={""} type={"bmi"} data={sortedDataDESC} cid={patient.cid} lineid={params.lineid} />
         </TabsContent>
         <TabsContent value="summary">
           {FirstTimeStore ? <div className="absolute top-3 right-3"><Component_help /></div> : ""}

@@ -17,6 +17,7 @@ interface Props {
   type: any;
   data: HealthProps[];
   cid: any;
+  lineid:any
 
 }
 
@@ -39,7 +40,7 @@ interface HealthProps {
   weight: any;
 }
 
-export default function Component_result({ title, description, type, data, cid }: Props) {
+export default function Component_result( { title, description, type, data, cid, lineid }: Props) {
   const { HealthStore, setHealthStore, removeHealthStore } = useHealthStore();
 
 
@@ -96,7 +97,7 @@ export default function Component_result({ title, description, type, data, cid }
 
         <div className="w-full h-12 grid grid-cols-8 gap-1 items-center justify-center px-4 bg-white">
           <div className="w-full flex items-center justify-center">
-            <Link href={`/add`} onClick={() => handleSetHealthStore(0, true)}>
+            <Link href={`../../${cid}/${lineid}/healthbook/add`} onClick={() => handleSetHealthStore(0, true)}>
               <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#49DABD] hover:bg-[#9fdfd2] shadow-lg">
                 <Image src={"/hygge_healthbook/icon_add.svg"} priority alt="Image" width={20} height={20} className="flex flex-row item-center justify-self-center" />
               </Button>
@@ -125,7 +126,7 @@ export default function Component_result({ title, description, type, data, cid }
             {data.map((item, index) => (
               <div key={index} className="w-full grid grid-cols-8 gap-1 items-center justify-center my-2 px-4">
                 <div className="w-full flex justify-center  ">
-                  <Link href={`/add`} onClick={() => handleSetHealthStore(index, false)}>
+                  <Link href={`../../${cid}/${lineid}/healthbook/add`} onClick={() => handleSetHealthStore(index, false)}>
                     <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#F98F86] hover:bg-[#fac0bb] shadow-lg">
                       <Image src={"/hygge_healthbook/icon_edit.svg"} priority alt="Image" width={20} height={20} className="flex flex-row item-center justify-self-center" />
                     </Button>

@@ -95,7 +95,7 @@ interface HealthProps {
 const baseURL = process.env.APIKey;
 
 
-export default function Home() {
+export default function Home(params: { cid: string, lineid: string }) {
     const { HealthStore, setHealthStore, removeHealthStore } = useHealthStore();
     const [date, setDate] = useState<Date | undefined>(new Date(HealthStore?.create_date))
     const [calendarOpen, setCalendarOpen] = useState(false);
@@ -107,7 +107,7 @@ export default function Home() {
 
 
     const handleGoBack = () => {
-        router.push('/');
+        router.push(`../healthbook`);
     };
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -269,11 +269,11 @@ export default function Home() {
         <div className='bg-white h-screen flex flex-col gap-4'>
 
             {isOpenAlert.type == 'insert' ?
-                <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={true} title={`เพิ่มข้อมูลสำเร็จ`} message={`เพิ่มข้อมูลวันที่ ${date ? format(date, "P", { locale: th }) : ""} สำเร็จแล้ว`} />
+                <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={true} title={`เพิ่มข้อมูลสำเร็จ`} message={`เพิ่มข้อมูลวันที่ ${date ? format(date, "P", { locale: th }) : ""} สำเร็จแล้ว` } cid={params.cid} lineid={params.lineid}/>
                 : <div>
                     {isOpenAlert.type == 'update' ?
-                        <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={true} title={`อัพเดทข้อมูลสำเร็จ`} message={`อัพเดทข้อมูลวันที่ ${date ? format(date, "P", { locale: th }) : ""} สำเร็จแล้ว`} />
-                        : <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={false} title={`ดำเนินไม่การสำเร็จ`} message={`การเพิ่มข้อมูลผิดพลาด\nกรุณาตรวจสอบใหม่อีกครั้ง`} />
+                        <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={true} title={`อัพเดทข้อมูลสำเร็จ`} message={`อัพเดทข้อมูลวันที่ ${date ? format(date, "P", { locale: th }) : ""} สำเร็จแล้ว`} cid={params.cid} lineid={params.lineid}/>
+                        : <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={false} title={`ดำเนินไม่การสำเร็จ`} message={`การเพิ่มข้อมูลผิดพลาด\nกรุณาตรวจสอบใหม่อีกครั้ง`} cid={params.cid} lineid={params.lineid}/>
                     }
                 </div>
             }

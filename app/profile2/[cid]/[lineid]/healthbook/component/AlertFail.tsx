@@ -32,11 +32,13 @@ interface Props {
     isStatus: boolean;
     title: string;
     message: string;
+    cid:any;
+    lineid:any;
 }
 
 
 
-export default function AlertStatus({ isOpen, setIsOpenAlert, isStatus, title, message }: Props) {
+export default function AlertStatus({ isOpen, setIsOpenAlert, isStatus, title, message, cid, lineid }: Props) {
 
     const [openDialog, setOpenDialog] = useState<boolean>(isOpen);
     const router = useRouter()
@@ -74,7 +76,7 @@ export default function AlertStatus({ isOpen, setIsOpenAlert, isStatus, title, m
                                 <Button className={`mx-7 rounded-3xl border-0 outline-0 bg-[#24b06c] hover:bg-[#85e0b4]`}
                                     onClick={() => {
                                         setOpenDialog(false);
-                                        router.push('/');
+                                        router.push(`../healthbook`);
                                     }
                                     }>
                                     ตกลง
