@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import th from "dayjs/locale/th";
 import { CirclesWithBar } from "react-loader-spinner";
 import { usePatientStore } from "@/app/store";
+import Navbar from "../components/Navbar";
 
 function Drug() {
     const pathUrl: any = process.env.pathUrl;
@@ -48,6 +49,7 @@ function Drug() {
 
     return (
         <div>
+            <Navbar/>
             <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
                     {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}

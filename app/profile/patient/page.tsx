@@ -11,6 +11,7 @@ import lab from '@/public/Lab.png'
 import xray from '@/public/xray.png'
 import back from '@/public/back.png'
 import { usePatientStore } from '@/app/store';
+import Navbar from '../components/Navbar';
 
 
 function Patient() {
@@ -26,6 +27,7 @@ function Patient() {
     return (
         <div> {loading && (
             <><div>
+                 <Navbar/>
                 <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
                     <Image
                         priority
@@ -76,7 +78,7 @@ function Patient() {
                     <Button
                         className="bg-[#4D57D3] text-[#ffffff] h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/appointment')}
+                        onClick={() => router.replace('/profile/appointment')}
                     >
                         <div className="flex ">
                             <div className="flex-initial w-30">
@@ -98,7 +100,7 @@ function Patient() {
 
                     <Button className="bg-[#76DA49] text-[#ffffff] h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/drug')}
+                        onClick={() => router.replace('/profile/drug')}
                     >
                         <div className="flex ">
                             <div className="flex-initial w-30 ">
@@ -119,7 +121,7 @@ function Patient() {
 
                     <Button className="bg-[#E17104] text-[#ffffff] text-lg h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/drugallergy')}
+                        onClick={() => router.replace('/profile/drugallergy')}
                     >  <div className="flex ">
                             <div className="flex-initial w-30 ">
                                 <Image
@@ -136,7 +138,7 @@ function Patient() {
 
                     <Button className="bg-[#6BB1E1] text-[#ffffff] text-lg h-20 w-full rounded-xl shadow-md shadow-gray-500/100 "
                         type="button"
-                        onClick={() => router.replace('/laboratory')}
+                        onClick={() => router.replace('/profile/laboratory')}
 
                     >  <div className="flex ">
                             <div className="flex-initial w-30 ">
@@ -155,7 +157,7 @@ function Patient() {
 
                     <Button className="bg-[#B96BE1] text-[#ffffff] text-lg h-20 w-full rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace('/xray')}>
+                        onClick={() => router.replace('/profile/xray')}>
                         <div className="flex ">
                             <div className="flex-initial w-30 ">
                                 <Image

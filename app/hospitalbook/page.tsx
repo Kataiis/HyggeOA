@@ -17,7 +17,7 @@ import loadingpage from '@/public/loading.png'
 const Hospitalbook = () => {
     const router = useRouter();
     const pathUrl: any = process.env.pathUrl;
-    const hyggeOAliff: any = process.env.HyggeOAliff;
+    const HyggeOAliff: any = process.env.HyggeOAliff;
     const [data, setData] = useState([]);
     const [loading, setloading] = useState(true);
 
@@ -83,7 +83,7 @@ const Hospitalbook = () => {
                         })
                             .then(async () => {
                                
-                                router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                                router.replace("/profile")
                             });
                     }, 30000);
                     return () => clearTimeout(timer);
@@ -96,7 +96,7 @@ const Hospitalbook = () => {
                         showConfirmButton: false,
                         timer: 2000
                     });
-                    router.replace("/profile2"+"/"+Patient?.cid+"/"+lineid)
+                    router.replace("/profile")
                     
 
                 }
@@ -107,7 +107,7 @@ const Hospitalbook = () => {
     const initLiff = async () => {
         liff.use(new GetOS());
         setOs(liff.getOS());
-        await liff.init({ liffId: hyggeOAliff }).then(async () => {
+        await liff.init({ liffId: HyggeOAliff }).then(async () => {
             if (!liff.isLoggedIn()) {
                 liff.login();
             } else {

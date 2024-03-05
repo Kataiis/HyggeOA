@@ -14,7 +14,7 @@ function Navbar() {
 
 
     const backPage = () => {
-        router.replace('/patient')
+        router.replace('/profile/patient')
     };
 
     useEffect(() => {

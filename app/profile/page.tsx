@@ -134,7 +134,7 @@ function Profile() {
                 <Button className="bg-[#49DABD] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
                     type="button"
                     // onClick={() => updatedata()}
-                    onClick={() => router.replace('./patient')}
+                    onClick={() => router.replace('/profile/patient')}
 
                 >สมุดโรงพยาบาล</Button>
 
