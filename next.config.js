@@ -9,7 +9,7 @@ const nextConfig = {
 
       
         // HyggeOAliff: '2003391401-jDvm8MlZ', 
-        APIKey: 'http://35.198.244.98:4000',
+        APIKey: 'https://apimobile.hyggecode.com',
         // test //
         HyggeOAliff: '2002893867-MzGeD6nL',
     }
