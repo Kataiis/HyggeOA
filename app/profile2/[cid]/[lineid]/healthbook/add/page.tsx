@@ -237,10 +237,11 @@ export default function Home({ params }: { params: { cid: string, lineid: string
                     bmi: Number(data.weight) / ((Number(data.height) / 100) * (Number(data.height) / 100)),
                 }).then((response) => {
                     setIsOpenAlert({ open: true, type: 'update' })
+                    console.log("update")
                 })
 
             } else {
-                console.log("insert")
+                // console.log("insert")
                 await axios.post(`${baseURL}/bookinghealth`, {
                     cid: HealthStore?.cid,
                     create_date: `${data.create_date.getFullYear()}-${data.create_date.getMonth() + 1}-${data.create_date.getDate()}`,
@@ -259,6 +260,8 @@ export default function Home({ params }: { params: { cid: string, lineid: string
                     bmi: Number(data.weight) / ((Number(data.height) / 100) * (Number(data.height) / 100)),
                 }).then((response) => {
                     setIsOpenAlert({ open: true, type: 'insert' })
+                    console.log("insert")
+
                 })
             }
         }
