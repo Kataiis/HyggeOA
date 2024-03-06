@@ -22,7 +22,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useHealthStore } from "../component/healthbookStorage";
+import { useHealthStore } from "@/app/store";
 import axios from "axios";
 import AlertFail from "../component/AlertFail";
 

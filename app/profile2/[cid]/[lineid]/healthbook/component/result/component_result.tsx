@@ -7,7 +7,7 @@ import Link from "next/link";
 import DetailSugar from "./component/DetailSugar";
 import { th } from "date-fns/locale";
 import { format } from "date-fns";
-import { useHealthStore } from "../healthbookStorage";
+import { useHealthStore } from "@/app/store";
 import { useState } from "react";
 
 

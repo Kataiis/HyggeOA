@@ -20,7 +20,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { HelpCircle } from 'lucide-react';
-import { useFirstTimeStore } from "./healthbookStorage";
+import { useFirstTimeStore } from "@/app/store";
 import { useState } from "react";
 
 interface Props {

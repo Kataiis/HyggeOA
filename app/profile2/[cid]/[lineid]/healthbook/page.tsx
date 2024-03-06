@@ -14,7 +14,7 @@ import Component_summary from "./component/summary/component_summary";
 import { useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios"
-import { useFirstTimeStore } from "./component/healthbookStorage";
+import { useFirstTimeStore } from "@/app/store";
 import { Loader2 } from 'lucide-react';
 
 interface HealthProps {
