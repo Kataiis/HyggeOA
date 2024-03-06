@@ -97,7 +97,7 @@ const baseURL = process.env.APIKey;
 
 export default function Home({ params }: { params: { cid: string, lineid: string } }) {
     const { HealthStore, setHealthStore, removeHealthStore } = useHealthStore();
-    const [date, setDate] = useState<Date | undefined>(new Date(HealthStore?.create_date))
+    const [date, setDate] = useState<Date | undefined>()
     const [calendarOpen, setCalendarOpen] = useState(false);
     const [isOpenAlert, setIsOpenAlert] = useState<OpenAlertProps>({ open: false, type: '' });
     const [id, setId] = useState(HealthStore?.id);
@@ -199,6 +199,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
         setDate(new Date(HealthStore?.create_date))
 
     }, []);
+
 
     useEffect(() => {
         if (date !== undefined) {
