@@ -195,6 +195,12 @@ export default function Home({ params }: { params: { cid: string, lineid: string
     };
 
     useEffect(() => {
+
+        setDate(new Date(HealthStore?.create_date))
+
+    }, []);
+
+    useEffect(() => {
         if (date !== undefined) {
             CheckData(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);
         }
