@@ -200,6 +200,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
 
     }, []);
 
+
     useEffect(() => {
         if (date !== undefined) {
             CheckData(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`);

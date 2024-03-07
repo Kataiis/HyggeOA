@@ -16,6 +16,7 @@ import { useEffect, useMemo, useState } from "react";
 import axios from "axios"
 import { useFirstTimeStore } from "@/app/store";
 import { Loader2 } from 'lucide-react';
+import { usePatientStore } from "@/app/store";
 
 interface HealthProps {
   bmi: any;
@@ -56,7 +57,7 @@ const baseURL = process.env.APIKey;
 const pathUrl: any = process.env.pathUrl;
 
 
-export default function Home({ params }: { params: { cid: string, lineid: string } }) {
+export default function Home() {
   const [isLoading, setIsloading] = useState<boolean>(true);
   const router = useRouter()
   const [data, setData] = useState<HealthProps[]>([]);
@@ -64,6 +65,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
   const { FirstTimeStore, setFirstTimeStore, removeFirstTimeStore } = useFirstTimeStore();
   const [patient, setPatient] = useState<PatientProps>();
   const [lineid, setLineid] = useState<string>();
+  const Patient: any = usePatientStore((state: any) => state.patient);
 
 
 
@@ -80,17 +82,17 @@ export default function Home({ params }: { params: { cid: string, lineid: string
   };
 
   const getPatient = async () => {
-    const response = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid })
+    const response = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: Patient.cid })
       // .then((response) => {
       //   setPatient(response.data.message[0]);
-      //   setLineid(params.lineid)
+      //   setLineid(Patient.lineid)
       //   console.log(response.data.message[0])
       //   setPatient(response.data.message[0]);
 
       // });
       if (response.data.ok) {
         setPatient(response.data.message[0]);
-          setLineid(params.lineid)
+          setLineid(Patient.lineid)
 
       } else {
         throw new Error(response.data.error);
@@ -101,7 +103,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
   useEffect(() => {
     const fetchdata = async () => {
       await setIsloading(true);
-      if(patient == undefined || params.cid != patient.cid){
+      if(patient == undefined || Patient.cid != patient.cid){
         await getPatient();
       }
       if(patient != undefined){
@@ -136,7 +138,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
     <div className='bg-white h-screen flex flex-col'>
       <div className="fixed w-full">
         <div className="h-[69px] bg-[#2D95A1] flex items-center justify-between p-2 text-white font-medium">
-          <div onClick={() => { setActiveTab("summary"); { activeTab == "summary" ? router.replace("../../" + patient?.cid + "/" + lineid) : "" }; }}
+          <div onClick={() => { setActiveTab("summary"); { activeTab == "summary" ? router.replace("/profile") : "" }; }}
             className="pr-4"><ChevronLeft size={40} /></div>
           <div className='text-xl'>สมุดสุขภาพ</div>
           <div className="w-[40px]">
@@ -203,14 +205,10 @@ export default function Home({ params }: { params: { cid: string, lineid: string
             </TabsContent>
             <TabsContent value="summary">
               {FirstTimeStore ? <div className="absolute top-3 right-3"><Component_help /></div> : ""}
-              <Component_summary data={sortedDataASC} fname={patient?.fname} />
+              <Component_summary data={sortedDataDESC} fname={patient?.fname} />
             </TabsContent>
           </>
         }
-
-
-
-
       </Tabs>
 
 
