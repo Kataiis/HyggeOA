@@ -13,7 +13,7 @@ function Coming() {
     const router = useRouter();
 
     const backPage = () => {
-        router.replace('/login')
+        router.replace('/profile')
     };
 
     return (
