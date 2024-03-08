@@ -263,15 +263,15 @@ export default function Component_summary({ data, fname }: Props) {
 
             <div className="grid grid-cols-5 gap-2 items-center justify-center mb-2 py-2">
                 <div className="col-span-2 flex items-center justify-center">
-                    {data[data.length - 1]?.bmi >= 18.5 && data[data.length - 1]?.bmi <= 22.9 ?
+                    {data[0]?.bmi >= 18.5 && data[0]?.bmi <= 22.9 ?
                         <div className="flex items-center justify-center w-[100px] h-[90px]">
                             <Image src={"/hygge_healthbook/BMI_good.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
                         </div>
-                        : (data[data.length - 1]?.bmi < 18.5 || (data[data.length - 1]?.bmi >= 23.0 && data[data.length - 1]?.bmi <= 24.9) ?
+                        : (data[0]?.bmi < 18.5 || (data[0]?.bmi >= 23.0 && data[0]?.bmi <= 24.9) ?
                             <div className="flex items-center justify-center w-[100px] h-[90px]">
                                 <Image src={"/hygge_healthbook/BMI_normal.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
                             </div>
-                            : (data[data.length - 1]?.bmi > 25.0 ?
+                            : (data[0]?.bmi > 25.0 ?
                                 <div className="flex items-center justify-center w-[100px] h-[90px]">
                                     <Image src={"/hygge_healthbook/BMI_bad.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="w-auto h-full" />
                                 </div>
@@ -280,6 +280,8 @@ export default function Component_summary({ data, fname }: Props) {
                         )
                     }
                 </div>
+                {/* {data[0]?.bmi} */}
+
                 <div className="col-span-3">
                     <Card>
                         <CardContent className="grid grid-cols-2 items-center justify-center gap-2 p-4">
@@ -291,7 +293,7 @@ export default function Component_summary({ data, fname }: Props) {
                                         : data[0]?.weight
                                     }
                                 </div>
-                                <div>ซม.</div>
+                                <div>กก.</div>
                             </div>
 
                             <div className="">ส่วนสูง</div>
@@ -302,7 +304,7 @@ export default function Component_summary({ data, fname }: Props) {
                                         : data[0]?.height
                                     }
                                 </div>
-                                <div>กก.</div>
+                                <div>ซม.</div>
                             </div>
                         </CardContent>
                     </Card>
@@ -404,9 +406,9 @@ export default function Component_summary({ data, fname }: Props) {
                                 <tbody >
 
                                     <tr className="">
-                                        {sortedGlucoseASC .length > 0 ?
+                                        {sortedGlucoseASC.length > 0 ?
                                             <>
-                                                {sortedGlucoseASC ?.map((item, index) => (
+                                                {sortedGlucoseASC?.map((item, index) => (
                                                     <td key={index} className="text-center px-1 pt-3 border-b">
                                                         {item.data.glucose_morning == 0 ? "-" : item.data.glucose_morning}
                                                     </td>
@@ -435,9 +437,9 @@ export default function Component_summary({ data, fname }: Props) {
                                     </tr>
 
                                     <tr className="">
-                                        {sortedGlucoseASC .length > 0 ?
+                                        {sortedGlucoseASC.length > 0 ?
                                             <>
-                                                {sortedGlucoseASC ?.map((item, index) => (
+                                                {sortedGlucoseASC?.map((item, index) => (
                                                     <td key={index} className="text-center px-1 pt-3 border-b ">
                                                         {item.data.glucose_afternoon == 0 ? "-" : item.data.glucose_afternoon}
                                                     </td>
@@ -464,9 +466,9 @@ export default function Component_summary({ data, fname }: Props) {
                                     </tr>
 
                                     <tr className="">
-                                        {sortedGlucoseASC .length > 0 ?
+                                        {sortedGlucoseASC.length > 0 ?
                                             <>
-                                                {sortedGlucoseASC ?.map((item, index) => (
+                                                {sortedGlucoseASC?.map((item, index) => (
                                                     <td key={index} className="text-center px-1 pt-3 border-b min-w-[30px]">
                                                         {item.data.glucose_evening == 0 ? "-" : item.data.glucose_evening}
                                                     </td>
@@ -493,9 +495,9 @@ export default function Component_summary({ data, fname }: Props) {
                                     </tr>
 
                                     <tr className="">
-                                        {sortedGlucoseASC .length > 0 ?
+                                        {sortedGlucoseASC.length > 0 ?
                                             <>
-                                                {sortedGlucoseASC ?.map((item, index) => (
+                                                {sortedGlucoseASC?.map((item, index) => (
                                                     <td key={index} className="text-center px-1 pt-3 border-b">
                                                         {item.data.glucose_night == 0 ? "-" : item.data.glucose_night}
                                                     </td>
@@ -524,21 +526,21 @@ export default function Component_summary({ data, fname }: Props) {
                                     <tr>
                                         {[...Array(7)].map((_, index) => (
                                             <td key={index} className="text-center min-w-[30px]">
-                                                {index + 1 < sortedGlucoseASC .length ?
+                                                {index + 1 < sortedGlucoseASC.length ?
                                                     <div className="flex flex-col items-center justify-center ">
                                                         <div className="w-2 h-2 my-1 mt-3 bg-[#4F4F4F] rounded-full"></div>
                                                         {/* <div>{index + 1}</div> */}
-                                                        <div>{sortedGlucoseASC [index].label}</div>
+                                                        <div>{sortedGlucoseASC[index].label}</div>
 
                                                     </div>
                                                     : (
-                                                        index + 1 == sortedGlucoseASC .length ?
+                                                        index + 1 == sortedGlucoseASC.length ?
                                                             <div className="flex flex-col items-center justify-center ">
                                                                 <div className="w-2 h-2 my-1 mt-3 bg-[#4F4F4F] rounded-full"></div>
                                                                 <div>ล่าสุด</div>
                                                             </div>
                                                             : (
-                                                                index + 1 > sortedGlucoseASC .length ?
+                                                                index + 1 > sortedGlucoseASC.length ?
                                                                     ""
                                                                     : ""
                                                             )

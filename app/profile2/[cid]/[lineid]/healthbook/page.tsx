@@ -203,7 +203,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
             </TabsContent>
             <TabsContent value="summary">
               {FirstTimeStore ? <div className="absolute top-3 right-3"><Component_help /></div> : ""}
-              <Component_summary data={sortedDataASC} fname={patient?.fname} />
+              <Component_summary data={sortedDataDESC} fname={patient?.fname} />
             </TabsContent>
           </>
         }
