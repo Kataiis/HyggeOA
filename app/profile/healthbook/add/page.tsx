@@ -245,6 +245,8 @@ export default function Home({ params }: { params: { cid: string, lineid: string
                 }).then((response) => {
                     setIsOpenAlert({ open: true, type: 'update' })
                     console.log("update")
+                    console.log("bmi", Number(data.weight) / ((Number(data.height) / 100) * (Number(data.height) / 100)))
+
                 })
 
             } else {
@@ -268,9 +270,13 @@ export default function Home({ params }: { params: { cid: string, lineid: string
                 }).then((response) => {
                     setIsOpenAlert({ open: true, type: 'insert' })
                     console.log("insert")
+                    console.log("bmi", Number(data.weight) / ((Number(data.height) / 100) * (Number(data.height) / 100)))
+
 
                 })
             }
+
+
         }
 
     }
@@ -279,11 +285,11 @@ export default function Home({ params }: { params: { cid: string, lineid: string
         <div className='bg-white h-screen flex flex-col gap-4'>
 
             {isOpenAlert.type == 'insert' ?
-                <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={true} title={`เพิ่มข้อมูลสำเร็จ`} message={`เพิ่มข้อมูลวันที่ ${date ? format(date, "P", { locale: th }) : ""} สำเร็จแล้ว` } cid={params.cid} lineid={params.lineid}/>
+                <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={true} title={`เพิ่มข้อมูลสำเร็จ`} message={`เพิ่มข้อมูลวันที่ ${date ? format(date, "P", { locale: th }) : ""} สำเร็จแล้ว`} cid={params.cid} lineid={params.lineid} />
                 : <div>
                     {isOpenAlert.type == 'update' ?
-                        <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={true} title={`อัพเดทข้อมูลสำเร็จ`} message={`อัพเดทข้อมูลวันที่ ${date ? format(date, "P", { locale: th }) : ""} สำเร็จแล้ว`} cid={params.cid} lineid={params.lineid}/>
-                        : <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={false} title={`ดำเนินไม่การสำเร็จ`} message={`การเพิ่มข้อมูลผิดพลาด\nกรุณาตรวจสอบใหม่อีกครั้ง`} cid={params.cid} lineid={params.lineid}/>
+                        <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={true} title={`อัพเดทข้อมูลสำเร็จ`} message={`อัพเดทข้อมูลวันที่ ${date ? format(date, "P", { locale: th }) : ""} สำเร็จแล้ว`} cid={params.cid} lineid={params.lineid} />
+                        : <AlertFail isOpen={isOpenAlert.open} setIsOpenAlert={setIsOpenAlert} isStatus={false} title={`ดำเนินไม่การสำเร็จ`} message={`การเพิ่มข้อมูลผิดพลาด\nกรุณาตรวจสอบใหม่อีกครั้ง`} cid={params.cid} lineid={params.lineid} />
                     }
                 </div>
             }
@@ -578,7 +584,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
 
                         <div className="flex items-center h-8 justify-end col-span-3 text-base">
                             ก่อนนอน
-                            <Image src={"/hygge_healthbook/icon_night.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="py-[5px] pl-2 w-auto h-full"/>
+                            <Image src={"/hygge_healthbook/icon_night.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="py-[5px] pl-2 w-auto h-full" />
                         </div>
                         <div className="flex items-center h-8 justify-center col-span-2 ">
                             <FormField
