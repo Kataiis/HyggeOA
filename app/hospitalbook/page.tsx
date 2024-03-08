@@ -82,7 +82,7 @@ const Hospitalbook = () => {
                             timer: 1500
                         })
                             .then(async () => {
-                               
+
                                 router.replace("/profile")
                             });
                     }, 30000);
@@ -97,7 +97,7 @@ const Hospitalbook = () => {
                         timer: 2000
                     });
                     router.replace("/profile")
-                    
+
 
                 }
             }
@@ -152,6 +152,8 @@ const Hospitalbook = () => {
                             } else {
                                 throw new Error(res2.data.error);
                             }
+                        } else {
+                            throw new Error(res2.data.error);
                         }
                     } else {
                         router.replace("/login");

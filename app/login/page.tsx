@@ -62,13 +62,17 @@ const Login = () => {
 
         console.log("dataIns", dataIns)
 
-        const resIns: any = await axios.post(pathUrl + "/health/hiereq/store_hyggeoa", DataTransferItemList);
+        const resIns: any = await axios.post(pathUrl + "/health/hiereq/store_hyggeoa", dataIns);
         console.log("resIns", resIns.data)
 
         if (resIns.data.ok) {
             console.log("insert hie_request success");
+            console.log("Patient.cid",Patient.cid);
+            console.log("lineid",lineid);
+
             const log = await axios.post(`${pathUrl}/health/phrviewlog/ins`, { cid: Patient.cid, line_id: lineid })
-            console.log("log", log.data)
+            
+            console.log("log", log)
             router.replace("/agreement")
 
         }
