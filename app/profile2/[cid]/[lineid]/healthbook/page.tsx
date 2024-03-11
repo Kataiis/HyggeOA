@@ -80,31 +80,31 @@ export default function Home({ params }: { params: { cid: string, lineid: string
   };
 
   const getPatient = async () => {
-    const response = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid })
-      // .then((response) => {
-      //   setPatient(response.data.message[0]);
-      //   setLineid(params.lineid)
-      //   console.log(response.data.message[0])
-      //   setPatient(response.data.message[0]);
+    const checkdata = await axios.post(`${pathUrl}/health/hyggelineservice/checkCitizen`, { cid: params.cid, lineid: params.lineid })
+    // .then((response) => {
+    //   setPatient(response.data.message[0]);
+    //   setLineid(params.lineid)
+    //   console.log(response.data.message[0])
+    //   setPatient(response.data.message[0]);
 
-      // });
-      if (response.data.ok) {
-        setPatient(response.data.message[0]);
-          setLineid(params.lineid)
+    // });
+    if (checkdata.data.ok) {
+      await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+      setLineid(params.lineid)
 
-      } else {
-        throw new Error(response.data.error);
-      }
+    } else {
+      throw new Error(checkdata.data.error);
+    }
 
   }
 
   useEffect(() => {
     const fetchdata = async () => {
       await setIsloading(true);
-      if(patient == undefined || params.cid != patient.cid){
+      if (patient == undefined || params.cid != patient.cid) {
         await getPatient();
       }
-      if(patient != undefined){
+      if (patient != undefined) {
         await FetchData();
       }
       await setIsloading(false);
