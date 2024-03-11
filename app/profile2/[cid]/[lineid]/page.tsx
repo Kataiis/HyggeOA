@@ -11,7 +11,6 @@ import QRCode from "react-qr-code";
 
 import logo from "@/public/hg.png"
 import axios from "axios";
-import { el } from "date-fns/locale";
 import { CirclesWithBar } from "react-loader-spinner";
 
 const hyggeOAliff: any = process.env.HyggeOAliff;

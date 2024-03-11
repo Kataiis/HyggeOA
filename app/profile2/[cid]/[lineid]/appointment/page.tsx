@@ -7,6 +7,7 @@ import Currentdate from "./component/currentpage";
 import Partdate from './component/partpage';
 import axios from "axios";
 import Navbar from "../components/Navbar";
+import { CirclesWithBar } from "react-loader-spinner";
 // import { usePatientStore } from "../store";
 
 
@@ -64,42 +65,55 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
     return (
         <div>
             <Navbar />
-            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
-                <p>
-                    {patient.pname} {patient.fname} {patient.lname}
-                    {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
-                </p>
-            </div>
-            <div className="bg-[#ffffff] p-4 sticky top-32">
-                <p className='bg-[#4D57D3] text-center text-lg text-[#ffffff] align-middle p-2'>รายการนัด</p>
 
-                <div className='grid grid-cols-2 justify-items-center mt-5'>
+            {loading && (
+                <div className="flex flex-row justify-center items-center w-full mt-10">
+                    <CirclesWithBar
+                        height="100"
+                        width="100"
+                        color="#00AE91"
+                        outerCircleColor="#00AE91"
+                        innerCircleColor="#00AE91"
+                        barColor="#00AE91"
+                        ariaLabel="circles-with-bar-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        visible={true}
+                    />
 
-                    <Button className="bg-[#4D57D3] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
-                        type="button" name="buttoncurrent"
-                        onClick={Clickcurrentdate} > รายการปัจจุบัน</Button>
-
-                    <Button className="bg-[#999999] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
-                        type="button" name="button part"
-                        onClick={Clickpartdate}> รายการย้อนหลัง</Button>
                 </div>
-            </div>
+            )}
+              {!loading && ( 
+            <><div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
+                    <p>
+                        {patient.pname} {patient.fname} {patient.lname}
+                        {/* {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname} */}
+                    </p>
+                </div><div className="bg-[#ffffff] p-4 sticky top-32">
+                        <p className='bg-[#4D57D3] text-center text-lg text-[#ffffff] align-middle p-2'>รายการนัด</p>
 
+                        <div className='grid grid-cols-2 justify-items-center mt-5'>
 
+                            <Button className="bg-[#4D57D3] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
+                                type="button" name="buttoncurrent"
+                                onClick={Clickcurrentdate}> รายการปัจจุบัน</Button>
 
+                            <Button className="bg-[#999999] text-[#ffffff] text-md rounded-xl shadow-md shadow-gray-500/100"
+                                type="button" name="button part"
+                                onClick={Clickpartdate}> รายการย้อนหลัง</Button>
+                        </div>
+                    </div><div>
+                        {!isShown && <Partdate params={{
+                            cid: params.cid,
+                            lineid: params.lineid
+                        }} />}
+                        {isShown && <Currentdate params={{
+                            cid: params.cid,
+                            lineid: params.lineid
+                        }} />}
+                    </div></>
 
-            <div>
-                {!isShown && <Partdate params={{
-                    cid: params.cid,
-                    lineid: params.lineid
-                }} />}
-                {isShown && <Currentdate params={{
-                    cid: params.cid,
-                    lineid: params.lineid
-                }} />}
-            </div>
-
-
+              )}
         </div>
 
     )

@@ -25,23 +25,7 @@ const Currentdate = ({ params }: { params: { cid: string, lineid: string } }, da
     const router = useRouter();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-
-
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-
-            const data = await axios.post(`${pathUrl}/health/hie/appointment`, { cid: params.cid })
-            console.log("data", data.data);
-            setData(data.data.message);
-
-
-        } catch (error: any) {
-            console.error(error.message);
-
-        }
-        setLoading(false);
-    };
+    
     const check = async () => {
         setLoading(true);
         console.log("dataSend", params.cid)
@@ -65,15 +49,35 @@ const Currentdate = ({ params }: { params: { cid: string, lineid: string } }, da
 
     };
 
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+
+            const data = await axios.post(`${pathUrl}/health/hie/appointment`, { cid: params.cid })
+            console.log("data", data.data);
+            setData(data.data.message);
+
+
+        } catch (error: any) {
+            console.error(error.message);
+
+        }
+        setLoading(false);
+    };
+
+   
+
     useEffect(() => {
         check();
-        console.log("Patient : ", params.cid);
-        if (!params.cid) {
-            router.push("/hospitalbook");
-        } else {
             fetchData();
-        }
-    }, [params.cid]);
+        // console.log("Patient : ", params.cid);
+        // if (!params.cid) {
+        //     router.push("/hospitalbook");
+        // } else {
+        //     check();
+        //     fetchData();
+        // }
+    }, []);
 
     return (
         <div>
