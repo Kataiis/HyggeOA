@@ -17,6 +17,7 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
     const [patient, setPatient] = useState<any>([]);
 
     const [isShown, setIsShown] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const Clickcurrentdate = (e: any) => {
         setIsShown(true);
@@ -25,8 +26,31 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
         setIsShown(false);
     };
 
+    const check = async () => {
+        setLoading(true);
+        console.log("dataSend", params.cid)
+        console.log("dataSend", params.lineid)
 
+        const checkdata = await axios.post(`${pathUrl}/health/hyggelineservice/checkCitizen`, { cid: params.cid, lineid: params.lineid })
+        console.log("checkdata : ", checkdata.data)
+        if (checkdata.data.ok) {
+            console.log("length", checkdata.data.message)
+            if (checkdata.data.message > 0) {
+                setLoading(false)
+            }
+            else {
+                router.replace("/login")
+            }
+        }
+        else {
+
+            throw new Error(checkdata.data.error);
+        }
+
+    };
     useEffect(() => {
+        check();
+
         const getPatient = async () => {
             const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
 

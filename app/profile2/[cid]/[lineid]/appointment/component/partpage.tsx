@@ -41,8 +41,31 @@ const Partdate = ({ params }: { params: { cid: string, lineid: string } }, dataI
         }
         setLoading(false);
     };
+    const check = async () => {
+        setLoading(true);
+        console.log("dataSend", params.cid)
+        console.log("dataSend", params.lineid)
+
+        const checkdata = await axios.post(`${pathUrl}/health/hyggelineservice/checkCitizen`, { cid: params.cid, lineid: params.lineid })
+        console.log("checkdata : ", checkdata.data)
+        if (checkdata.data.ok) {
+            console.log("length", checkdata.data.message)
+            if (checkdata.data.message > 0) {
+                setLoading(false)
+            }
+            else {
+                router.replace("/login")
+            }
+        }
+        else {
+
+            throw new Error(checkdata.data.error);
+        }
+
+    };
 
     useEffect(() => {
+        check();
         console.log("Patient : ", params.cid);
         if (!params.cid) {
             router.push("/hospitalbook");
