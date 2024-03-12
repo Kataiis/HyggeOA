@@ -27,6 +27,7 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
         setIsShown(false);
     };
 
+    
     const check = async () => {
         setLoading(true);
         console.log("dataSend", params.cid)

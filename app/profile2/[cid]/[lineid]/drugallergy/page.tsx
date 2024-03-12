@@ -21,18 +21,6 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
     const [patient, setPatient] = useState<any>([]);
 
 
-    const fetchData = async () => {
-        setLoading(true);
-        try {
-            const data = await axios.post(`${pathUrl}/health/hie/drugallergy`, { cid: params.cid })
-            console.log("data", data.data);
-            setData(data.data.message);
-        } catch (error: any) {
-            console.error(error.message);
-        }
-        setLoading(false);
-    };
-
     const check = async () => {
         setLoading(true);
         console.log("dataSend", params.cid)
@@ -44,6 +32,7 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
             console.log("length", checkdata.data.message)
             if (checkdata.data.message > 0) {
                 setLoading(false)
+                fetchData();
             }
             else {
                 router.replace("/login")
@@ -56,6 +45,19 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
 
     };
 
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const data = await axios.post(`${pathUrl}/health/hie/drugallergy`, { cid: params.cid })
+            console.log("data", data.data);
+            setData(data.data.message);
+        } catch (error: any) {
+            console.error(error.message);
+        }
+        setLoading(false);
+    };
+
+
     useEffect(() => {
         check();
         const getPatient = async () => {
@@ -66,29 +68,20 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
         getPatient();
 
 
-        console.log("Patient : ", params);
-        if (!params) {
-            router.push("/hospitalbook");
-        } else {
-            fetchData();
-        }
+        // console.log("Patient : ", params);
+        // if (!params) {
+        //     router.push("/hospitalbook");
+        // } else {
+        //     fetchData();
+        // }
 
-    }, [params]);
+    }, []);
 
 
 
     return (
         <div>
-            <Navbar/>
-            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
-                <p>
-                    {/* {params.cid} */}
-                    {patient.pname + " " + patient.fname + " " + patient.lname}
-                </p>
-            </div>
-
-            <div className="bg-[#ffffff] p-4 sticky top-32">
-                <p className='bg-[#E17104] text-center text-lg text-[#ffffff] align-middle p-2'>ข้อมูลการแพ้ยา {data.length} รายการ</p> </div>
+            <Navbar />
             {loading && (
                 <div className="flex flex-row justify-center items-center w-full mt-10">
                     <CirclesWithBar
@@ -106,10 +99,21 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
 
                 </div>
             )}
+
             {!loading && (
                 (data.length > 0) ?
                     (
                         <div>
+
+                            <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
+                                <p>
+                                    {/* {params.cid} */}
+                                    {patient.pname + " " + patient.fname + " " + patient.lname}
+                                </p>
+                            </div>
+
+                            <div className="bg-[#ffffff] p-4 sticky top-32">
+                                <p className='bg-[#E17104] text-center text-lg text-[#ffffff] align-middle p-2'>ข้อมูลการแพ้ยา {data.length} รายการ</p> </div>
                             {data.map((item: any) => (
                                 <div className='bg-[#F3EEDC] m-5 p-2' key={item.id}>
 

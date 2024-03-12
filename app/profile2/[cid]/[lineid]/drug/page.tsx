@@ -25,6 +25,30 @@ function Drug({ params }: { params: { cid: string, lineid: string } }) {
     const [patient, setPatient] = useState<any>([]);
 
 
+    const check = async () => {
+        setLoading(true);
+        console.log("dataSend", params.cid)
+        console.log("dataSend", params.lineid)
+
+        const checkdata = await axios.post(`${pathUrl}/health/hyggelineservice/checkCitizen`, { cid: params.cid, lineid: params.lineid })
+        console.log("checkdata : ", checkdata.data)
+        if (checkdata.data.ok) {
+            console.log("length", checkdata.data.message)
+            if (checkdata.data.message > 0) {
+                setLoading(false)
+                fetchData();
+            }
+            else {
+                router.replace("/login")
+            }
+        }
+        else {
+
+            throw new Error(checkdata.data.error);
+        }
+
+    };
+    
     const fetchData = async () => {
         setLoading(true);
         try {
@@ -37,28 +61,7 @@ function Drug({ params }: { params: { cid: string, lineid: string } }) {
         }
         setLoading(false);
     };
-    const check = async () => {
-        setLoading(true);
-        console.log("dataSend", params.cid)
-        console.log("dataSend", params.lineid)
-
-        const checkdata = await axios.post(`${pathUrl}/health/hyggelineservice/checkCitizen`, { cid: params.cid, lineid: params.lineid })
-        console.log("checkdata : ", checkdata.data)
-        if (checkdata.data.ok) {
-            console.log("length", checkdata.data.message)
-            if (checkdata.data.message > 0) {
-                setLoading(false)
-            }
-            else {
-                router.replace("/login")
-            }
-        }
-        else {
-
-            throw new Error(checkdata.data.error);
-        }
-
-    };
+    
 
     useEffect(() => {
         check();
@@ -76,7 +79,6 @@ function Drug({ params }: { params: { cid: string, lineid: string } }) {
         // } else {
         //     fetchData();
         // }
-        fetchData();
     }, []);
 
     return (
@@ -99,11 +101,15 @@ function Drug({ params }: { params: { cid: string, lineid: string } }) {
 
                 </div>
             )}
+
+   
+
             {!loading && (
                 (data.length > 0) ?
                     (
                         <><div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                             <p>
+                                {/* {params.cid} */}
                                 {patient.pname} {patient.fname} {patient.lname}
                             </p>
                         </div><div className="bg-[#ffffff] p-4 sticky top-32">
@@ -150,8 +156,7 @@ function Drug({ params }: { params: { cid: string, lineid: string } }) {
 
                                 </Accordion>
 
-                            </div>
-                            </>
+                            </div></>
                     ) : (
                         <div className="flex justify-center"> ไม่พบข้อมูล</div>
                     )

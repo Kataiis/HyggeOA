@@ -67,11 +67,11 @@ const Login = () => {
 
         if (resIns.data.ok) {
             console.log("insert hie_request success");
-            console.log("Patient.cid",Patient.cid);
-            console.log("lineid",lineid);
+            console.log("Patient.cid", Patient.cid);
+            console.log("lineid", lineid);
 
             const log = await axios.post(`${pathUrl}/health/phrviewlog/ins`, { cid: Patient.cid, line_id: lineid })
-            
+
             console.log("log", log)
             router.replace("/agreement")
 
@@ -240,19 +240,21 @@ const Login = () => {
 
                     </FormProvider>
                 </CardContent>
+
+                {/* ลืม password */}
                 <div className="flex justify-center mb-5">
                     <Button
                         type="submit"
                         variant="outline"
                         className="bg-[#53AE85] text-grey drop-shadow-md text-md hover:bg-[#eaefe8] hover:text-grey hover:text-lg text-[#ffffff] h-[45px] w-[250px]"
                         disabled={isDisble}
-                        onClick={() => router.replace('/comingsoon')}
-
-
+                        onClick={() => router.push('https://imauth.bora.dopa.go.th/api/v2/oauth2/auth/?response_type=code&client_id=TTNUQnVRZmJTcmtOYTdxRmZvMjZUaXVjNjF1T05BN0k&redirect_uri=https://hyggecode.com/hyggeforgetpassword/index.html&scope=pid%20given_name%20title%20family_name%20name%20gender&state=12345')}
                     >
                         ลืม password
                     </Button>
+
                 </div>
+
             </Card>
             <div className="mt-10">
                 <Button
