@@ -41,7 +41,7 @@ function Appointment({ params }: { params: { cid: string, lineid: string } }) {
                 setLoading(false)
             }
             else {
-                router.replace("/login")
+                router.replace("/noentry")
             }
         }
         else {

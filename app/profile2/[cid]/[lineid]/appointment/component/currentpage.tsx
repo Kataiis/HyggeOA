@@ -39,7 +39,7 @@ const Currentdate = ({ params }: { params: { cid: string, lineid: string } }, da
                 setLoading(false)
             }
             else {
-                router.replace("/login")
+                router.replace("/noentry")
             }
         }
         else {

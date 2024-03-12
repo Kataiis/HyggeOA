@@ -39,7 +39,7 @@ const Partdate = ({ params }: { params: { cid: string, lineid: string } }, dataI
                 setLoading(false)
             }
             else {
-                router.replace("/login")
+                router.replace("/noentry")
             }
         }
         else {

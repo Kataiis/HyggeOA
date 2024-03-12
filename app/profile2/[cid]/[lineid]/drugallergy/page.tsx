@@ -35,7 +35,7 @@ function Drugallergy({ params }: { params: { cid: string, lineid: string } }) {
                 fetchData();
             }
             else {
-                router.replace("/login")
+                router.replace("/noentry")
             }
         }
         else {

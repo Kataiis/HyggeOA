@@ -92,7 +92,8 @@ export default function Home({ params }: { params: { cid: string, lineid: string
               setLineid(params.lineid)
             }
             else {
-                router.replace("/login")
+              //   
+              router.replace("/noentry")
             }
         }
         else {

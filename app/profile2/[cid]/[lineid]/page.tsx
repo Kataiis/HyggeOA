@@ -44,7 +44,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
                 setloading(false)
             }
             else {
-                router.replace("/login")
+                router.replace("/noentry")
             }
         }
         else {
