@@ -73,6 +73,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
 
     if (datahealth.data.ok) {
       setData(datahealth.data.rows)
+      await setIsloading(false);
 
     } else {
       throw new Error(datahealth.data.error);
@@ -80,21 +81,24 @@ export default function Home({ params }: { params: { cid: string, lineid: string
   };
 
   const getPatient = async () => {
+    await setIsloading(true);
+
     const checkdata = await axios.post(`${pathUrl}/health/hyggelineservice/checkCitizen`, { cid: params.cid, lineid: params.lineid })
-    // .then((response) => {
-    //   setPatient(response.data.message[0]);
-    //   setLineid(params.lineid)
-    //   console.log(response.data.message[0])
-    //   setPatient(response.data.message[0]);
+        console.log("checkdata : ", checkdata.data)
+        if (checkdata.data.ok) {
+            console.log("length", checkdata.data.message)
+            if (checkdata.data.message > 0) {
+              await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+              setLineid(params.lineid)
+            }
+            else {
+                router.replace("/login")
+            }
+        }
+        else {
 
-    // });
-    if (checkdata.data.ok) {
-      await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
-      setLineid(params.lineid)
-
-    } else {
-      throw new Error(checkdata.data.error);
-    }
+            throw new Error(checkdata.data.error);
+        }
 
   }
 
@@ -107,7 +111,6 @@ export default function Home({ params }: { params: { cid: string, lineid: string
       if (patient != undefined) {
         await FetchData();
       }
-      await setIsloading(false);
       await console.log("patient", patient)
 
     }
