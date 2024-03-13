@@ -12,6 +12,9 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+import { th } from "date-fns/locale";
+import { format, parse } from "date-fns"
+
 
 interface Props {
     data: HealthProps[];
@@ -46,7 +49,7 @@ interface ChartProps {
 
 interface ChartDataProps {
     label: string;
-    date: number;
+    date: any;
     data: {
         pulse: number;
         sbp: number;
@@ -57,7 +60,7 @@ interface ChartDataProps {
 
 interface GlucoseDataProps {
     label: string;
-    date: number;
+    date: any;
     data: {
         glucose_morning: number;
         glucose_afternoon: number;
@@ -328,11 +331,14 @@ export default function Component_summary({ data, fname }: Props) {
                             }
                         </div>
                         <div className="col-span-2 bg-[#E1E1E1] rounded-r-lg flex flex-col items-center justify-center px-2 py-3">
-                            <div className="">ครั้งล่าสุด</div>
+                            <div className="text-lg">ครั้งล่าสุด</div>
+                            <div className="text-xs my-1">
+                                {sortedChartASC[sortedChartASC.length - 1]?.date ? <div>{format(sortedChartASC[sortedChartASC.length - 1]?.date, "P", { locale: th })}</div> : ""}
+                            </div>
                             <div className="flex items-center justify-center gap-2">
                                 <div className="flex items-center justify-center w-2 h-[40%] bg-[#00A3FF]"></div>
-                                <div className="flex items-center justify-center text-sm">บน</div>
-                                <div className="flex items-center justify-center text-base font-bold">
+                                <div className="flex items-center justify-center">บน</div>
+                                <div className="flex items-center justify-center text-xl font-bold">
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
                                         : sortedChartASC[sortedChartASC.length - 1]?.data.sbp
@@ -341,8 +347,8 @@ export default function Component_summary({ data, fname }: Props) {
                             </div>
                             <div className="flex items-center justify-center gap-2">
                                 <div className="flex items-center justify-center w-2 h-[40%] bg-[#9C2AD2]"></div>
-                                <div className="flex items-center justify-center text-sm">ล่าง</div>
-                                <div className="flex items-center justify-center text-base font-bold">
+                                <div className="flex items-center justify-center">ล่าง</div>
+                                <div className="flex items-center justify-center text-xl font-bold">
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
                                         : sortedChartASC[sortedChartASC.length - 1]?.data.dbp
@@ -370,7 +376,10 @@ export default function Component_summary({ data, fname }: Props) {
                                 : <LineChart chartdata={chartHeartrate} />
                             }                        </div>
                         <div className="col-span-2 bg-[#E1E1E1] rounded-r-lg flex flex-col items-center justify-center px-2 py-3">
-                            <div className="">ครั้งล่าสุด</div>
+                            <div className="text-lg">ครั้งล่าสุด</div>
+                            <div className="text-xs my-1">
+                                {sortedChartASC[sortedChartASC.length - 1]?.date ? <div>{format(sortedChartASC[sortedChartASC.length - 1]?.date, "P", { locale: th })}</div> : ""}
+                            </div>
                             <div className="flex items-center justify-center gap-2">
                                 <div className="flex items-center justify-center w-2 h-[40%] bg-[#CA1101]"></div>
                                 <div className="flex items-center justify-center text-xl font-bold">{sortedChartASC[sortedChartASC.length - 1]?.data.pulse}</div>
@@ -525,7 +534,7 @@ export default function Component_summary({ data, fname }: Props) {
 
                                     <tr>
                                         {[...Array(7)].map((_, index) => (
-                                            <td key={index} className="text-center min-w-[30px]">
+                                            <td key={index} className="text-center flex-initial items-end justify-center min-h-12">
                                                 {index + 1 < sortedGlucoseASC.length ?
                                                     <div className="flex flex-col items-center justify-center ">
                                                         <div className="w-2 h-2 my-1 mt-3 bg-[#4F4F4F] rounded-full"></div>
@@ -538,6 +547,7 @@ export default function Component_summary({ data, fname }: Props) {
                                                             <div className="flex flex-col items-center justify-center ">
                                                                 <div className="w-2 h-2 my-1 mt-3 bg-[#4F4F4F] rounded-full"></div>
                                                                 <div>ล่าสุด</div>
+
                                                             </div>
                                                             : (
                                                                 index + 1 > sortedGlucoseASC.length ?
@@ -548,6 +558,12 @@ export default function Component_summary({ data, fname }: Props) {
                                                 }
                                             </td>
                                         ))}
+                                        <td className="text-center flex items-end justify-start min-h-12"  >
+                                            <div className="text-xs mb-[2px]">
+                                                {sortedGlucoseASC[sortedGlucoseASC.length - 1]?.date ? <div>{`(${format(sortedGlucoseASC[sortedGlucoseASC.length - 1]?.date, "P", { locale: th })})`}</div> : ""}
+                                            </div>
+                                        </td>
+
                                     </tr>
                                 </tbody>
                             </table>
