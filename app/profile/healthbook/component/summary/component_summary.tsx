@@ -256,13 +256,8 @@ export default function Component_summary({ data, fname }: Props) {
 
 
     return (
-        <div className='bg-white flex flex-col px-4 mt-[130px]'>
+        <div className='bg-white flex flex-col px-4 mt-[200px]'>
 
-
-            <div className="w-full items-center justify-center mb-3">
-                <div className="text-center text-2xl font-bold text-[#2C97A3]">{`สวัสดีครับ ! คุณ ${fname}`}</div>
-                <div className="text-center">{`ข้อมูลจากการบันทึกประวัติสุขภาพของคุณ`}</div>
-            </div>
 
             <div className="grid grid-cols-5 gap-2 items-center justify-center mb-2 py-2">
                 <div className="col-span-2 flex items-center justify-center">
@@ -289,8 +284,8 @@ export default function Component_summary({ data, fname }: Props) {
                     <Card>
                         <CardContent className="grid grid-cols-2 items-center justify-center gap-2 p-4">
                             <div className="">น้ำหนัก</div>
-                            <div className="grid grid-cols-2">
-                                <div>
+                            <div className="grid grid-cols-2 items-center justify-center">
+                                <div className="text-xl font-bold">
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
                                         : data[0]?.weight
@@ -300,8 +295,8 @@ export default function Component_summary({ data, fname }: Props) {
                             </div>
 
                             <div className="">ส่วนสูง</div>
-                            <div className="grid grid-cols-2">
-                                <div>
+                            <div className="grid grid-cols-2 items-center justify-center">
+                                <div className="text-xl font-bold">
                                     {data.length == 0 ?
                                         <div className=" text-gray-400">-</div>
                                         : data[0]?.height
