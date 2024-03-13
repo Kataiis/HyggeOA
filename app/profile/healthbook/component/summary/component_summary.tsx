@@ -322,7 +322,7 @@ export default function Component_summary({ data, fname }: Props) {
                 <Card>
                     <CardContent className="grid grid-cols-7 gap-2 p-0">
                         <div className="col-span-5 flex items-center justify-center px-1 py-3 pb-2 ">
-                            {data.length == 0 ?
+                            {sortedChartASC.length == 0 ?
                                 <>
                                     <div className="w-full absolute text-center my-10 text-3xl text-gray-400">ไม่พบข้อมูล</div>
                                     <LineChart chartdata={chartPressure} />
@@ -339,7 +339,7 @@ export default function Component_summary({ data, fname }: Props) {
                                 <div className="flex items-center justify-center w-2 h-[40%] bg-[#00A3FF]"></div>
                                 <div className="flex items-center justify-center">บน</div>
                                 <div className="flex items-center justify-center text-xl font-bold">
-                                    {data.length == 0 ?
+                                    {sortedChartASC.length == 0 ?
                                         <div className=" text-gray-400">-</div>
                                         : sortedChartASC[sortedChartASC.length - 1]?.data.sbp
                                     }
@@ -349,7 +349,7 @@ export default function Component_summary({ data, fname }: Props) {
                                 <div className="flex items-center justify-center w-2 h-[40%] bg-[#9C2AD2]"></div>
                                 <div className="flex items-center justify-center">ล่าง</div>
                                 <div className="flex items-center justify-center text-xl font-bold">
-                                    {data.length == 0 ?
+                                    {sortedChartASC.length == 0 ?
                                         <div className=" text-gray-400">-</div>
                                         : sortedChartASC[sortedChartASC.length - 1]?.data.dbp
                                     }
@@ -368,7 +368,7 @@ export default function Component_summary({ data, fname }: Props) {
                 <Card>
                     <CardContent className="grid grid-cols-7 gap-2 p-0">
                         <div className="col-span-5 flex items-center justify-center px-1 py-3 pb-2 ">
-                            {data.length == 0 ?
+                            {sortedChartASC.length == 0 ?
                                 <>
                                     <div className="w-full absolute text-center my-10 text-3xl text-gray-400">ไม่พบข้อมูล</div>
                                     <LineChart chartdata={chartHeartrate} />
@@ -380,10 +380,15 @@ export default function Component_summary({ data, fname }: Props) {
                             <div className="text-xs my-1">
                                 {sortedChartASC[sortedChartASC.length - 1]?.date ? <div>{format(sortedChartASC[sortedChartASC.length - 1]?.date, "P", { locale: th })}</div> : ""}
                             </div>
-                            <div className="flex items-center justify-center gap-2">
-                                <div className="flex items-center justify-center w-2 h-[40%] bg-[#CA1101]"></div>
-                                <div className="flex items-center justify-center text-xl font-bold">{sortedChartASC[sortedChartASC.length - 1]?.data.pulse}</div>
-                            </div>
+                            {sortedChartASC.length == 0 ?
+                                <div className=" text-gray-400">-</div>
+                                :
+                                <div className="flex items-center justify-center gap-2">
+                                    <div className="flex items-center justify-center w-2 h-[40%] bg-[#CA1101]"></div>
+                                    <div className="flex items-center justify-center text-xl font-bold">{sortedChartASC[sortedChartASC.length - 1]?.data.pulse}</div>
+                                </div>
+                            }
+
                         </div>
                     </CardContent>
                 </Card>
@@ -397,16 +402,16 @@ export default function Component_summary({ data, fname }: Props) {
                 <Card>
                     <CardContent className="grid grid-cols-7 gap-2 p-0">
                         <div className="col-span-7 grid grid-cols-3 items-center justify-center bg-[#E1E1E1] px-1 py-3 pb-2 ">
-                            <div className="flex items-center justify-center gap-2 text-sm">
+                            <div className="flex items-end justify-center gap-2 text-sm">
                                 <div className="">ค่าต่ำสุด</div>
                                 <div className="text-base text-[#1628C8] font-bold">{minGlucose == 999999999 || minGlucose == undefined ? "-" : minGlucose}</div>
                             </div>
-                            <div className="flex items-center justify-center gap-2 text-sm">
+                            <div className="flex items-end justify-center gap-2 text-sm">
                                 <div>ค่าสูงสุด</div>
                                 <div className="text-base text-[#1628C8] font-bold">{maxGlucose == (-1) || maxGlucose == undefined ? "-" : maxGlucose}</div>
                             </div>
-                            <div className="flex items-center justify-center gap-2 text-sm">
-                                <div>ค่าเฉลี่ย</div>
+                            <div className="flex items-end justify-center gap-2 text-sm">
+                                <div className="">ค่าเฉลี่ย</div>
                                 <div className="text-base text-[#AF16C8] font-bold">{avgGlucose == undefined ? "-" : Number(avgGlucose).toFixed(2)}</div>
                             </div>
                         </div>
