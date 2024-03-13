@@ -56,22 +56,22 @@ export default function Component_help({ }: Props) {
                             เลือกดูข้อมูลที่บันทึก
                         </div>
                         <div className="flex justify-between">
-                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#39CC88]">
+                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#39CC88] outline outline-2 outline-white shadow-md shadow-stone-700/40">
                                 <Image src={"/hygge_healthbook/icon_weight.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
                             </div>
-                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67]">
+                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67] outline outline-2 outline-white shadow-md shadow-stone-700/40">
                                 <Image src={"/hygge_healthbook/icon_height.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-1 w-auto h-full" />
                             </div>
-                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67]">
+                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67] outline outline-2 outline-white shadow-md shadow-stone-700/40">
                                 <Image src={"/hygge_healthbook/icon_pressure.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="pt-3 p-2 w-full h-auto" />
                             </div>
-                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67]">
+                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67] outline outline-2 outline-white shadow-md shadow-stone-700/40">
                                 <Image src={"/hygge_healthbook/icon_pulse.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="pt-2 p-1  w-full h-auto" />
                             </div>
-                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67]">
+                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67] outline outline-2 outline-white shadow-md shadow-stone-700/40">
                                 <Image src={"/hygge_healthbook/icon_bloodsugar.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="pl-2 p-1 w-auto h-full" />
                             </div>
-                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67]">
+                            <div className="flex items-center justify-center rounded-full w-[44px] h-[44px] bg-[#4A5A67] outline outline-2 outline-white shadow-md shadow-stone-700/40">
                                 <Image src={"/hygge_healthbook/icon_bmi.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-full h-auto" />
                             </div>
                         </div>
@@ -79,21 +79,21 @@ export default function Component_help({ }: Props) {
                 </Card>
 
                 <div className="flex items-center gap-4 px-4">
-                    <div className="flex items-center justify-center p-0 w-[40px] h-[40px] rounded-md bg-[#49DABD] hover:bg-[#9fdfd2] shadow-lg">
+                    <div className="flex items-center justify-center p-0 w-[40px] h-[40px] rounded-md bg-[#49DABD] hover:bg-[#9fdfd2] shadow-md shadow-stone-700/40">
                         <Image src={"/hygge_healthbook/icon_add.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
                     </div>
                     <div className="text-xl">เพิ่มข้อมูล/บันทึกข้อมูล</div>
                 </div>
 
                 <div className="flex items-center gap-4 px-4">
-                    <div className="flex items-center justify-center p-0 w-[40px] h-[40px] rounded-md bg-[#F98F86] hover:bg-[#fac0bb] shadow-lg">
+                    <div className="flex items-center justify-center p-0 w-[40px] h-[40px] rounded-md bg-[#F98F86] hover:bg-[#fac0bb] shadow-md shadow-stone-700/40">
                         <Image src={"/hygge_healthbook/icon_edit.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
                     </div>
                     <div className="text-xl">แก้ไขข้อมูล</div>
                 </div>
 
                 <div className="flex items-center gap-4 px-4">
-                    <div className="flex items-center justify-center p-0 w-[40px] h-[40px] rounded-md bg-[#39CC88] hover:bg-[#9ce4c2] shadow-lg">
+                    <div className="flex items-center justify-center p-0 w-[40px] h-[40px] rounded-md bg-[#39CC88] hover:bg-[#9ce4c2] shadow-md shadow-stone-700/40">
                         <Image src={"/hygge_healthbook/icon_detail.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
                     </div>
                     <div className="text-xl">ดูรายละเอียด</div>
@@ -103,7 +103,9 @@ export default function Component_help({ }: Props) {
 
 
 
-                <DialogFooter></DialogFooter>
+                <DialogFooter className="flex items-center justify-center py-2 ">
+                    <Button onClick={() => { setOpenDialog(false); setFirstTimeStore(false); }} className="bg-[#2150C9] text-xl px-10">ปิด</Button>
+                </DialogFooter>
             </DialogContent>
         </Dialog >
     );

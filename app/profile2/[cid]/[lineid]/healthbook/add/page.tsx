@@ -290,7 +290,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
             <div className="fixed w-full z-50">
                 <div className="h-[69px] bg-[#2D95A1] flex items-center justify-between p-2 text-white font-medium" >
                     <div onClick={handleGoBack} className="pr-4"><ChevronLeft size={40} /></div>
-                    <div className='text-xl'>สมุดสุขภาพ</div>
+                    <div className='text-2xl'>สมุดสุขภาพ</div>
                     <div className="w-[40px]">
                     </div>
                 </div>

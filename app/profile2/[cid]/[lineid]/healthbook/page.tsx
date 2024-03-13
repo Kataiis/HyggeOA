@@ -84,22 +84,22 @@ export default function Home({ params }: { params: { cid: string, lineid: string
     await setIsloading(true);
 
     const checkdata = await axios.post(`${pathUrl}/health/hyggelineservice/checkCitizen`, { cid: params.cid, lineid: params.lineid })
-        console.log("checkdata : ", checkdata.data)
-        if (checkdata.data.ok) {
-            console.log("length", checkdata.data.message)
-            if (checkdata.data.message > 0) {
-              await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
-              setLineid(params.lineid)
-            }
-            else {
-              //   
-              router.replace("/noentry")
-            }
-        }
-        else {
+    console.log("checkdata : ", checkdata.data)
+    if (checkdata.data.ok) {
+      console.log("length", checkdata.data.message)
+      if (checkdata.data.message > 0) {
+        await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
+        setLineid(params.lineid)
+      }
+      else {
+        //   
+        router.replace("/noentry")
+      }
+    }
+    else {
 
-            throw new Error(checkdata.data.error);
-        }
+      throw new Error(checkdata.data.error);
+    }
 
   }
 
@@ -142,14 +142,19 @@ export default function Home({ params }: { params: { cid: string, lineid: string
         <div className="h-[69px] bg-[#2D95A1] flex items-center justify-between p-2 text-white font-medium">
           <div onClick={() => { setActiveTab("summary"); { activeTab == "summary" ? router.replace("../../" + patient?.cid + "/" + lineid) : "" }; }}
             className="pr-4"><ChevronLeft size={40} /></div>
-          <div className='text-xl'>สมุดสุขภาพ</div>
+          <div className='text-2xl'>สมุดสุขภาพ</div>
           <div className="w-[40px]">
           </div>
         </div>
 
-        {activeTab === "summary" ? "" :
-          <div className="h-[60px] flex items-center justify-center relative text-xl text-center p-2 pt-4 text-[#2C97A3] bg-white font-bold">
-            <div>{`${patient?.pname} ${patient?.fname} ${patient?.lname}`}</div>
+        {activeTab === "summary" ?
+          <div className="h-[70px] flex flex-col items-center justify-center relative text-xl text-center p-2 pt-4 bg-white font-bold">
+            <div className="text-center text-2xl font-bold text-[#2C97A3]">{`สวัสดีครับ ! คุณ ${patient?.fname}`}</div>
+            <div className="text-center">{`ข้อมูลจากการบันทึกประวัติสุขภาพของคุณ`}</div>
+          </div>
+          :
+          <div className="h-[70px] flex items-center justify-center relative text-xl text-center p-2 pt-4 text-[#2C97A3] bg-white font-bold">
+            <div className="text-center text-2xl font-bold text-[#2C97A3]">{`${patient?.pname} ${patient?.fname} ${patient?.lname}`}</div>
             <div className="absolute top-3 right-3"><Component_help /></div>
           </div>
         }
@@ -157,7 +162,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
       </div>
 
       <Tabs defaultValue={activeTab} value={activeTab} className={`w-full rounded-none`}>
-        <TabsList className={`grid grid-cols-6 w-full h-[60px] rounded-none p-0 m-0 bg-white justify-center items-center z-10 ${activeTab === "summary" ? "fixed mt-[69px]" : "fixed mt-[124px]"}`}>
+      <TabsList className={`grid grid-cols-6 w-full h-[60px] rounded-none p-0 m-0 bg-white justify-center items-center z-10 fixed mt-[139px]`}>
           <TabsTrigger onClick={() => setActiveTab("weight")} value="weight">
             <Image src={"/hygge_healthbook/icon_weight.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-2 w-auto h-full" />
           </TabsTrigger>
@@ -179,7 +184,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
         </TabsList>
 
         {isLoading ?
-          <div className="flex flex-col justify-center items-center text-gray-400 pt-[72pt] animate-pulse" >
+          <div className="flex flex-col justify-center items-center text-gray-400 pt-[139px] animate-pulse" >
             <div className="animate-spin mt-20">
               <Loader2 size={75} />
             </div>
@@ -200,7 +205,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
               <Component_result title={"อัตราการเต้นของหัวใจ"} description={""} type={"pulse"} data={sortedDataDESC} cid={patient?.cid} lineid={lineid} />
             </TabsContent>
             <TabsContent value="bloodsugar">
-              <Component_result title={"ค่าน้ำตาลในเลือด"} description={"(แสดงค่าบันทึก ก่อนอาหารเช้า)"} type={"bloodsugar"} data={sortedDataDESC} cid={patient?.cid} lineid={lineid} />
+              <Component_result title={"ค่าน้ำตาลในเลือด"} description={"(แสดงค่าบันทึก ครั้งล่าสุด)"} type={"bloodsugar"} data={sortedDataDESC} cid={patient?.cid} lineid={lineid} />
             </TabsContent>
             <TabsContent value="bmi">
               <Component_result title={"ดัชนีมวลกาย"} description={""} type={"bmi"} data={sortedDataDESC} cid={patient?.cid} lineid={lineid} />
