@@ -26,7 +26,7 @@ import lockgray from "@/public/lockgray.png"
 
 import lockgreen from "@/public/lockgreen.png"
 
-const Resetpassword = () => {
+const Setpassword = () => {
 
     const pathUrl: any = process.env.pathUrl;
     const Patient: any = usePatientStore((state: any) => state.patient);
@@ -324,4 +324,4 @@ const Resetpassword = () => {
         </div>
     );
 };
-export default Resetpassword;
+export default Setpassword;

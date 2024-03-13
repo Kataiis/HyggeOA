@@ -48,7 +48,7 @@ function Setting() {
                     <Button
                         className="bg-[#006A38] text-[#ffffff] h-24 w-60 rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace("/profile/setting/resetpassword")}
+                        onClick={() => router.replace("/profile/setting/setpassword")}
                     >
                         <div className="flex ">
 
