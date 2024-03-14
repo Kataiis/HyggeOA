@@ -20,7 +20,6 @@ import hygge_logo from '@/public/hygge_logo.png'
 import liff from "@line/liff"
 import Navbardigital from "../../components/Navbardigital";
 import { usePatientStore } from "@/app/store"
-import { RocketIcon } from "@radix-ui/react-icons"
 
 import lockgray from "@/public/lockgray.png"
 
