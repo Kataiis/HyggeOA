@@ -221,9 +221,6 @@ export default function Home({ params }: { params: { cid: string, lineid: string
         if (response.data.ok) {
             console.log("response", response.data);
             if (response.data.message !== undefined) {
-                // console.log("update")
-                // console.log("id", id)
-                // console.log("bmi", Number(data.weight) / ((Number(data.height) / 100) * (Number(data.height) / 100)))
 
                 await axios.put(`${baseURL}/bookinghealth/${id}`, {
                     cid: HealthStore?.cid,

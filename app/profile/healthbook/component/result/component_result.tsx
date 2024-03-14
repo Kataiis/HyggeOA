@@ -9,6 +9,7 @@ import { th } from "date-fns/locale";
 import { format } from "date-fns";
 import { useHealthStore } from "@/app/store";
 import { useState } from "react";
+import { useRouter } from 'next/navigation'
 
 
 interface Props {
@@ -42,6 +43,7 @@ interface HealthProps {
 
 export default function Component_result({ title, description, type, data, cid, lineid }: Props) {
   const { HealthStore, setHealthStore, removeHealthStore } = useHealthStore();
+  const router = useRouter()
 
 
   const handleSetHealthStore = (index: number, add: boolean) => {
@@ -85,6 +87,9 @@ export default function Component_result({ title, description, type, data, cid, 
       });
     }
 
+    router.push(`/profile/healthbook/add`);
+
+
   };
 
   return (
@@ -102,11 +107,9 @@ export default function Component_result({ title, description, type, data, cid, 
 
         <div className="w-full h-12 grid grid-cols-8 gap-1 items-center justify-center px-4 bg-white">
           <div className="w-full flex items-center justify-center">
-            <Link href={`/profile/healthbook/add`} onClick={() => handleSetHealthStore(0, true)}>
-              <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#49DABD] hover:bg-[#9fdfd2] shadow-md shadow-stone-700/40">
+              <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#49DABD] hover:bg-[#9fdfd2] shadow-md shadow-stone-700/40" onClick={() => handleSetHealthStore(0, true)}>
                 <Image src={"/hygge_healthbook/icon_add.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-1 w-auto h-full" />
               </Button>
-            </Link>
           </div>
           <div className="w-full col-span-7 grid grid-cols-7 text-[#2C97A3] text-xl font-bold text-center">
             <div className="w-full items-center justify-center col-span-3">วันที่</div>
@@ -131,11 +134,9 @@ export default function Component_result({ title, description, type, data, cid, 
             {data.map((item, index) => (
               <div key={index} className="w-full grid grid-cols-8 gap-1 items-center justify-center my-2 px-4">
                 <div className="w-full flex justify-center  ">
-                  <Link href={`/profile/healthbook/add`} onClick={() => handleSetHealthStore(index, false)}>
-                    <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#F98F86] hover:bg-[#fac0bb] shadow-md shadow-stone-700/40">
+                    <Button className="flex items-center justify-center p-0 w-[30px] h-[30px] bg-[#F98F86] hover:bg-[#fac0bb] shadow-md shadow-stone-700/40" onClick={() => handleSetHealthStore(index, false)}>
                       <Image src={"/hygge_healthbook/icon_edit.svg"} priority alt="Image" width="0" height="0" sizes="100vw" className="p-1 w-auto h-full" />
                     </Button>
-                  </Link>
                 </div>
                 <div className="w-full col-span-3 text-lg text-center p-2">
                   {format(item.create_date, "P", { locale: th })}

@@ -69,8 +69,6 @@ export default function Home({ params }: { params: { cid: string, lineid: string
 
   const FetchData = async () => {
     const datahealth = await axios.get(`${baseURL}/bookinghealth/${patient?.cid}/cid`);
-
-
     if (datahealth.data.ok) {
       setData(datahealth.data.rows)
       await setIsloading(false);
@@ -148,10 +146,10 @@ export default function Home({ params }: { params: { cid: string, lineid: string
         </div>
 
         {activeTab === "summary" ?
-          <div className="h-[70px] flex flex-col items-center justify-center relative text-xl text-center p-2 pt-4 bg-white font-bold">
-            <div className="text-center text-2xl font-bold text-[#2C97A3]">{`สวัสดีครับ ! คุณ ${patient?.fname}`}</div>
-            <div className="text-center">{`ข้อมูลจากการบันทึกประวัติสุขภาพของคุณ`}</div>
-          </div>
+          <div className="h-[70px] flex flex-col items-center justify-center relative text-xl text-center p-2 pt-4 bg-white">
+          <div className="text-center font-thin">{`ข้อมูลจากการบันทึกประวัติสุขภาพของคุณ`}</div>
+          <div className="text-center text-2xl font-bold text-[#2C97A3]">{`สวัสดีครับ ! คุณ ${isLoading ? "..." : patient?.fname}`}</div>
+        </div>
           :
           <div className="h-[70px] flex items-center justify-center relative text-xl text-center p-2 pt-4 text-[#2C97A3] bg-white font-bold">
             <div className="text-center text-2xl font-bold text-[#2C97A3]">{`${patient?.pname} ${patient?.fname} ${patient?.lname}`}</div>
@@ -216,10 +214,6 @@ export default function Home({ params }: { params: { cid: string, lineid: string
             </TabsContent>
           </>
         }
-
-
-
-
       </Tabs>
 
 
