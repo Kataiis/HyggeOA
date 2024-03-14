@@ -148,7 +148,7 @@ export default function Home() {
         {activeTab === "summary" ?
           <div className="h-[70px] flex flex-col items-center justify-center relative text-xl text-center p-2 pt-4 bg-white">
             <div className="text-center font-thin">{`ข้อมูลจากการบันทึกประวัติสุขภาพของคุณ`}</div>
-            <div className="text-center text-2xl font-bold text-[#2C97A3]">{`สวัสดีครับ ! คุณ ${patient?.fname}`}</div>
+            <div className="text-center text-2xl font-bold text-[#2C97A3]">{`สวัสดีครับ ! คุณ ${isLoading ? "..." : patient?.fname}`}</div>
           </div>
           :
           <div className="h-[70px] flex items-center justify-center relative text-xl text-center p-2 pt-4 text-[#2C97A3] bg-white font-bold">
