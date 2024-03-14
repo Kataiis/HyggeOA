@@ -76,7 +76,7 @@ export default function AlertStatus({ isOpen, setIsOpenAlert, isStatus, title, m
                                 <Button className={`mx-7 rounded-3xl border-0 outline-0 bg-[#24b06c] hover:bg-[#85e0b4]`}
                                     onClick={() => {
                                         setOpenDialog(false);
-                                        router.push(`../healthbook`);
+                                        router.replace(`../healthbook`);
                                     }
                                     }>
                                     ตกลง

@@ -107,7 +107,7 @@ export default function Home({ params }: { params: { cid: string, lineid: string
 
 
     const handleGoBack = () => {
-        router.push(`../healthbook`);
+        router.replace(`../healthbook`);
     };
 
     const form = useForm<z.infer<typeof FormSchema>>({

@@ -87,7 +87,7 @@ export default function Component_result({ title, description, type, data, cid, 
       });
     }
 
-    router.push(`/profile2/${cid}/${lineid}/healthbook/add`);
+    router.replace(`/profile2/${cid}/${lineid}/healthbook/add`);
 
 
   };
