@@ -79,8 +79,9 @@ const Setpassword = () => {
     const form = useForm<LoginFormValues>({
         resolver: zodResolver(LoginFormSchema),
         defaultValues: {
-            username: "",
             password: "",
+            npassword: "",
+            cpassword: "",
         },
     });
     // const onSubmit = async (data: LoginFormValues) => {
