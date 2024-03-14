@@ -6,11 +6,11 @@ const nextConfig = {
     },
     env: {
         pathUrl: `https://hyggemedicalservice.com/phpapi/api`,
-        // HyggeOAliff: '2003391401-jDvm8MlZ', 
+        HyggeOAliff: '2003391401-jDvm8MlZ', 
         APIKey: 'https://apimobile.hyggecode.com',
         
         // test //
-        HyggeOAliff: '2002893867-MzGeD6nL',
+        // HyggeOAliff: '2002893867-MzGeD6nL',
   
     }
 
