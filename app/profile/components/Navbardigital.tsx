@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 
 
 
-function Navbar() {
+function Navbardigital() {
     const [isShown, setIsShown] = useState(false);
     const currentPage = usePathname();
     const router = useRouter();
@@ -17,21 +17,21 @@ function Navbar() {
         router.replace('/profile/patient')
     };
 
-    // useEffect(() => {
-    //     document.title = "Virtual Hospital";
-    //     console.log("currentPage : ", currentPage);
-    //     if (currentPage !== '/hospitalbook' && currentPage !== '/checkno' && currentPage !== '/loading' && currentPage !== '/patient' && currentPage !== '/comingsoon') {
-    //         setIsShown(true);
-    //     } else {
-    //         setIsShown(false);
-    //     }
-    // }, [currentPage]);
+    useEffect(() => {
+        document.title = "Virtual Hospital";
+        console.log("currentPage : ", currentPage);
+        if (currentPage !== '/hospitalbook' && currentPage !== '/checkno' && currentPage !== '/loading' && currentPage !== '/patient' && currentPage !== '/comingsoon') {
+            setIsShown(true);
+        } else {
+            setIsShown(false);
+        }
+    }, [currentPage]);
 
 
     return (
-        <div className='bg-[#00AE91] h-16 sticky top-0'>
+        <div className='bg-[#787874] h-16 sticky top-0'>
 
-            <p className='text-center text-2xl text-[#ffffff] align-middle p-4' >สมุดโรงพยาบาล</p>
+            <p className='text-center text-2xl text-[#ffffff] align-middle p-4' >ดิจิทัล เซอร์วิส</p>
             {isShown &&
                 <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
                     <Image
@@ -48,4 +48,4 @@ function Navbar() {
     )
 }
 
-export default Navbar
+export default Navbardigital

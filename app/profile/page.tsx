@@ -11,6 +11,9 @@ import Avatar from '@mui/material/Avatar';
 import QRCode from "react-qr-code";
 
 import logo from "@/public/hg.png"
+import setting from "@/public/setting.png"
+import footer from "@/public/footer.png"
+
 
 const hyggeOAliff: any = process.env.HyggeOAliff;
 
@@ -53,20 +56,35 @@ function Profile() {
 
     }, [lineId, Patient])
 
+    const clicksetting = () => {
+        router.replace("/profile/setting")
+    };
+
 
 
     return (
 
         <div>
+            <div className='bg-[#F15D4F]  flex justify-between p-3 sticky top-0'>
+                <span>
+                    <Image
+                        priority
+                        src={logo}
+                        alt="logo"
+                        width={55}
+                        height={50} />
 
-            <div className='bg-[#F15D4F] flex justify-center p-3 '>
-                <Image
-                    priority
-                    src={logo}
-                    alt="logo"
-                    width={55}
-                    height={50} />
-                <p className='text-center text-2xl text-[#ffffff] p-3'>ฮุกกะ เมดิคอล เซอร์วิส</p>
+                </span>
+                <span className="text-2xl text-[#ffffff] p-3">ฮุกกะ เมดิคอล เซอร์วิส</span>
+                <span >
+                    <Image
+                        priority
+                        src={setting}
+                        alt="setting"
+                        width={55}
+                        height={50}
+                        onClick={clicksetting} />
+                </span>
             </div>
 
 
@@ -101,7 +119,7 @@ function Profile() {
                     <Avatar src={imgPath} sx={{ width: 140, height: 140 }} />
                 </div>
 
-                <div  className=" p-5">
+                <div className=" p-5">
                     <QRCode
                         size={145}
                         // style={{ height: "auto", maxWidth: "100%", width: "100%" }}
@@ -122,7 +140,7 @@ function Profile() {
             </div>
             <div className='grid justify-items-center m-8  gap-6'>
 
-                <Button className="bg-[#2C97A3] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100 "
+                <Button className="bg-[#2C97A3] text-[#ffffff] text-2xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100 "
                     type="button"
                     onClick={() => router.replace('/profile/healthbook')}
                 >สมุดสุขภาพ
@@ -131,7 +149,7 @@ function Profile() {
 
 
 
-                <Button className="bg-[#49DABD] text-[#ffffff] text-xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
+                <Button className="bg-[#49DABD] text-[#ffffff] text-2xl h-14 w-full rounded-xl shadow-md shadow-gray-500/100"
                     type="button"
                     // onClick={() => updatedata()}
                     onClick={() => router.replace('/profile/patient')}
@@ -142,7 +160,15 @@ function Profile() {
 
 
             </div>
-
+            <div className="mt-20 flex justify-center">
+                <Image
+                    priority
+                    src={footer}
+                    alt="footer"
+                    width={250}
+                    height={250}
+                    />
+            </div>
 
         </div>
     )
