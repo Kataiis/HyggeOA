@@ -20,10 +20,11 @@ import hygge_logo from '@/public/hygge_logo.png'
 import liff from "@line/liff"
 import Navbardigital from "../../components/Navbardigital";
 import { usePatientStore } from "@/app/store"
+import lockgreen from "@/public/lockgreen.png"
 
 import lockgray from "@/public/lockgray.png"
+import back from '@/public/back.png'
 
-import lockgreen from "@/public/lockgreen.png"
 
 const Setpassword = () => {
 
@@ -44,6 +45,9 @@ const Setpassword = () => {
 
     type LoginFormValues = z.infer<typeof LoginFormSchema>;
 
+    const backPage = () => {
+        router.replace('./')
+    };
 
 
 
@@ -155,7 +159,18 @@ const Setpassword = () => {
 
     return (
         <div>
-            <Navbardigital />
+           <div>
+                    <Navbardigital />
+                    <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
+                        <Image
+                            priority
+                            src={back}
+                            alt="scan"
+                            height={25}
+                            onClick={backPage}
+                        />
+                    </div>
+                </div>
 
             <div className="m-10">
                 <div className="bg-red-500 text-[#ffffff] text-2xl flex justify-center mt-5 p-3 mb-5"> เปลี่ยนรหัสผ่าน</div>
@@ -180,36 +195,39 @@ const Setpassword = () => {
                                         name="password"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <div className="flex flex-col space-y-1.5 mb-5">   <label className="relative block">
+                                                <div className="flex flex-row">
 
-                                                    <span className="sr-only">Password</span>
+                                                    <div className="w-11">
+                                                        <label className="relative block">
+                                                            <span className="sr-only">Password</span>
+                                                            <span className="flex items-center">
+                                                                <Image
+                                                                    priority
+                                                                    src={lockgray}
+                                                                    alt="Password"
+                                                                    height={40}
+                                                                    width={40}
+                                                                />
+                                                                <svg className="h-10 w-10 fill-slate-300" viewBox="0 0 20 20"></svg>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div className="grow w-14">
+                                                        <FormControl className="border-gray-500	">
+                                                            <Input
+                                                                inputMode="numeric"
+                                                                className="text-center text-lg"
+                                                                id="password"
+                                                                type="password"
+                                                                placeholder="รหัสผ่านปัจจุบัน"
+                                                                maxLength={6}
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
 
-                                                    <span className="absolute inset-y-0 left-0 flex items-center pl-2  border-green-500">
-                                                        <Image
-                                                            priority
-                                                            src={lockgray}
-                                                            alt="scan"
-                                                            height={25}
-                                                        />
+                                                        <FormMessage />
+                                                    </div>
 
-                                                        <svg className="h-5 w-5 fill-slate-300" viewBox="0 0 20 20"></svg>
-                                                    </span>
-                                                    <FormControl className="border-gray-500	">
-
-
-                                                        <Input
-                                                            inputMode="numeric"
-                                                            className="text-center text-lg"
-                                                            id="password"
-                                                            type="password"
-                                                            placeholder="รหัสผ่านปัจจุบัน"
-                                                            maxLength={6}
-                                                            {...field}
-                                                        />
-
-
-                                                    </FormControl> </label>
-                                                    <FormMessage />
                                                 </div>
                                             </FormItem>
                                         )}
@@ -222,36 +240,39 @@ const Setpassword = () => {
                                         name="npassword"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <div className="flex flex-col space-y-1.5 mb-5">   <label className="relative block">
+                                                <div className="flex flex-row">
 
-                                                    <span className="sr-only">Password</span>
+                                                    <div className="w-11">
+                                                        <label className="relative block">
+                                                            <span className="sr-only">NewPassword</span>
+                                                            <span className="flex items-center">
+                                                                <Image
+                                                                    priority
+                                                                    src={lockgreen}
+                                                                    alt="Password"
+                                                                    height={40}
+                                                                    width={40}
+                                                                />
+                                                                <svg className="h-10 w-10 fill-slate-300" viewBox="0 0 20 20"></svg>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div className="grow w-14">
+                                                        <FormControl className="border-green-500">
+                                                            <Input
+                                                                inputMode="numeric"
+                                                                className="text-center text-lg"
+                                                                id="npassword"
+                                                                type="password"
+                                                                placeholder="รหัสผ่านใหม่"
+                                                                maxLength={6}
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
 
-                                                    <span className="absolute inset-y-0 left-0 flex items-center pl-2  border-green-500">
-                                                        <Image
-                                                            priority
-                                                            src={lockgreen}
-                                                            alt="scan"
-                                                            height={25}
-                                                        />
+                                                        <FormMessage />
+                                                    </div>
 
-                                                        <svg className="h-5 w-5 fill-slate-300" viewBox="0 0 20 20"></svg>
-                                                    </span>
-                                                    <FormControl className=" border-green-500">
-
-
-                                                        <Input
-                                                            inputMode="numeric"
-                                                            className="text-center text-lg"
-                                                            id="npassword"
-                                                            type="password"
-                                                            placeholder="รหัสผ่านใหม่"
-                                                            maxLength={6}
-                                                            {...field}
-                                                        />
-
-
-                                                    </FormControl> </label>
-                                                    <FormMessage />
                                                 </div>
                                             </FormItem>
                                         )}
@@ -260,40 +281,43 @@ const Setpassword = () => {
 
                                     {/* ยืนยันรหัสผ่านใหม่ */}
                                     <FormField
-                                        control={form.control}
+                                        control={form.control}  
                                         name="cpassword"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <div className="flex flex-col space-y-1.5 mb-5">   <label className="relative block">
+                                                <div className="flex flex-row">
 
-                                                    <span className="sr-only">Password</span>
+                                                    <div className="w-11">
+                                                        <label className="relative block">
+                                                            <span className="sr-only">ConfirmPassword</span>
+                                                            <span className="flex items-center">
+                                                                <Image
+                                                                    priority
+                                                                    src={lockgreen}
+                                                                    alt="Password"
+                                                                    height={40}
+                                                                    width={40}
+                                                                />
+                                                                <svg className="h-10 w-10 fill-slate-300" viewBox="0 0 20 20"></svg>
+                                                            </span>
+                                                        </label>
+                                                    </div>
+                                                    <div className="grow w-14">
+                                                        <FormControl className="border-green-500">
+                                                            <Input
+                                                                inputMode="numeric"
+                                                                className="text-center text-lg"
+                                                                id="cpassword"
+                                                                type="password"
+                                                                placeholder="ยืนยันรหัสผ่าน"
+                                                                maxLength={6}
+                                                                {...field}
+                                                            />
+                                                        </FormControl>
 
-                                                    <span className="absolute inset-y-0 left-0 flex items-center pl-2  border-green-500">
-                                                        <Image
-                                                            priority
-                                                            src={lockgreen}
-                                                            alt="scan"
-                                                            height={25}
-                                                        />
+                                                        <FormMessage />
+                                                    </div>
 
-                                                        <svg className="h-5 w-5 fill-slate-300" viewBox="0 0 20 20"></svg>
-                                                    </span>
-                                                    <FormControl className=" border-green-500">
-
-
-                                                        <Input
-                                                            inputMode="numeric"
-                                                            className="text-center text-lg"
-                                                            id="cpassword"
-                                                            type="password"
-                                                            placeholder="ยืนยันรหัสผ่านใหม่"
-                                                            maxLength={6}
-                                                            {...field}
-                                                        />
-
-
-                                                    </FormControl> </label>
-                                                    <FormMessage />
                                                 </div>
                                             </FormItem>
                                         )}
@@ -303,7 +327,7 @@ const Setpassword = () => {
                                         <Button
                                             type="submit"
                                             variant="outline"
-                                            className="bg-[#2150C9] text-grey drop-shadow-md text-xl  hover:bg-[#eaefe8] hover:text-grey hover:text-lg text-[#ffffff] h-[60px] w-[200px] "
+                                            className="bg-[#2150C9] text-grey drop-shadow-md text-xl  hover:bg-[#eaefe8] hover:text-grey hover:text-lg text-[#ffffff] h-[54px] w-[200px] "
                                             disabled={isDisble}
 
                                         >

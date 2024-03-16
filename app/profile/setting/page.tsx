@@ -4,14 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { useRouter, } from "next/navigation";
 import Image from 'next/image'
-import comment from '@/public/comment-text.png'
-import drug from '@/public/drug.png'
-import drugallergy from '@/public/drugallergy.png'
-import lab from '@/public/Lab.png'
-import xray from '@/public/xray.png'
 import back from '@/public/back.png'
 import { usePatientStore } from '@/app/store';
-import Navbar from '../components/Navbar';
 import Navbardigital from '../components/Navbardigital';
 
 
@@ -20,25 +14,26 @@ function Setting() {
     const [loading, setloading] = useState(true);
 
 
-    const Patient: any = usePatientStore((state: any) => state.patient);
+    // const Patient: any = usePatientStore((state: any) => state.patient);
     const backPage = () => {
         router.replace('/profile')
     };
 
     return (
         <div> {loading && (
-            <><div>
-                <Navbardigital />
-                <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
-                    <Image
-                        priority
-                        src={back}
-                        alt="scan"
-                        height={25}
-                        onClick={backPage}
-                    />
+            <>
+                <div>
+                    <Navbardigital />
+                    <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
+                        <Image
+                            priority
+                            src={back}
+                            alt="scan"
+                            height={25}
+                            onClick={backPage}
+                        />
+                    </div>
                 </div>
-            </div>
                 <hr />
 
 
@@ -62,7 +57,7 @@ function Setting() {
 
                     <Button className="bg-[#BA2E21] text-[#ffffff]  h-24 w-60  rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace("")}
+                        onClick={() => router.replace("/profile/setting/lockout")}
                     >
                         <div className="flex ">
 

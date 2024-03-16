@@ -47,14 +47,14 @@ function Drugallergy() {
 
     return (
         <div>
-                        <Navbar/>
+            <Navbar />
 
             <div className=" text-2xl bg-[#E1E1E1] text-center p-4 text-[#666666] font-medium sticky top-16">
                 <p>
                     {Patient?.pname + " " + Patient?.fname + " " + Patient?.lname}
                 </p>
             </div>
-         
+
             <div className="bg-[#ffffff] p-4 sticky top-32">
                 <p className='bg-[#E17104] text-center text-lg text-[#ffffff] align-middle p-2'>ข้อมูลการแพ้ยา {data.length} รายการ</p> </div>
             {loading && (
@@ -126,9 +126,9 @@ function Drugallergy() {
 
                         </div>) : (
                         <div className=" h-56 grid content-center font-semibold text-[#707070] text-center text-lg p-5">
-                        
-                                ยังไม่มีการรายงาน <br />
-                                ข้อมูลการแพ้ยา
+
+                            ยังไม่มีการรายงาน <br />
+                            ข้อมูลการแพ้ยา
                         </div>
                     )
 

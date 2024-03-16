@@ -13,26 +13,27 @@ function Navbardigital() {
     const router = useRouter();
 
 
-    const backPage = () => {
-        router.replace('/profile/patient')
-    };
-
+  
     useEffect(() => {
         document.title = "Virtual Hospital";
         console.log("currentPage : ", currentPage);
-        if (currentPage !== '/hospitalbook' && currentPage !== '/checkno' && currentPage !== '/loading' && currentPage !== '/patient' && currentPage !== '/comingsoon') {
-            setIsShown(true);
-        } else {
-            setIsShown(false);
-        }
-    }, [currentPage]);
+        // if (currentPage !== '/hospitalbook' &&
+        //     currentPage !== '/checkno' &&
+        //     currentPage !== '/loading' &&
+        //     currentPage !== '/patient' &&
+        //     currentPage !== '/comingsoon') {
+        //     setIsShown(true);
+        // } else {
+        //     setIsShown(false);
+        // }
+    }, []);
 
 
     return (
         <div className='bg-[#787874] h-16 sticky top-0'>
 
             <p className='text-center text-2xl text-[#ffffff] align-middle p-4' >ดิจิทัล เซอร์วิส</p>
-            {isShown &&
+            {/* {isShown &&
                 <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
                     <Image
                         priority
@@ -41,7 +42,7 @@ function Navbardigital() {
                         height={25}
                         onClick={backPage}
                     />
-                </div>}
+                </div>} */}
 
         </div>
 
