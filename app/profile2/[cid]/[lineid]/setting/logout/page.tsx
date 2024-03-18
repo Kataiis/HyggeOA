@@ -19,13 +19,13 @@ import Image from 'next/image'
 import liff from "@line/liff"
 import { usePatientStore } from "@/app/store"
 import back from '@/public/back.png'
-import vector from "@/public/vector_lockout.png"
+import vector from "@/public/logout.png"
 import Avatar from "@mui/material/Avatar";
 import Navbardigital from "@/app/profile/components/Navbardigital";
 
 const hyggeOAliff: any = process.env.HyggeOAliff;
 
-function Lockout({ params }: { params: { cid: string, lineid: string } }) {
+function Logout({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
     const Patient: any = usePatientStore((state: any) => state.patient);
     const [profile, setProfile] = useState<any>({});
@@ -151,4 +151,4 @@ function Lockout({ params }: { params: { cid: string, lineid: string } }) {
     )
 }
 
-export default Lockout
+export default Logout

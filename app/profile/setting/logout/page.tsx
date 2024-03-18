@@ -20,12 +20,12 @@ import liff from "@line/liff"
 import Navbardigital from "../../components/Navbardigital";
 import { usePatientStore } from "@/app/store"
 import back from '@/public/back.png'
-import vector from "@/public/vector_lockout.png"
+import vector from "@/public/vector_logout.png"
 import Avatar from "@mui/material/Avatar";
 
 const hyggeOAliff: any = process.env.HyggeOAliff;
 
-function Lockout() {
+function Logout() {
     const router = useRouter();
     const Patient: any = usePatientStore((state: any) => state.patient);
     const [profile, setProfile] = useState<any>({});
@@ -150,4 +150,4 @@ function Lockout() {
     )
 }
 
-export default Lockout
+export default Logout
