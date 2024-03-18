@@ -160,7 +160,7 @@ function Profile() {
 
 
             </div>
-            <div className="mt-20 flex justify-center">
+            <div className="mt-16 flex justify-center">
                 <Image
                     priority
                     src={footer}

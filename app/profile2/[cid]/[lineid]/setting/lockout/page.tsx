@@ -17,15 +17,15 @@ import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import Image from 'next/image'
 import liff from "@line/liff"
-import Navbardigital from "../../components/Navbardigital";
 import { usePatientStore } from "@/app/store"
 import back from '@/public/back.png'
 import vector from "@/public/vector_lockout.png"
 import Avatar from "@mui/material/Avatar";
+import Navbardigital from "@/app/profile/components/Navbardigital";
 
 const hyggeOAliff: any = process.env.HyggeOAliff;
 
-function Lockout() {
+function Lockout({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
     const Patient: any = usePatientStore((state: any) => state.patient);
     const [profile, setProfile] = useState<any>({});
@@ -38,8 +38,8 @@ function Lockout() {
     const backPage = () => {
         router.replace('./')
     };
-
-    const imgPath = 'https://www.virtualhos.net/api4000/apihygge/getImageProfile/' + Patient?.cid;
+    console.log("imgPath", params.cid)
+    const imgPath = 'https://www.virtualhos.net/api4000/apihygge/getImageProfile/' + params.cid;
     useEffect(() => {
 
         const initLiff = async () => {
@@ -68,6 +68,7 @@ function Lockout() {
 
     }, [lineId, Patient])
 
+    console.log("lineid", lineId)
     const clicklogout = async (lineId: any) => {
         const isConfirm = await Swal.fire({
             title: "ต้องการออกจากระบบใช่หรือไม่",
@@ -82,7 +83,7 @@ function Lockout() {
         }).then((result) => {
             return result.isConfirmed;
         });
-
+        console.log("lineIdaxios", lineId)
         if (!isConfirm) {
             return;
         }

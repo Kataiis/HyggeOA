@@ -55,7 +55,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
     };
 
     const clickstart = () => {
-        router.replace("/setting")
+        router.replace("../" + params.cid + "/" + params.lineid + "/setting")
       };
 
 
