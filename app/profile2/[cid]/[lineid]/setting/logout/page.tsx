@@ -19,7 +19,7 @@ import Image from 'next/image'
 import liff from "@line/liff"
 import { usePatientStore } from "@/app/store"
 import back from '@/public/back.png'
-import vector from "@/public/logout.png"
+import vector from "@/public/vector_logout.png"
 import Avatar from "@mui/material/Avatar";
 import Navbardigital from "@/app/profile/components/Navbardigital";
 
@@ -32,44 +32,40 @@ function Logout({ params }: { params: { cid: string, lineid: string } }) {
     const [loading, setloading] = useState(false);
     const [lineId, setLineId] = useState("");
     const [image, setimage] = useState("");
+    const [patient, setPatient] = useState<any>([]);
+
     const pathUrl: any = process.env.pathUrl;
 
 
     const backPage = () => {
         router.replace('./')
     };
-    console.log("imgPath", params.cid)
+
+   
     const imgPath = 'https://www.virtualhos.net/api4000/apihygge/getImageProfile/' + params.cid;
+    
+
+
     useEffect(() => {
-
-        const initLiff = async () => {
-            setloading(false);
-            await liff.init({ liffId: hyggeOAliff }).then(async () => {
-                if (!liff.isLoggedIn()) {
-                    liff.login();
-                } else {
-                    const profile = await liff.getProfile()
-                    console.log(profile);
-                    setProfile(profile)
-                    setLineId(profile?.userId);
-
-                    console.warn(lineId);
-                }
-            });
-            await liff.ready
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) => setPatient(v.data.message[0]));
         }
+        getPatient();
 
         try {
-            initLiff()
-            setimage("https://www.virtualhos.net/api4000/apihygge/getImageProfile/" + Patient.cid)
+
+            setimage("https://www.virtualhos.net/api4000/apihygge/getImageProfile/" + params.cid)
         } catch (e: any) {
             console.error('liff init error', e.message)
         }
 
-    }, [lineId, Patient])
+    }, [])
 
-    console.log("lineid", lineId)
-    const clicklogout = async (lineId: any) => {
+    
+    
+
+    const clicklogout = async (lineid: any) => {
+        console.log("lineid :", lineid)
         const isConfirm = await Swal.fire({
             title: "ต้องการออกจากระบบใช่หรือไม่",
             //   text: "You won't be able to revert this!",
@@ -83,20 +79,19 @@ function Logout({ params }: { params: { cid: string, lineid: string } }) {
         }).then((result) => {
             return result.isConfirmed;
         });
-        console.log("lineIdaxios", lineId)
         if (!isConfirm) {
             return;
         }
 
         await axios
-            .delete(`${pathUrl}/hyggelineservice/destroy/${lineId}`)
-            .then(({ data }) => {
+            .delete(`${pathUrl}/health/hyggelineservice/destroy/${lineid}`)
+            .then(() => {
                 Swal.fire({
                     icon: "success",
-                    text: data.message,
+                  
                 });
             });
-        router.replace("../login");
+        router.replace("/login");
     };
 
     return (
@@ -141,7 +136,8 @@ function Logout({ params }: { params: { cid: string, lineid: string } }) {
                         variant="outline"
                         className="bg-[#9747FF] text-grey drop-shadow-md text-xl 
                      hover:bg-[#eaefe8] hover:text-grey hover:text-lg text-[#ffffff] h-[54px] w-[150px] "
-                        onClick={() => clicklogout(lineId)}
+                     
+                        onClick={() => clicklogout(params.lineid)}
 
                     >
                         ยืนยัน

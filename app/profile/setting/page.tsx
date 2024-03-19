@@ -57,7 +57,7 @@ function Setting() {
 
                     <Button className="bg-[#BA2E21] text-[#ffffff]  h-24 w-60  rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace("/profile/setting/lockout")}
+                        onClick={() => router.replace("/profile/setting/logout")}
                     >
                         <div className="flex ">
 

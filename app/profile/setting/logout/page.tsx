@@ -68,7 +68,7 @@ function Logout() {
 
     }, [lineId, Patient])
 
-    const clicklogout = async (lineId: any) => {
+    const clicklogout = async () => {
         const isConfirm = await Swal.fire({
             title: "ต้องการออกจากระบบใช่หรือไม่",
             //   text: "You won't be able to revert this!",
@@ -86,16 +86,22 @@ function Logout() {
         if (!isConfirm) {
             return;
         }
+      
+        const dataSend = {
+            token_line: null,
+            cid:Patient?.cid
+        }
 
+        console.log("dataSend", dataSend)
         await axios
-            .delete(`${pathUrl}/hyggelineservice/destroy/${lineId}`)
-            .then(({ data }) => {
-                Swal.fire({
-                    icon: "success",
-                    text: data.message,
-                });
-            });
-        router.replace("../login");
+            .put(`${pathUrl}/health/hygge_citizen/updatetoken`, dataSend)
+            // .then(({ data }) => {
+            //     Swal.fire({
+            //         icon: "success",
+            //         // text: data.message,
+            //     });
+            // });
+            router.replace("/login");
     };
 
     return (
@@ -140,7 +146,7 @@ function Logout() {
                         variant="outline"
                         className="bg-[#9747FF] text-grey drop-shadow-md text-xl 
                      hover:bg-[#eaefe8] hover:text-grey hover:text-lg text-[#ffffff] h-[54px] w-[150px] "
-                        onClick={() => clicklogout(lineId)}
+                        onClick={() => clicklogout()}
 
                     >
                         ยืนยัน

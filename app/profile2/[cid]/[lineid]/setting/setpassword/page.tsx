@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input"
 import { FormProvider, useForm } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,151 +26,97 @@ import back from '@/public/back.png'
 import Navbardigital from "@/app/profile/components/Navbardigital";
 
 
-const Setpassword = () => {
+
+
+
+
+const Setpassword = ({ params }: { params: { cid: string, lineid: string } }) => {
 
     const pathUrl: any = process.env.pathUrl;
     const Patient: any = usePatientStore((state: any) => state.patient);
 
     const [isDisble, setIsDisble] = useState(false);
-
     const [lineId, setLineId] = useState("");
     const [profile, setProfile] = useState<any>({});
     const router = useRouter();
+    const [patient, setPatient] = useState<any>([]);
 
-    const LoginFormSchema = z.object({
-        password: z.string({ required_error: "กรุณาใส่ เลขประจำตัวประชาชน" }),
-        npassword: z.string({ required_error: "กรุณาใส่ Password" }),
-        cpassword: z.string({ required_error: "กรุณายืนยันรหัสผ่าน" }),
+
+    const SignUpSchema = z.object({
+
+        password: z.string().min(1, { message: "กรุณาใส่รหัสผ่านปัจจุบัน" }),
+        npassword: z.string().min(1, { message: "กรุณาใส่รหัสผ่านใหม่" }),
+        cpassword: z.string().min(1, { message: "กรุณายืนยันรหัสผ่าน" }),
     });
 
-    type LoginFormValues = z.infer<typeof LoginFormSchema>;
+
+
+    type SignUpSchemaType = z.infer<typeof SignUpSchema>;
+
+    const SignUphForm = useForm<SignUpSchemaType>({
+        resolver: zodResolver(SignUpSchema),
+    });
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<SignUpSchemaType>
+            ({ resolver: zodResolver(SignUpSchema) });
+
 
     const backPage = () => {
         router.replace('./')
     };
 
 
-
-    // const updatedata = async (Patient: any, lineid: any) => {
-    //     // hygge oa  insert request
-    //     const dataIns = {
-    //         req_cid: Patient.cid,
-    //         favhos1: Patient.favhos1,
-    //         line_id: lineid,
-    //     };
+    const onSubmit = async (data: SignUpSchemaType) => {
+        // setIsDisble(true);
+        console.log("data", data)
 
 
+        if (data.npassword == data.cpassword) {
+            const res = await axios.put(`${pathUrl}/health/hygge_citizen/updatepasscode`, { cid: params.cid, passcode: data.npassword })
 
-    //     console.log("dataIns", dataIns)
-
-    //     const resIns: any = await axios.post(pathUrl + "/health/hiereq/store_hyggeoa", dataIns);
-    //     console.log("resIns", resIns.data)
-
-    //     if (resIns.data.ok) {
-    //         console.log("insert hie_request success");
-    //         console.log("Patient.cid", Patient.cid);
-    //         console.log("lineid", lineid);
-
-    //         const log = await axios.post(`${pathUrl}/health/phrviewlog/ins`, { cid: Patient.cid, line_id: lineid })
-
-    //         console.log("log", log)
-    //         router.replace("/agreement")
-
-    //     }
-
-    // };
-
-    const form = useForm<LoginFormValues>({
-        resolver: zodResolver(LoginFormSchema),
-        defaultValues: {
-            password: "",
-            npassword: "",
-            cpassword: "",
-        },
-    });
-    // const onSubmit = async (data: LoginFormValues) => {
-
-    //     setIsDisble(true);
-    //     // ข้อมูลที่ส่งไปให้ API
-
-    //     const profile = await liff.getProfile()
-    //     console.log(profile);
-    //     setProfile(profile)
-    //     setLineId(profile?.userId);
-
-    //     console.warn(lineId);
-
-    //     console.log("dataSend : ", profile);
+            Swal.fire({
+                title: "เปลี่ยนรหัสผ่านสำเร็จ",
+                icon: "success",
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "ตกลง",
+            })
+            reset();
+        }
+        else {
+            Swal.fire({
+                text: "รหัสผ่านใหม่ และ ยืนยันรหัสผ่านไม่ตรงกัน",
+                icon: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "ตกลง",
+            })
+            reset();
+        }
+    };
 
 
-    //     // // ดึงข้อมูลจาก API
-    //     console.log("cid : ", data.username);
-    //     console.log("password : ", data.password);
-    //     const res = await axios.post(`${pathUrl}/health/hygge_citizen/checkbycitizen`, { cid: data.username, passcode: data.password })
 
-    //     // check token
-
-    //     console.log("res login : ", res.data);
-    //     if (res.data.ok) {
-    //         console.log("message : ", res.data.message);
-    //         console.log("message.length : ", res.data.message.length);
-
-    //         if (res.data.message.length > 0) {
-
-    //             const dataSend = {
-    //                 cid: res.data.message[0].cid,
-    //                 token_line: `${profile.userId}`
-    //             }
-
-    //             //update token
-    //             const resUpdate: any = await axios.put(`${pathUrl}/health/hygge_citizen/updatetoken`, dataSend)
-    //             console.log("resUpdate", resUpdate.data)
-    //             console.log("dataSend", dataSend)
-    //             if (resUpdate.data.ok) {
-    //                 if (resUpdate.data.message === 1) {
-    //                     const res2 = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: dataSend })
-    //                     // updatePatient(res2.data.message[0])
-    //                     // updatedata(res2.data.message[0], `${profile.userId}`)
-
-    //                 } else {
-    //                     throw new Error(res.data.error);
-    //                 }
-    //             } else {
-    //                 throw new Error(res.data.error);
-    //             }
-    //         } else {
-    //             // ไม่มีข้อมูลใน DB
-
-    //             Swal.fire({
-    //                 title: "เข้าสู่ระบบไม่สำเร็จ",
-    //                 icon: "error",
-    //                 html: "เลขประจำตัวประชาชน หรือ รหัสผ่าน ไม่ถูกต้อง<br>" + "กรุณาลองอีกครั้ง",
-    //                 showCloseButton: true,
-    //                 showConfirmButton: false,
-    //             }).then(() => {
-    //                 form.reset();
-    //                 setIsDisble(false);
-    //             });
-    //         }
-    //     } else {
-    //         throw new Error(res.data.error);
-    //     }
-    // };
 
     return (
         <div>
-           <div>
-                    <Navbardigital />
-                    <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
-                        <Image
-                            priority
-                            src={back}
-                            alt="scan"
-                            height={25}
-                            onClick={backPage}
-                        />
-                    </div>
+            <div>
+                <Navbardigital />
+                <div className="absolute left-8 top-5 h-16 w-16 z-0 ">
+                    <Image
+                        priority
+                        src={back}
+                        alt="scan"
+                        height={25}
+                        onClick={backPage}
+                    />
                 </div>
+            </div>
 
             <div className="m-10">
                 <div className="bg-red-500 text-[#ffffff] text-2xl flex justify-center mt-5 p-3 mb-5"> เปลี่ยนรหัสผ่าน</div>
@@ -180,18 +126,19 @@ const Setpassword = () => {
                     <p className="text-2xl text-center mt-5">{Patient?.pname}{Patient?.fname} {Patient?.lname}</p>
                     <CardContent className="mt-6">
 
-                        <FormProvider {...form}>
+                        <FormProvider {...SignUphForm}>
                             <form
                                 id="frmLogin"
                                 className="space-y-8"
-                            // onSubmit={form.handleSubmit(onSubmit)}
+                                // onSubmit={form.handleSubmit(onSubmit)}
+                                onSubmit={handleSubmit(onSubmit)}
                             >
 
                                 <div className="grid w-full items-center gap-4">
 
                                     {/* รหัสผ่านปัจจุบัน */}
                                     <FormField
-                                        control={form.control}
+
                                         name="password"
                                         render={({ field }) => (
                                             <FormItem>
@@ -221,11 +168,15 @@ const Setpassword = () => {
                                                                 type="password"
                                                                 placeholder="รหัสผ่านปัจจุบัน"
                                                                 maxLength={6}
-                                                                {...field}
+                                                                {...register("password")}
                                                             />
                                                         </FormControl>
+                                                        {errors.password && (
+                                                            <p className="text-xs italic text-red-500 mt-2">
+                                                                {errors.password?.message}
+                                                            </p>
+                                                        )}
 
-                                                        <FormMessage />
                                                     </div>
 
                                                 </div>
@@ -236,7 +187,7 @@ const Setpassword = () => {
 
                                     {/* รหัสผ่านใหม่ */}
                                     <FormField
-                                        control={form.control}
+                                        control={SignUphForm.control}
                                         name="npassword"
                                         render={({ field }) => (
                                             <FormItem>
@@ -266,11 +217,16 @@ const Setpassword = () => {
                                                                 type="password"
                                                                 placeholder="รหัสผ่านใหม่"
                                                                 maxLength={6}
-                                                                {...field}
+                                                                {...register("npassword")}
+
                                                             />
                                                         </FormControl>
+                                                        {errors.npassword && (
+                                                            <p className="text-xs italic text-red-500 mt-2">
+                                                                {errors.npassword?.message}
+                                                            </p>
+                                                        )}
 
-                                                        <FormMessage />
                                                     </div>
 
                                                 </div>
@@ -281,7 +237,7 @@ const Setpassword = () => {
 
                                     {/* ยืนยันรหัสผ่านใหม่ */}
                                     <FormField
-                                        control={form.control}  
+                                        // control={form.control}
                                         name="cpassword"
                                         render={({ field }) => (
                                             <FormItem>
@@ -311,11 +267,14 @@ const Setpassword = () => {
                                                                 type="password"
                                                                 placeholder="ยืนยันรหัสผ่าน"
                                                                 maxLength={6}
-                                                                {...field}
+                                                                {...register("cpassword")}
                                                             />
                                                         </FormControl>
-
-                                                        <FormMessage />
+                                                        {errors.cpassword && (
+                                                            <p className="text-xs italic text-red-500 mt-2">
+                                                                {errors.cpassword?.message}
+                                                            </p>
+                                                        )}
                                                     </div>
 
                                                 </div>

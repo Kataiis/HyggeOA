@@ -20,6 +20,7 @@ function Setting({ params }: { params: { cid: string, lineid: string } }) {
         router.replace("../" + params.lineid)
     };
 
+    console.log(params.cid, params.lineid)
     return (
         <div> {loading && (
             <>
@@ -36,9 +37,6 @@ function Setting({ params }: { params: { cid: string, lineid: string } }) {
                     </div>
                 </div>
                 <hr />
-
-
-
                 <div className='grid justify-items-center m-6  gap-6 mt-20'>
 
                     <Button
@@ -58,7 +56,7 @@ function Setting({ params }: { params: { cid: string, lineid: string } }) {
 
                     <Button className="bg-[#BA2E21] text-[#ffffff]  h-24 w-60  rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace("/profile2/" + params.cid + "/" + params.lineid +"/setting/lockout")}
+                        onClick={() => router.replace("/profile2/" + params.cid + "/" + params.lineid +"/setting/logout")}
                     >
                         <div className="flex ">
 
