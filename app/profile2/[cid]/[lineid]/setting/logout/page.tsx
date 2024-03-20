@@ -91,7 +91,7 @@ function Logout({ params }: { params: { cid: string, lineid: string } }) {
                   
                 });
             });
-        router.replace("/login");
+        router.replace("/profile2");
     };
 
     return (

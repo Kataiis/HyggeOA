@@ -75,22 +75,32 @@ const Setpassword = ({ params }: { params: { cid: string, lineid: string } }) =>
         // setIsDisble(true);
         console.log("data", data)
 
+        console.log("patient", patient)
+        if (data.password === patient.passcode)
+            if (data.npassword == data.cpassword) {
+                const res = await axios.put(`${pathUrl}/health/hygge_citizen/updatepasscode`, { cid: params.cid, passcode: data.npassword })
 
-        if (data.npassword == data.cpassword) {
-            const res = await axios.put(`${pathUrl}/health/hygge_citizen/updatepasscode`, { cid: params.cid, passcode: data.npassword })
-
+                Swal.fire({
+                    title: "เปลี่ยนรหัสผ่านสำเร็จ",
+                    icon: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "ตกลง",
+                })
+                reset();
+            }
+            else {
+                Swal.fire({
+                    text: "กรุุณายืนยันรหัสผ่านให้ตรงกัน",
+                    icon: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "ตกลง",
+                })
+                reset();
+            } else {
             Swal.fire({
-                title: "เปลี่ยนรหัสผ่านสำเร็จ",
-                icon: "success",
-                showCancelButton: false,
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "ตกลง",
-            })
-            reset();
-        }
-        else {
-            Swal.fire({
-                text: "รหัสผ่านใหม่ และ ยืนยันรหัสผ่านไม่ตรงกัน",
+                text: "รหัสผ่านปัจจุบันไม่ถูกต้อง",
                 icon: "error",
                 showCancelButton: false,
                 confirmButtonColor: "#3085d6",
@@ -100,7 +110,16 @@ const Setpassword = ({ params }: { params: { cid: string, lineid: string } }) =>
         }
     };
 
+    useEffect(() => {
 
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) =>
+                setPatient(v.data.message[0]));
+        }
+        getPatient();
+
+
+    }, [])
 
 
     return (

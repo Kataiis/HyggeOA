@@ -74,24 +74,34 @@ const Setpassword = () => {
     const onSubmit = async (data: SignUpSchemaType) => {
         // setIsDisble(true);
         console.log("data", data)
-        console.log("Patient",Patient)
+        console.log("Patient", Patient)
 
+        if (data.password === Patient.passcode)
+            if (data.npassword === data.cpassword) {
+                const res = await axios.put(`${pathUrl}/health/hygge_citizen/updatepasscode`, { cid: Patient?.cid, passcode: data.npassword })
 
-        if (data.npassword == data.cpassword) {
-            const res = await axios.put(`${pathUrl}/health/hygge_citizen/updatepasscode`, { cid: Patient?.cid, passcode: data.npassword })
-
-            Swal.fire({
-                title: "เปลี่ยนรหัสผ่านสำเร็จ",
-                icon: "success",
-                showCancelButton: false,
-                confirmButtonColor: "#3085d6",
-                confirmButtonText: "ตกลง",
-            })
-            reset();
-        }
+                Swal.fire({
+                    title: "เปลี่ยนรหัสผ่านสำเร็จ",
+                    icon: "success",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "ตกลง",
+                })
+                reset();
+            }
+            else {
+                Swal.fire({
+                    text: "กรุุณายืนยันรหัสผ่านให้ตรงกัน",
+                    icon: "error",
+                    showCancelButton: false,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "ตกลง",
+                })
+                reset();
+            }
         else {
             Swal.fire({
-                text: "รหัสผ่านใหม่ และ ยืนยันรหัสผ่านไม่ตรงกัน",
+                text: "รหัสผ่านปัจจุบันไม่ถูกต้อง",
                 icon: "error",
                 showCancelButton: false,
                 confirmButtonColor: "#3085d6",

@@ -28,6 +28,8 @@ function Profile() {
     const [image, setimage] = useState("");
 
     const imgPath = 'https://www.virtualhos.net/api4000/apihygge/getImageProfile/' + Patient?.cid;
+
+    console.log("Patient:",Patient)
     useEffect(() => {
 
         const initLiff = async () => {
