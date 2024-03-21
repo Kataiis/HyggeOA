@@ -13,6 +13,8 @@ import logo from "@/public/hg.png"
 import axios from "axios";
 import { CirclesWithBar } from "react-loader-spinner";
 import setting from "@/public/setting.png"
+import footer from "@/public/footer.png"
+
 const hyggeOAliff: any = process.env.HyggeOAliff;
 
 const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) => {
@@ -81,7 +83,7 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
 
         <div>
 
-            <div className='bg-[#F15D4F]  flex justify-between p-3'>
+            <div className='bg-[#F15D4F]  flex justify-between p-3 sticky top-0'>
                 <span>
                     <Image
                         priority
@@ -195,6 +197,15 @@ const ProfilePage = ({ params }: { params: { cid: string, lineid: string } }) =>
                         <div className="-mt-3">ข้อมูลสุขภาพ <span className="text-lg italic ">จากโรงพยาบาล </span></div>
 
 
+                    </div>
+                    <div className="mt-16 flex justify-center">
+                        <Image
+                            priority
+                            src={footer}
+                            alt="footer"
+                            width={250}
+                            height={250}
+                        />
                     </div>
                 </div>
             )}
