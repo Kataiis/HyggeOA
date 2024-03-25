@@ -6,19 +6,21 @@ import { useRouter, } from "next/navigation";
 import Image from 'next/image'
 import back from '@/public/back.png'
 import { usePatientStore } from '@/app/store';
-import Navbardigital from '../components/Navbardigital';
+import Navbardigital from '@/app/profile/components/Navbardigital';
 
 
-function Setting() {
+
+function Setting({ params }: { params: { cid: string, lineid: string } }) {
     const router = useRouter();
     const [loading, setloading] = useState(true);
 
 
     // const Patient: any = usePatientStore((state: any) => state.patient);
     const backPage = () => {
-        router.replace('/profile')
+        router.replace("../" + params.lineid)
     };
 
+    console.log(params.cid, params.lineid)
     return (
         <div> {loading && (
             <>
@@ -35,15 +37,12 @@ function Setting() {
                     </div>
                 </div>
                 <hr />
-
-
-
                 <div className='grid justify-items-center m-6  gap-6 mt-20'>
 
                     <Button
                         className="bg-[#006A38] text-[#ffffff] h-24 w-60 rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace("/profile/setting/setpassword")}
+                        onClick={() => router.replace("/profile2/" + params.cid + "/" + params.lineid +"/setting/setpassword")}
                     >
                         <div className="flex ">
 
@@ -57,7 +56,7 @@ function Setting() {
 
                     <Button className="bg-[#BA2E21] text-[#ffffff]  h-24 w-60  rounded-xl shadow-md shadow-gray-500/100"
                         type="button"
-                        onClick={() => router.replace("/profile/setting/logout")}
+                        onClick={() => router.replace("/profile2/" + params.cid + "/" + params.lineid +"/setting/logout")}
                     >
                         <div className="flex ">
 

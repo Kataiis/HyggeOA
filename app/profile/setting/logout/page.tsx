@@ -16,29 +16,29 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import Image from 'next/image'
-import hygge_logo from '@/public/hygge_logo.png'
 import liff from "@line/liff"
 import Navbardigital from "../../components/Navbardigital";
 import { usePatientStore } from "@/app/store"
 import back from '@/public/back.png'
-import vector from "@/public/vector_lockout.png"
+import vector from "@/public/vector_logout.png"
 import Avatar from "@mui/material/Avatar";
 
 const hyggeOAliff: any = process.env.HyggeOAliff;
 
-function Lockout() {
+function Logout() {
     const router = useRouter();
-    const [isDisble, setIsDisble] = useState(false);
     const Patient: any = usePatientStore((state: any) => state.patient);
     const [profile, setProfile] = useState<any>({});
     const [loading, setloading] = useState(false);
     const [lineId, setLineId] = useState("");
     const [image, setimage] = useState("");
+    const pathUrl: any = process.env.pathUrl;
 
 
     const backPage = () => {
         router.replace('./')
     };
+
     const imgPath = 'https://www.virtualhos.net/api4000/apihygge/getImageProfile/' + Patient?.cid;
     useEffect(() => {
 
@@ -68,6 +68,41 @@ function Lockout() {
 
     }, [lineId, Patient])
 
+    const clicklogout = async () => {
+        const isConfirm = await Swal.fire({
+            title: "ต้องการออกจากระบบใช่หรือไม่",
+            //   text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "ยืนยัน",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "ยกเลิก",
+
+        }).then((result) => {
+            return result.isConfirmed;
+        });
+
+        if (!isConfirm) {
+            return;
+        }
+      
+        const dataSend = {
+            token_line: null,
+            cid:Patient?.cid
+        }
+
+        console.log("dataSend", dataSend)
+        await axios
+            .put(`${pathUrl}/health/hygge_citizen/updatetoken`, dataSend)
+            // .then(({ data }) => {
+            //     Swal.fire({
+            //         icon: "success",
+            //         // text: data.message,
+            //     });
+            // });
+            router.replace("/login");
+    };
 
     return (
         <div>
@@ -111,7 +146,7 @@ function Lockout() {
                         variant="outline"
                         className="bg-[#9747FF] text-grey drop-shadow-md text-xl 
                      hover:bg-[#eaefe8] hover:text-grey hover:text-lg text-[#ffffff] h-[54px] w-[150px] "
-                        disabled={isDisble}
+                        onClick={() => clicklogout()}
 
                     >
                         ยืนยัน
@@ -121,4 +156,4 @@ function Lockout() {
     )
 }
 
-export default Lockout
+export default Logout

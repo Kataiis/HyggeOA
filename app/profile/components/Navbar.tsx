@@ -16,6 +16,19 @@ function Navbar() {
     const backPage = () => {
         router.replace('/profile/patient')
     };
+    useEffect(() => {
+        document.title = "Virtual Hospital";
+        console.log("currentPage : ", currentPage);
+        if (currentPage !== '/hospitalbook' &&
+            currentPage !== '/checkno' &&
+            currentPage !== '/loading' &&
+            currentPage !== '/patient' &&
+            currentPage !== '/comingsoon') {
+            setIsShown(true);
+        } else {
+            setIsShown(false);
+        }
+    }, []);
 
   
 

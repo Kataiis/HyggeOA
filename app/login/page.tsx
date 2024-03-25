@@ -80,7 +80,7 @@ const Login = () => {
     };
 
     const onSubmit = async (data: LoginFormValues) => {
-        setIsDisble(true);
+        setIsDisble(true); 
         // ข้อมูลที่ส่งไปให้ API
 
         const profile = await liff.getProfile()
@@ -202,7 +202,7 @@ const Login = () => {
                                             </div>
                                             <FormMessage />
                                         </FormItem>
-                                    )}
+                                     )}
                                 />
                                 <FormField
                                     control={form.control}

@@ -30,7 +30,7 @@ import Navbardigital from "@/app/profile/components/Navbardigital";
 
 
 
-const Setpassword = () => {
+const Setpassword = ({ params }: { params: { cid: string, lineid: string } }) => {
 
     const pathUrl: any = process.env.pathUrl;
     const Patient: any = usePatientStore((state: any) => state.patient);
@@ -74,11 +74,11 @@ const Setpassword = () => {
     const onSubmit = async (data: SignUpSchemaType) => {
         // setIsDisble(true);
         console.log("data", data)
-        console.log("Patient", Patient)
 
-        if (data.password === Patient.passcode)
-            if (data.npassword === data.cpassword) {
-                const res = await axios.put(`${pathUrl}/health/hygge_citizen/updatepasscode`, { cid: Patient?.cid, passcode: data.npassword })
+        console.log("patient", patient)
+        if (data.password === patient.passcode)
+            if (data.npassword == data.cpassword) {
+                const res = await axios.put(`${pathUrl}/health/hygge_citizen/updatepasscode`, { cid: params.cid, passcode: data.npassword })
 
                 Swal.fire({
                     title: "เปลี่ยนรหัสผ่านสำเร็จ",
@@ -98,8 +98,7 @@ const Setpassword = () => {
                     confirmButtonText: "ตกลง",
                 })
                 reset();
-            }
-        else {
+            } else {
             Swal.fire({
                 text: "รหัสผ่านปัจจุบันไม่ถูกต้อง",
                 icon: "error",
@@ -111,7 +110,16 @@ const Setpassword = () => {
         }
     };
 
+    useEffect(() => {
 
+        const getPatient = async () => {
+            const res: any = await axios.post(`${pathUrl}/health/hygge_citizen/bycid`, { cid: params.cid }).then((v: any) =>
+                setPatient(v.data.message[0]));
+        }
+        getPatient();
+
+
+    }, [])
 
 
     return (

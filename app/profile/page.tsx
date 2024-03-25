@@ -28,6 +28,8 @@ function Profile() {
     const [image, setimage] = useState("");
 
     const imgPath = 'https://www.virtualhos.net/api4000/apihygge/getImageProfile/' + Patient?.cid;
+
+    console.log("Patient:",Patient)
     useEffect(() => {
 
         const initLiff = async () => {
@@ -160,7 +162,7 @@ function Profile() {
 
 
             </div>
-            <div className="mt-20 flex justify-center">
+            <div className="mt-16 flex justify-center">
                 <Image
                     priority
                     src={footer}
