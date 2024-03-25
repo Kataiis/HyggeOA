@@ -453,8 +453,8 @@ export default function Home({ params }: { params: { cid: string, lineid: string
 
                         <div className="col-span-7 flex justify-center ">
                             {(form.formState.errors.sbp || form.formState.errors.dbp || form.formState.errors.pulse) && (
-                                <FormMessage>ERROR MORNING</FormMessage>
-                            )}
+                                <FormMessage>กรุณาบันทึกค่าความดันโลหิตตัวบน ล่าง และ อัตราการเต้นหัวใจ ช่วงเช้าให้เรียบร้อย</FormMessage>
+                                )}
                         </div>
 
 
@@ -516,8 +516,8 @@ export default function Home({ params }: { params: { cid: string, lineid: string
 
                         <div className="col-span-7 flex justify-center ">
                             {(form.formState.errors.sbp_night || form.formState.errors.dbp_night || form.formState.errors.pulse_night) && (
-                                <FormMessage>ERROR NIGHT</FormMessage>
-                            )}
+                                <FormMessage>กรุณาบันทึกค่าความดันโลหิตตัวบน ล่าง และ อัตราการเต้นหัวใจ ก่อนนอนให้เรียบร้อย</FormMessage>
+                                )}
                         </div>
                     </div>
 
